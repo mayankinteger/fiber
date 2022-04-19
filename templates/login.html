@@ -1,0 +1,106 @@
+<!doctype html>
+
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8" />
+    <title> Login | Fiber</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Fiber Login" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+<style>
+body{
+	background-color:#96a9f5;
+}
+</style>
+</head>
+
+<body>
+    <!--<div class="home-btn d-none d-sm-block">
+        <a href="" class="text-dark"><i class="fas fa-home h2"></i></a>
+    </div>-->
+    <div class="account-pages my-5 pt-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card overflow-hidden">
+                        <div class="bg-login text-center">
+                            <div class="bg-login-overlay"></div>
+                            <div class="position-relative">
+                                <h5 class="text-white font-size-20">Welcome Back !</h5>
+                                <p class="text-white-50 mb-0">Sign in to continue to Fiber.</p>
+                                <a href="" class="logo logo-admin mt-4">
+                                    <img src="{% static 'images/iran.svg' %}" alt="" height="30">
+                                </a>
+                            </div>
+                        </div>
+						{% for message in messages  %}            
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <strong>Message : </strong> {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}  
+                        <div class="card-body pt-5">
+                            <div class="p-2">
+                                <form class="form-horizontal needs-validation custom-form mt-4 pt-2" novalidate action="/login" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="redir_page" value="{{request.GET.next}}">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" id="username" title="Email" placeholder="Enter Email" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="userpassword">Password</label>
+                                        <input type="password" class="form-control" id="userpassword" name="password" title="Password" placeholder="Enter password" required>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <!--<input type="checkbox" class="custom-control-input" id="customControlInline">
+                                        <label class="custom-control-label" for="customControlInline">Remember me</label>-->
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Log In</button>
+                                    </div>
+
+                                    <div class="mt-4 text-center">
+                                        <!--<a href="pages-recoverpw.html" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a>-->
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <!--<p>Don't have an account ? <a href="pages-register.html" class="font-weight-medium text-primary"> Signup now </a> </p>
+                        <p>2021 © Integer.. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'libs/node-waves/waves.min.js' %}"></script>
+
+    <script src="{% static 'js/app.js' %}"></script>
+
+</body>
+
+</html>

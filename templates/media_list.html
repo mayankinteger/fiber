@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+
+{% block title %} Media List {% endblock %}
+
+{% block css %}
+.font-weight{
+	font-weight: 300;
+}
+.form-group>label{
+	line-height: 1.2;
+}
+.form-group>div>label{
+	line-height: .6;
+}
+.card-body>.row>h6 {
+	margin-bottom : 20px;
+}
+.card-body>h6{
+	margin-bottom : 20px;
+}
+.color{
+	color:black;
+	font-size: .8rem;
+}
+
+{% endblock %}
+
+{% block link %}
+<!-- Sweet Alert-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="page-title font-size-18">All Media of Job - DA {{activity_data.da}}</h4>
+					<div>
+						<label style="color:#3b5de7;" class="col-md-2">LUs - {{activity_data.lus}}</Label>
+						<label style="color:#3b5de7;" class="col-md-7">{{activity_data.pfp}}</Label>
+					</div>
+					<div>
+						<label style="color:#ffffff; background-color:#3b5de7; text-align:center;" class="col-md-2">Aramis Drafting</Label>
+					</div>
+					<div class="">
+						<table class="table mb-5">
+							<thead>
+								<tr>
+									<th><b>F1 Media Files</b></th>
+									<th></th>
+									<th></th>
+									<th><button type="button" class="btn btn-primary waves-effect waves-light" onClick="Add_Files('f1')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><b>File Name</b></th>
+									<th><b>Date Time</b></th>
+									<th><b>Caption</b></th>
+									<th><b>Added BY</b></th>
+									<th></th>
+								</tr>
+								{% if f1_files %}
+								{% for f1 in f1_files %}
+								<tr>
+									<td><a href="{{ f1.file_name.url }}" target="_blank" title="{{ f1.file_name }}">{{ f1.file_name|toStr|mysplit }}</a></td>
+									<td>{{ f1.added_date }}</td>
+									<td>{{ f1.media_name }}</td>
+									<td>{{f1.added_by.fname}} {{f1.added_by.lname}}
+									</td>
+									<td><a href="javascript:void(0);" style="color:red;cursor:pointer;" class="delete_media" data-file-id="{{ f1.id }}" data-file-name="{{ f1.file_name }}"><i class="fas fa-trash"></i></a></td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+					<div class="">
+						<table class="table mb-5">
+							<thead>
+								<tr>
+									<th><b>F2 Media Files</b></th>
+									<th></th>
+									<th></th>
+									<th><button type="button" class="btn btn-primary waves-effect waves-light" onClick="Add_Files('f2')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr>
+									<th><b>File Name</b></th>
+									<th><b>Date Time</b></th>
+									<th><b>Caption</b></th>
+									<th><b>Added BY</b></th> 
+									<!--<th><b>Filetype</b></th>-->
+									<th></th>
+								</tr>
+								{% if f2_files %}
+								{% for f2 in f2_files %}
+								<tr>
+									<td>
+										<a href="{{ f2.file_name.url }}" target="_blank" title="{{ f2.file_name }}">{{ f2.file_name|toStr|mysplit }}</a>
+									</td>
+									<td>{{ f2.added_date }}</td>
+									<td>{{ f2.media_name }}</td>
+									<td>{{f2.added_by.fname}} {{f2.added_by.lname}}
+									</td>
+									<td><a href="javascript:void(0);" style="color:red;cursor:pointer;" class="delete_media" data-file-id="{{ f2.id }}" data-file-name="{{ f2.file_name }}"><i class="fas fa-trash"></i></a></td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table> 
+					</div> 
+					<div class="">
+						<table class="table mb-5">
+							<thead>
+								<tr>
+									<th><b>Fielders File</b></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>   
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title mt-0">Upload Files</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="media_save" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form-group row">
+						<input type="hidden" name="type" class="Type">
+						<input type="hidden" name="activity_id" value="{{request.GET.activity_id}}">
+						<input type="hidden" name="da" class="activity_da_class" value="{{activity_data.da}}">
+						<input type="hidden" name="added_by" class="" value="{{request.user.id}}">
+						<label class="col-md-2 col-form-label"> File</label>
+						<div class="col-md-6">
+							<input type="file" name="file" multiple>
+						</div>
+					</div>
+			   		<div class="form-group row">
+						<label class="col-md-2 col-form-label">Caption</label>
+						<div class="col-md-6">
+							<input class="form-control" type="text" name="caption">
+						</div>
+					</div>
+					<div class="form-group row">
+						<button class="col-md-12 btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+{% endblock %}
+
+{% block script %}
+<!-- Sweet Alert-->
+<script src="{% static '/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<script>
+	function Add_Files(type){  
+		  $(".Type").val(type);
+	}
+	
+	/*$(".delete_media").click(function(){
+		var fileid = $(this).data("file-id");
+		var filename = $(this).data("file-name");
+		var activity_da = $('.activity_da_class').val();
+		var csr = $("input[name=csrfmiddlewaretoken]").val();
+		if(confirm("You want to delete this file ?")){
+			mydata = {id: fileid, csrfmiddlewaretoken: csr};
+			$.ajax({
+				url: "{% url 'media_delete' %}",
+				method: "POST",
+				data: mydata,
+				success: function(data){
+					//console.log(data);
+					location.reload();
+				},
+			});
+		}
+	});*/
+
+	$(".delete_media").click(function(){
+		var fileid = $(this).data("file-id");
+		//alert(fileid);
+		 Swal.fire({
+					   title: "Are you sure?",
+					   text: "You won't be able to revert this!",
+					   type: "warning",
+					   showCancelButton: !0,
+					   confirmButtonColor: "#34c38f",
+					   cancelButtonColor: "#f46a6a",
+					   confirmButtonText: "Yes, delete it!",
+						preConfirm: function() {
+						
+						   var csr = $("input[name=csrfmiddlewaretoken]").val();
+							mydata = {id:fileid,csrfmiddlewaretoken:csr} 
+						 return new Promise(function(resolve) {
+						   $.ajax({
+							url: '{% url "media_delete" %}',
+							type: 'POST',
+							data: mydata,
+						   dataType: "json"
+						 })
+						 .done(function(response){
+							Swal.fire({
+									 type: 'success',
+									 title: 'File deleted succesfully',
+									 confirmButtonColor: "#5156be",
+									 preConfirm: function() {
+										   window.location.reload();
+										}
+							   })
+							})
+						 .fail(function(){
+							Swal.fire('Oops...', 'Something went wrong!', 'error');
+						 });
+						 });
+					 }
+				   });
+		});
+</script>
+{% endblock %}

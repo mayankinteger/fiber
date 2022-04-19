@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Bill View {% endblock %}
+
+{% block css %}
+.search_input{
+	width:100%;
+}
+{% endblock %}
+
+{% block link %}
+<link href="{% static 'libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12"><b>All Bill</b></p>
+
+				<div class="page-title-right">
+					<p class="card-title">
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endfor %}  
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<!--<h4 class="card-title">All Activities
+						<div style="text-align:right;">
+							<span class="badge badge-soft-danger font-size-12">F - Fielding</span>
+							<span class="badge badge-soft-primary font-size-12">P - Planning</span>
+							<span class="badge badge-soft-success font-size-12">D - Drafting</span>
+						</div>
+					</h4>-->
+					<div class="table-responsive">
+					
+						<table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>DA ID</th>
+									<th>EWO</th>
+									<th>Ticket</th>
+									<th>Market</th>
+									<th>Sow</th>
+									<th>Job Status</th>
+									<th>Move to Drafting Week</th>
+									<th>Bucket</th>
+									<th>Job Assigned Date</th>
+									<th>Fielder Name</th>
+									<th>Fielder's ECD</th>
+									<th>Amdocs Provided ECD</th>
+									<th>Fielding Submission Date</th>
+									<th>Design Submission Date</th>
+									<th>Fielding Correction Submission Date</th>
+									<th>Design Correction Submission Date</th>
+									<th>Approved Footages From Amdocs</th>
+									<th>Invoicing Status Fielding</th>
+									<th>Invoicing Remarks</th>
+									<th>Invoicing Status Desing</th>
+								</tr>
+							</thead>
+							<tbody>
+							<!--<td><span class="badge badge-soft-danger font-size-12">F</span></td>
+							<td><span class="badge badge-soft-primary font-size-12">P</span></td>
+							<td><span class="badge badge-soft-success font-size-12">D</span></td>-->
+							
+							{% for i in act_list %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td>{{ i.da }}</td>
+								<td>{{ i.ewo }}</td>
+								<td>{{ i.ticket }}</td>
+								<td>{% if i.market is 1 %}AL{% elif i.market is 2 %}LA{% elif i.market is 3 %}FL{% elif i.market is 4 %}MS{% endif %}</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>{{ i.rec_date|date:"d/m/Y" }}</td>
+								<td>{{ i.assign_fielder.fname }} {{ i.assign_fielder.lname }}</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							{% endfor%}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+<!-- Required datatable js -->
+<script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'libs/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'libs/pdfmake/build/pdfmake.min.js' %}"></script>
+<script src="{% static 'libs/pdfmake/build/vfs_fonts.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+<!-- Datatable init js -->
+<script src="{% static 'js/pages/datatables.init.js' %}"></script>
+<script>
+ $(document).ready(function() {
+    $('#datatable').DataTable();
+	// start for next table //
+	
+	
+	 $('#actdatatable thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#actdatatable thead');
+ 
+    var table = $('#actdatatable').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            var api = this.api();
+ 
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+					$(cell).html('<input type="text" class="search_input" placeholder="' + title + '" />');
+ 
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+                            e.stopPropagation();
+ 
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+ 
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+ 
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        }
+    });
+	
+});
+ </script>
+{% endblock %}

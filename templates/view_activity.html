@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} View Activity {% endblock %}
+
+{% block css %}
+.font-weight{
+	font-weight: 300;
+}
+.form-group>label{
+	line-height: 1.2;
+}
+.form-group>div>label{
+	line-height: .6;
+}
+.card-body>.row>h6 {
+	margin-bottom : 20px;
+}
+.card-body>h6{
+	margin-bottom : 20px;
+}
+.color{
+	color:black;
+	font-size: .8rem;
+}
+
+{% endblock %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12">Ticket ID : {{viewdata.ticket}}</b></p>
+				<div class="page-title-right">
+					<a class="" href="/media_list?activity_id={{ viewdata.id }}"><b>View Media</b></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endfor %}  
+
+	<div class="row">
+		<div class="col-lg-12">
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						<div class="row">
+							<h6 class="col-md-8" style="color:#0caadc;"><b>General Details</b></h6>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Job receive date :</label>
+							<label class="col-md-2 color">{{viewdata.rec_date}}</label>
+							<label class="col-md-2 font-weight">ECD :</label>
+							<label class="col-md-2 color">{{viewdata.ecd}}</label>
+							<label class="col-md-2 font-weight">Client :</label>
+							<label class="col-md-2 color">{{viewdata.client_id}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">DA :</label>
+							<label class="col-md-2 color">{{viewdata.da}}</label>
+							<label class="col-md-2 font-weight">LUs :</label>
+							<label class="col-md-2 color">{{viewdata.lus}}</label>
+							<label class="col-md-2 font-weight">Wire Center :</label>
+							<label class="col-md-2 color">{{viewdata.wire_center}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">PFP :</label>
+							<label class="col-md-6 color">{{viewdata.pfp}}</label>
+							<label class="col-md-2 font-weight">Latitude/Longitude :</label>
+							<label class="col-md-2 color">{{viewdata.latitude}}/{{viewdata.longitude}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Job Type :</label>
+							<label class="col-md-2 color">{{viewdata.job_type}}</label>
+							<label class="col-md-2 font-weight">Job No. :</label>
+							<label class="col-md-2 color">{{viewdata.job_no}}</label>
+						</div>
+					</div>
+				</div>
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						<h6 style="color:#0caadc;"><b>F1 Details</b></h6>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">F1 CFAS :</label>
+							<label class="col-md-2 color">{{viewdata.f1cfas}}</label>
+							<label class="col-md-2 font-weight">F1 Job No# :</label>
+							<label class="col-md-2 color">{{viewdata.f1job_no}}</label>
+							<label class="col-md-2 font-weight">F1 SOW :</label>
+							<label class="col-md-2 color">{{viewdata.f1_sow}}</label>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<h6 style="color:#0caadc;"><b>F2 Details</b></h6>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">F2 CFAS :</label>
+							<label class="col-md-2 color">{{viewdata.f2cfas}}</label>
+							<label class="col-md-2 font-weight">F2 Job :</label>
+							<label class="col-md-2 color">{{viewdata.f2job_no}}</label>
+							<label class="col-md-2 font-weight">F2 SOW :</label>
+							<label class="col-md-2 color">{{viewdata.f2_sow}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Assign Fielder :</label>
+							<label class="col-md-2 color">{{viewdata.assign_fielder.fname}} {{viewdata.assign_fielder.lname}}</label>
+							<label class="col-md-2 font-weight">Assign Int.Eng :</label>
+							<label class="col-md-2 color">{{viewdata.assign_int_eng.fname}} {{viewdata.assign_int_eng.lname}}</label>
+							<label class="col-md-2 font-weight">Assign Int.Eng2 :</label>
+							<label class="col-md-2 color">{{viewdata.int_eng2.fname}} {{viewdata.int_eng2.lname}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Assign Lead Eng :</label>
+							<label class="col-md-2 color">{{viewdata.lead_eng.fname}} {{viewdata.lead_eng.lname}}</label>
+							<label class="col-md-2 font-weight">Activity :</label>
+							<div class="col-md-2">
+								{% for activities in viewdata.activity.all %}
+								<label class=" color">{{activities}}, </label>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Notes For Fielders</label>
+							<label class="col-md-6 color">{{viewdata.notes}}</label>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+<!-- Plugins js -->
+<script src="{% static 'libs/dropzone/min/dropzone.min.js' %}"></script>
+
+<script>
+	$(function() {
+	
+	  // This code will attach `fileselect` event to all file inputs on the page
+	  $(document).on('change', ':file', function() {
+		var input = $(this),
+			numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		input.trigger('fileselect', [numFiles, label]);
+	  });
+	
+	  
+	  $(document).ready( function() {
+	//below code executes on file input change and append name in text control
+		  $(':file').on('fileselect', function(event, numFiles, label) {
+	
+			  var input = $(this).parents('.input-group').find(':text'),
+				  log = numFiles > 1 ? numFiles + ' files selected' : label;
+	
+			  if( input.length ) {
+				  input.val(log);
+			  } else {
+				  if( log ) alert(log);
+			  }
+	
+		  });
+	  });
+	  
+	});
+	</script>
+{% endblock %}

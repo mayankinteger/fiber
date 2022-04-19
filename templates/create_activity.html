@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Create Activity {% endblock %}
+
+{% block css %}
+.danger{
+	color:#ff715b;
+}
+.col-form-label, .form-control{
+	font-size:.75rem;
+}
+.custom_pr_btn{
+	font-size:.75rem;
+	width:67px;
+}
+
+.custom_dropbox{
+	background-color: transparent;
+		width: 100%;
+		font-size: 80%;
+		text-align: center;
+		/*text-transform: uppercase;*/
+		
+		padding: 1rem 2rem;
+		border: 0;
+}
+
+label.file {
+		position: relative;
+		display: block;
+		width: 100%;
+		font-size: 80%;
+		text-align: center;
+		text-transform: uppercase;
+		border: 2px dashed #ccc;
+		margin: 3rem 0;
+		padding: 3rem;
+}
+
+label.file:hover {
+		background-color: rgba(255, 255, 255, 0.3);
+}
+
+label.file:active,
+label.file.focus {
+		border-color: #09f;
+}
+
+.custom_inp_file{
+	position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		outline: 0;
+		border: 1px solid red;
+}
+.sml {
+		display: inline-block;
+		color: #eee;
+		background-color: rgba(0, 200, 0, 0.67);
+		border-radius: 1rem;
+		font-size: smaller;
+		margin: .2rem 0 0 0;
+		padding: 0.3rem 1rem;
+}
+.form-control{
+	padding: 0.26rem 0.25rem;
+}
+{% endblock %}
+
+{% block link %}
+<!-- Plugins css -->
+<link href="{% static 'libs/dropzone/min/dropzone.min.css" rel="stylesheet' %}" type="text/css" />
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<h4 class="page-title mb-0 font-size-18">Create Activity</h4>
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endfor %}  
+
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+				<input type="hidden" name="form_edit_id" value="">  
+				<input type="hidden" name="added_by" value="{{added_by}}">  
+				<input type="hidden" name="ticket" value="">  
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						<h6 style="color:#0caadc;"><b>General Details</b></h6>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Job receive date<span class="danger">*</span></label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" autocomplete="off" name="rec_date" title="Job receive date" data-provide="datepicker" data-date-autoclose="true" required>
+							</div>
+							<label class="col-md-1 col-form-label">ECD</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="ecd" autocomplete="off" title="ECD"data-provide="datepicker" data-date-autoclose="true">
+							</div>
+							<label class="col-md-1 col-form-label">Client<span class="danger">*</span></label>
+							<div class="col-md-1">
+								<select class="form-control" name="client" required="required">
+									<option value="">Select</option>
+									{% for single_client in clients_list %}
+									<option value="{{single_client.id}}">{{single_client.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Market</label>
+							<div class="col-md-2">
+								<select class="form-control" name="market">
+									<option value="0">--Select--</option>
+									<option value="1" >AL</option>
+									<option value="2" >LA</option>
+									<option value="3" >FL</option>
+									<option value="4" >MS</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">DA<span class="danger">*</span></label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="da" title="DA" required>
+							</div>
+							<label class="col-md-1 col-form-label">LUs</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="lus" title="LUs">
+							</div>
+							<label class="col-md-1 col-form-label">Wire Center</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="wire_center" title="Wire Center">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Job Type</label>
+							<div class="col-md-2">
+								<select class="form-control" name="job_type">
+									<option value="">--Select--</option>
+									<option value="ASE" >ASE</option>
+									<option value="CRAN" >CRAN</option>
+									<option value="MDU" >MDU</option>
+									<option value="F1">F1</option>
+									<option value="F2" >F2</option>
+									<option value="DFIB" >DFIB</option>
+									<option value="FFIB" >FFIB</option>
+									<option value="ROD&ROPE" >ROD&ROPE</option>
+									<option value="BACKBONE" >BACKBONE</option>
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Job No#</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="job_no" title="Job No#">
+							</div>
+							<label class="col-md-1 col-form-label">EWO</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="ewo" title="EWO">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">PFP</label>
+							<div class="col-md-5">
+								<input class="form-control" value="" type="text" name="pfp" title="PFP" placeholder="Location address">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="latitude" title="Latitude" placeholder="Latitude">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="longitude" title="Longitude" placeholder="Longitude">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						<h6 style="color:#0caadc;"><b>F1 Details</b></h6>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">F1 CFAS</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="f1cfas" title="F1 CFAS">
+							</div>
+							<label class="col-md-1 col-form-label">F1 Job No#</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="f1job_no" title="F1 Job No#">
+							</div>
+							
+							
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">F1 SOW</label>
+							<div class="col-md-5">
+								<input class="form-control" value="" type="text" name="f1_sow" title="F1 SOW">
+							</div>
+							
+							
+						</div>
+					</div>
+				</div>
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						<h6 style="color:#0caadc;"><b>F2 Details</b></h6>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">F2 CFAS</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="f2cfas" title="F2 CFAS">
+							</div>
+							<label class="col-md-1 col-form-label">F2 Job No#</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="f2job_no" title="F2 Job">
+							</div>
+							
+							
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">F2 SOW</label>
+							<div class="col-md-5">
+								<input class="form-control" value="" type="text" name="f2_sow" title="F2 SOW">
+							</div>
+							
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Notes For Fielders</label>
+							<div class="col-md-5">
+								<textarea class="form-control" name="notes" rows=5 title="Notes For Fielders"></textarea>
+							</div>
+							<div class="col-md-4">
+								<label class="col-form-label">Activity</label>
+								{% for activities in activities_list %}
+									{% if activities.id is 1 or 2 or 3%}
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" value="{{activities.id}}" name="activity" id="activity_{{activities.id}}" >
+										<label class="custom-control-label" for="activity_{{activities.id}}">{{activities}}</label>
+									</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Assign Fielder</label>
+							<div class="col-md-2">
+								<select class="form-control" name="assign_fielder">
+									<option value="0">--Select--</option>
+									{% for single_feuser in feusers_list %}
+									<option value="{{single_feuser.id}}">{{single_feuser.fname}} {{single_feuser.lname}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Integer Eng</label>
+							<div class="col-md-2">
+								<select class="form-control" name="assign_int_eng">
+									<option value="0">--Select--</option>
+									{% for single_bayuser in bayusers_list %}
+									<option value="{{single_bayuser.id}}">{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Integer Eng</label>
+							<div class="col-md-2">
+								<select class="form-control" name="int_eng2">
+									<option value="0">--Select--</option>
+									{% for single_bayuser in bayusers_list %}
+									<option value="{{single_bayuser.id}}">{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							
+							<label class="col-md-2 col-form-label">Lead Eng</label>
+							<div class="col-md-2">
+								<select class="form-control" name="lead_eng">
+									<option value="0">--Select--</option>
+									{% for single_bayuser in bayusers_list %}
+									<option value="{{single_bayuser.id}}">{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Work Print</label>
+							<div class="col-md-2">
+								<input class="form-control" value="" type="text" name="work_print" title="Work Print">
+							</div>
+							<label class="col-md-1 col-form-label">Footage</label>
+							<div class="col-md-2">
+								<input class="form-control" value="0" type="number" name="footage" title="Total Footage" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Terminals</label>
+							<div class="col-md-2">
+								<input class="form-control" value="0" type="number" name="terminal" title="Total Terminals" placeholder="">
+							</div>
+						</div>
+						
+						<div class="form-group row mt-4">
+							<button class="col-md-12 btn btn-primary">Submit</button>
+						</div>
+					</div>
+					
+				</div>
+		</div>
+	</div>
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+<!-- Plugins js -->
+<script src="{% static 'libs/dropzone/min/dropzone.min.js' %}"></script>
+
+<script>
+	$(function() {
+	
+	  // This code will attach `fileselect` event to all file inputs on the page
+	  $(document).on('change', ':file', function() {
+		var input = $(this),
+			numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		input.trigger('fileselect', [numFiles, label]);
+	  });
+	
+	  
+	  $(document).ready( function() {
+	//below code executes on file input change and append name in text control
+		  $(':file').on('fileselect', function(event, numFiles, label) {
+	
+			  var input = $(this).parents('.input-group').find(':text'),
+				  log = numFiles > 1 ? numFiles + ' files selected' : label;
+	
+			  if( input.length ) {
+				  input.val(log);
+			  } else {
+				  if( log ) alert(log);
+			  }
+	
+		  });
+	  });
+	  
+	});
+	
+	</script>
+{% endblock %}

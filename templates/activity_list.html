@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Activity List {% endblock %}
+
+{% block css %}
+.search_input{
+	width:100%;
+}
+{% endblock %}
+
+{% block link %}
+<link href="{% static 'libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<!--Sweat alert-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12"><b>All Activities</b></p>
+
+				<div class="page-title-right">
+					<p class="card-title">
+						<div>
+							<span class="badge badge-soft-danger font-size-12">F - Fielding</span>
+							<span class="badge badge-soft-primary font-size-12">P - Planning</span>
+							<span class="badge badge-soft-success font-size-12">D - Drafting</span>
+						</div>
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endfor %}  
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					{% csrf_token %}
+					<!--<h4 class="card-title">All Activities
+						<div style="text-align:right;">
+							<span class="badge badge-soft-danger font-size-12">F - Fielding</span>
+							<span class="badge badge-soft-primary font-size-12">P - Planning</span>
+							<span class="badge badge-soft-success font-size-12">D - Drafting</span>
+						</div>
+					</h4>-->
+					<div class="table-responsive">
+					
+						<table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Ticket</th>
+									<th>Job No.</th>
+									<th>Job Receive Date</th>
+									<th>EWO</th>
+									<th>Type</th>
+									<th>DA</th>
+									<th>LUs</th>
+									<th>Wire Center</th>
+									<th>F1</th>
+									<th>F2</th>
+									<th>Activity</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<!--<td><span class="badge badge-soft-danger font-size-12">F</span></td>
+							<td><span class="badge badge-soft-primary font-size-12">P</span></td>
+							<td><span class="badge badge-soft-success font-size-12">D</span></td>-->
+							
+							{% for i in act_list %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td>{{ i.ticket }}</td>
+								<td>{{ i.job_no }}</td>
+								<td>{{ i.rec_date|date:"d/m/Y" }}</td>
+								<td>{{ i.ewo }}</td>
+								<td>{{ i.job_type }}</td>
+								<td>{{ i.da }}</td>
+								<td>{{ i.lus }}</td>
+								<td>{{ i.wire_center }}</td>
+								<td>{{ i.f1cfas }}</td>
+								<td>{{ i.f2cfas }}</td>
+								<td>{% for activities in i.activity.all %}
+									{% if activities.id is 1 %}
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-12">F</span></a>
+									{% endif %}
+									{% if activities.id is 2 %}
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-primary font-size-12">P</span></a>
+									{% endif %}
+									{% if activities.id is 3 %}
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-12">D</span></a>
+									{% endif %}
+									{% endfor %}
+								</td>
+								<td><a href='/view_activity?id={{ i.id }}'><span><i class='mdi mdi-eye'></i></span></a>&nbsp;<a href=''><span><i class='mdi mdi-pencil-outline'></i></span></a>&nbsp;<a href='/media_list?activity_id={{ i.id }}'><span><i class='mdi mdi-image-outline'></i></span></a>&nbsp;<a href='javascript:void(0);' class="delete_activity" delete-id="{{ i.id }}"><span><i class='mdi mdi-delete'></i></span></a></td>
+							</tr>
+							{% endfor%}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+<!-- Required datatable js -->
+<script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'libs/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'libs/pdfmake/build/pdfmake.min.js' %}"></script>
+<script src="{% static 'libs/pdfmake/build/vfs_fonts.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+<!--Sweat alert-->
+<script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+<!-- Datatable init js -->
+<script src="{% static 'js/pages/datatables.init.js' %}"></script>
+<script>
+ $(document).ready(function() {
+    $('#datatable').DataTable();
+	// start for next table //
+	
+	
+	 $('#actdatatable thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#actdatatable thead');
+ 
+    var table = $('#actdatatable').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            var api = this.api();
+ 
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+					$(cell).html('<input type="text" class="search_input" placeholder="' + title + '" />');
+ 
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+                            e.stopPropagation();
+ 
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+ 
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+ 
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        }
+    });
+	
+});
+ </script>
+
+ <script>
+
+	$(".delete_activity").click(function(){
+	var act_id = $(this).attr("delete-id");
+   
+	 Swal.fire({
+				   title: "Are you sure?",
+				   text: "You won't be able to revert this!",
+				   type: "warning",
+				   showCancelButton: !0,
+				   confirmButtonColor: "#34c38f",
+				   cancelButtonColor: "#f46a6a",
+				   confirmButtonText: "Yes, delete it!",
+					preConfirm: function() {
+					
+					   var csrf = $("input[name=csrfmiddlewaretoken]").val();
+						mydata = {act_id:act_id,csrfmiddlewaretoken:csrf} 
+					 return new Promise(function(resolve) {
+					   $.ajax({
+						url: '{% url "delete_activity" %}',
+						type: 'POST',
+						data: mydata,
+					   dataType: "json"
+					 })
+					 .done(function(response){
+						Swal.fire({
+								 type: 'success',
+								 title: 'Activity Deleted',
+								 confirmButtonColor: "#5156be",
+								 preConfirm: function() {
+									   window.location.reload();
+									}
+						   })
+						})
+					 .fail(function(){
+						Swal.fire('Oops...', 'Something went wrong!', 'error');
+					 });
+					 });
+				 }
+			   });
+	});
+	</script>
+{% endblock %}
