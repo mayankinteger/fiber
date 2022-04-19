@@ -1,0 +1,9 @@
+[
+{"type":"header","version":"4.9.2","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"fiber"},
+{"type":"table","name":"activity","database":"fiber","data":
+[
+{"id":"1","ticket":"030422-0001","rec_date":"2022-03-01","ecd":"2022-03-03","client_id":"1","market":"2","ewo":"4578","da":"1478","lus":"456123","wire_center":"center testing","pfp":"Test address","latitude":"123","longitude":"545","job_type":"MDU","job_no":"66151","f1cfas":"S01245","f1job_no":"FA4054","f1_sow":"f1 sow testing","f2cfas":"KA1456","f2job_no":"KL12354","f2_sow":"f2 sow testing","notes":"Notes testing","activity":"a:3:{i:0;s:1:\"1\";i:1;s:1:\"2\";i:2;s:1:\"3\";}","assign_fielder":"103","assign_int_eng":"99","int_eng2":"108","lead_eng":"38","work_print":"6","footage":"500","appr_footage":null,"terminal":"70","added_by":"99","added_date":"1646377088","timestamp":"2022-03-08 15:42:41"}
+]
+}
+]
