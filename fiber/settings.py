@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
 
+#new
+import django_heroku
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +31,7 @@ SECRET_KEY = 'django-insecure-p&fwg5j0m6g7&q_kget&z&#3f##@qom%nssk+8^zqt4e!tng9^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -150,3 +153,4 @@ EMAIL_HOST_PASSWORD = "softql@123"
 EMAIL_POST = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+django_heroku.settings(locals())
