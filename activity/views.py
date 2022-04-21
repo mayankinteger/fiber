@@ -10,15 +10,65 @@ from datetime import date
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
+from random import randint
 
 #html email required stuff
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+def random_with_N_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)
 
 def index(request):
     return redirect('handleLogin')
+
+def reset_password(request):
+    if request.method=="POST":
+        email = request.POST.get("email")
+        user_data = Bay_users.objects.get(email=email)
+        form_edit_id = request.POST.get("form_edit_id")
+        print(form_edit_id)
+        # Get the get parameters
+        if request.POST.get("form_edit_id") and request.POST.get("form_edit_otp"):
+            password = request.POST.get("password")
+            confirm_password = request.POST.get("confirm_password")
+            if password!=confirm_password:
+                messages.error(request, "Password not matching !")
+                return redirect('/reset_password?email='+email+'&&id='+str(user_data.id)+'&&otp=yes')
+            user_data.set_password(password)
+            user_data.save()
+            user=authenticate(email= email, password= password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Successfully reset your password and Logged In")
+                return redirect("activity_list")
+            else:
+                messages.error(request, "Invalid credentials Supplied!")
+                return redirect('/reset_password?email='+email+'&&id='+str(user_data.id)+'&&otp=yes')
+
+        elif request.POST.get("form_edit_id"):
+            otp_check = request.POST.get("otp")
+            if otp_check!=user_data.otp or user_data.email=='':
+                messages.error(request, "Invalid OTP Supplied!")
+                return redirect('/reset_password?email='+email+'&&id='+str(user_data.id))
+            else:
+                messages.success(request, "Enter your new Password.")
+                return redirect('/reset_password?email='+email+'&&id='+str(user_data.id)+'&&otp=yes')
+        
+        else:
+            otp = random_with_N_digits(6)
+            if user_data:
+                Bay_users.objects.filter(id=user_data.id).update(otp=otp)
+                '''send_mail_reset'''
+                messages.success(request, "Your OTP has been sent to your email id.")	
+                return redirect('/reset_password?email='+email+'&&id='+str(user_data.id))
+            messages.error(request, "Invalid credentials Supplied!")
+            return redirect('/reset_password')
+
+    return render(request, "reset_password.html")
 
 def handleLogin(request):
     if request.method=="POST":
@@ -187,11 +237,11 @@ def create_activity(request):
                 
                 client_data = Clients.objects.get(pk=client_id)
                 if assign_int_eng is not None:
-                    params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_int_eng, 'client':client_data}
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_int_eng.email, 'client':client_data.name}
                     send_eng_mail(params)
                 
                 if int_eng2 is not None:
-                    params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':int_eng2, 'client':client_data}
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':int_eng2.email, 'client':client_data.name}
                     send_eng_mail(params)
                 
                 
