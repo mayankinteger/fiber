@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'fiber.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fiber2',
+        'NAME': 'fiber',
         'USER': 'postgres',
         'PASSWORD': 'demo1234',
         'HOST': 'localhost',
