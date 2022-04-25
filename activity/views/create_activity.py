@@ -89,9 +89,9 @@ def create_activity(request):
     else:
         edit_data={}
     activities_list = Activities.objects.all()
-    clients_list = Clients.objects.all()
-    feusers_list = Fe_users.objects.all()
-    bayusers_list = Bay_users.objects.all()
+    clients_list = Clients.objects.order_by('name')
+    feusers_list = Fe_users.objects.order_by('fname')
+    bayusers_list = Bay_users.objects.order_by('fname')
     
     if request.method == "POST":
         
