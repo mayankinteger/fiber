@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load myfilters %}
 
 {% block title %} View Activity {% endblock %}
 
@@ -64,9 +65,9 @@
 						
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">Job receive date :</label>
-							<label class="col-md-2 color">{{viewdata.rec_date}}</label>
+							<label class="col-md-2 color">{{viewdata.rec_date|date:"d/m/Y"}}</label>
 							<label class="col-md-2 font-weight">ECD :</label>
-							<label class="col-md-2 color">{{viewdata.ecd}}</label>
+							<label class="col-md-2 color">{% if viewdata.ecd|toStr != '1111-11-11' %}{{viewdata.ecd|date:"d/m/Y"}}{% endif %}</label>
 							<label class="col-md-2 font-weight">Client :</label>
 							<label class="col-md-2 color">{{viewdata.client_id}}</label>
 						</div>

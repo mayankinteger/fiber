@@ -111,7 +111,7 @@
 									{% endif %}
 									{% endfor %}
 								</td>
-								<td><a href='/view_activity?id={{ i.id }}'><span><i class='mdi mdi-eye'></i></span></a>&nbsp;<a href=''><span><i class='mdi mdi-pencil-outline'></i></span></a>&nbsp;<a href='/media_list?activity_id={{ i.id }}'><span><i class='mdi mdi-image-outline'></i></span></a>&nbsp;<a href='javascript:void(0);' class="delete_activity" delete-id="{{ i.id }}"><span><i class='mdi mdi-delete'></i></span></a></td>
+								<td><a href='/view_activity?id={{ i.id }}'><span><i class='mdi mdi-eye'></i></span></a>&nbsp;<a href='/create_activity?id={{ i.id }}'><span><i class='mdi mdi-pencil-outline'></i></span></a>&nbsp;<a href='/media_list?activity_id={{ i.id }}'><span><i class='mdi mdi-image-outline'></i></span></a>&nbsp;<a href='javascript:void(0);' class="delete_activity" delete-id="{{ i.id }}"><span><i class='mdi mdi-delete'></i></span></a></td>
 							</tr>
 							{% endfor%}
 							</tbody>
