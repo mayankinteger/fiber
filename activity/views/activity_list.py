@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
 from random import randint
-
+from ..filters import ActivityFilter
 #html email required stuff
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -21,7 +21,10 @@ from django.utils.html import strip_tags
 @login_required(login_url="/login")
 def activity_list(request):
     act_list = Activity.objects.order_by('-id')
-    return render(request, 'activity_list.html', {'act_list':act_list})
+    myFilter = ActivityFilter(request.GET, queryset=act_list)
+    act_list = myFilter.qs   
+
+    return render(request, 'activity_list.html', {'act_list':act_list,'myFilter':myFilter})
     
 
 @login_required(login_url="/login")

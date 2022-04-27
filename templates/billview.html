@@ -58,6 +58,7 @@
 						<table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
 							<thead>
 								<tr>
+									<th>Action</th>
 									<th>S.No</th>
 									<th>DA ID</th>
 									<th>EWO</th>
@@ -70,7 +71,7 @@
 									<th>Job Assigned Date</th>
 									<th>Fielder Name</th>
 									<th>Fielder's ECD</th>
-									<th>Amdocs Provided ECD</th>
+									<th>Client Provided ECD</th>
 									<th>Fielding Submission Date</th>
 									<th>Design Submission Date</th>
 									<th>Fielding Correction Submission Date</th>
@@ -88,12 +89,24 @@
 							
 							{% for i in act_list %}
 							<tr>
+								<td><a href='/create_bill?id={{ i.id }}'><span><i class='mdi mdi-pencil-outline'></i></span></a></td>
 								<td>{{ forloop.counter }}</td>
 								<td>{{ i.da }}</td>
 								<td>{{ i.ewo }}</td>
 								<td>{{ i.ticket }}</td>
 								<td>{% if i.market is 1 %}AL{% elif i.market is 2 %}LA{% elif i.market is 3 %}FL{% elif i.market is 4 %}MS{% endif %}</td>
-								<td></td>
+								<td>{% for activities in i.activity.all %}
+									{% if activities.id is 1 %}
+										<span class="badge badge-soft-danger font-size-12">F</span>
+									{% endif %}
+									{% if activities.id is 2 %}
+										<span class="badge badge-soft-primary font-size-12">P</span>
+									{% endif %}
+									{% if activities.id is 3 %}
+										<span class="badge badge-soft-success font-size-12">D</span>
+									{% endif %}
+									{% endfor %}
+								</td>
 								<td></td>
 								<td></td>
 								<td></td>

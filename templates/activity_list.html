@@ -61,6 +61,11 @@
 							<span class="badge badge-soft-success font-size-12">D - Drafting</span>
 						</div>
 					</h4>-->
+					<form method="get">
+				{{myFilter.form}}
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
 					<div class="table-responsive">
 					
 						<table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
@@ -91,7 +96,7 @@
 								<td>{{ forloop.counter }}</td>
 								<td>{{ i.ticket }}</td>
 								<td>{{ i.job_no }}</td>
-								<td>{{ i.rec_date|date:"d/m/Y" }}</td>
+								<td>{{ i.rec_date|date:"m/d/Y" }}</td>
 								<td>{{ i.ewo }}</td>
 								<td>{{ i.job_type }}</td>
 								<td>{{ i.da }}</td>
@@ -149,6 +154,7 @@
 <!-- Datatable init js -->
 <script src="{% static 'js/pages/datatables.init.js' %}"></script>
 <script>
+
  $(document).ready(function() {
     $('#datatable').DataTable();
 	// start for next table //

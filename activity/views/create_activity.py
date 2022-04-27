@@ -202,7 +202,7 @@ def create_activity(request):
 
                     if assign_fielder is not None:
                         params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_fielder.email, 'client':client_data.name}
-                        send_mail(params, 'activity_mail.html', 'New ticket assigned')  
+                        #send_mail(params, 'activity_mail.html', 'New ticket assigned')  
                         
                     #Activity.objects.filter(id=act_id).update(ticket=ticket_no)
                     for x in activitylist:
