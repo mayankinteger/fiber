@@ -46,7 +46,7 @@ def create_bill(request):
             else:
                 form = BillForm(initial={'fielder_name':ass_fielder, 'app_footage':appr_footage, 'activity_id':activity_id, 'added_by_id':request.user.id})
     else:
-        edit_data={}
+        return redirect('billview')
     if request.method == "POST":
         form = BillForm(request.POST)
         if form.is_valid():
@@ -73,3 +73,14 @@ def create_bill(request):
     context = {"form": form, 'activity_data':edit_data}
     html_template = loader.get_template('create_bill.html')
     return HttpResponse(html_template.render(context, request))
+
+@login_required(login_url="/login")
+def billview(request):
+    #act_list = Activity.objects.order_by('-id')
+    #params = {'act_list':act_list}
+    bill_list = Bill.objects.order_by('-id')
+    params = {'bill_list':bill_list}
+    #bill = Bill.objects.get(activity__bill)
+
+    #print(bill_list.activity)
+    return render(request, 'billview.html', params)

@@ -8,6 +8,7 @@ from django import forms
 from django.contrib.auth.models import User
 from bill.models import Bill as Create_Bill
 from activity.models import Bay_users, Fe_users
+from activity.templatetags.myfilters import *
 #from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 users = Fe_users.objects.order_by('fname')
@@ -16,30 +17,10 @@ user = list(user)
 add_tuple = ('','--Select--')
 user.insert(0, add_tuple)
 Fielder_choice = user
-Market= [
-    ('', '--Select--'),
-    ('1', 'AL'),
-    ('2', 'LA'),
-    ('3', 'FL'),
-    ('4', 'MS')
-    ]
-Invoicing_status = [
-    ('', '--Select--'),
-    ('1', 'Pending'),
-    ('2', 'Ongoing'),
-    ('3', 'Complete')
-    ]
-Bucket_choices = [
-    ('', '--Select--'),
-    ('1', 'Client'),
-    ('2', 'Integer')
-    ]
-Job_status = [
-    ('', '--Select--'),
-    ('1', 'Pending'),
-    ('2', 'Ongoing'),
-    ('3', 'Complete')
-    ]
+Market= market_list()
+Invoicing_status = invoicing_status_list()
+Bucket_choices = bucket_list()
+Job_status = job_status_list()
 class DateInput(forms.DateInput):
     input_type = 'date'    
 class BillForm(forms.ModelForm):

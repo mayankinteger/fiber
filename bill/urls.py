@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('create_bill', views.create_bill, name='create_bill'),
+    path('billview', views.billview, name='billview'),
 ]

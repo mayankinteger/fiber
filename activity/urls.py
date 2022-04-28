@@ -13,5 +13,4 @@ urlpatterns = [
     path('media_list', views.media_list, name='media_list'),
     path('media_save', views.media_save, name='media_save'),
     path('media_delete', views.media_delete, name='media_delete'),
-    path('billview', views.billview, name='billview'),
 ]

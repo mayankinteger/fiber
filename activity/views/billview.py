@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
 from random import randint
+from bill.models import *
 
 #html email required stuff
 from django.core.mail import EmailMultiAlternatives
@@ -19,8 +20,14 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
+
 @login_required(login_url="/login")
 def billview(request):
-    act_list = Activity.objects.order_by('-id')
-    params = {'act_list':act_list}
+    #act_list = Activity.objects.order_by('-id')
+    #params = {'act_list':act_list}
+    bill_list = Bill.objects.order_by('-id')
+    params = {'bill_list':bill_list}
+    #bill = Bill.objects.get(activity__bill)
+
+    #print(bill_list.activity)
     return render(request, 'billview.html', params)

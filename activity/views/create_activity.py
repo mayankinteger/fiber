@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
 from random import randint
+from bill.models import Bill
 
 #html email required stuff
 from django.core.mail import EmailMultiAlternatives
@@ -25,7 +26,7 @@ def send_mail(mydata, page, subject):
     if page == 'reset_password.html':
         receiver = [mydata['email']]
     else:
-        receiver = [mydata['email'], 'amit@integertel.com']
+        receiver = [mydata['email'],'amit@integertel.com']
     email = EmailMultiAlternatives(
         # subject
         subject,
@@ -190,7 +191,12 @@ def create_activity(request):
             else:
                 if Enquiry(activitylist):
                     activity_data.save()
-                    
+                    new_act_id = Activity.objects.latest('id').id
+                    #print(new_act_id)
+                    new_act_id = Activity.objects.get(id=new_act_id)
+                    bill_data = Bill(activity=new_act_id, added_by=added_by)
+                    bill_data.save()
+
                     client_data = Clients.objects.get(pk=client_id)
                     if assign_int_eng is not None:
                         params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_int_eng.email, 'client':client_data.name}

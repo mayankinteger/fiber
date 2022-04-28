@@ -1,7 +1,7 @@
 import django_filters
 from django_filters import CharFilter
 
-from .models import *
+from activity.models import *
 
 class ActivityFilter(django_filters.FilterSet):
 	#ecd = CharFilter(field_name="ecd", lookup_expr='icontains')
