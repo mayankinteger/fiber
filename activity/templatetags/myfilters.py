@@ -25,7 +25,7 @@ def mysplit(value):
 
 def job_status_list():
     Job_status = [
-    ('', '--Select--'),
+    (0, ''),
     (1, 'Pending'),
     (2, 'Ongoing'),
     (3, 'Complete')
@@ -42,7 +42,7 @@ def job_status(value):
 
 def bucket_list():
     bucket = [
-    ('', '--Select--'),
+    (0, ''),
     (1, 'Client'),
     (2, 'Integer')
     ]
@@ -58,7 +58,7 @@ def bucket(value):
 
 def invoicing_status_list():
     invoicing_status = [
-    ('', '--Select--'),
+    (0, ''),
     (1, 'Pending'),
     (2, 'Ongoing'),
     (3, 'Complete')
@@ -75,7 +75,7 @@ def invoicing_status(value):
 
 def market_list():
     market = [
-    ('', '--Select--'),
+    (0, ''),
     (1, 'AL'),
     (2, 'LA'),
     (3, 'FL'),
