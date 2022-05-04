@@ -13,4 +13,6 @@ urlpatterns = [
     path('media_list', views.media_list, name='media_list'),
     path('media_save', views.media_save, name='media_save'),
     path('media_delete', views.media_delete, name='media_delete'),
+    path('activities', views.activities, name='activities'),
+    path('task_details', views.task_details, name='task_details'),
 ]

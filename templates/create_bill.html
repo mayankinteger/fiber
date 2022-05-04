@@ -73,7 +73,7 @@ label.file.focus {
 
 {% block link %}
 <!-- Plugins css -->
-<link href="{% static 'libs/dropzone/min/dropzone.min.css" rel="stylesheet' %}" type="text/css" />
+<link href="{% static 'libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block page_content %}
@@ -100,14 +100,12 @@ label.file.focus {
 
 	<div class="row">
 		<div class="col-lg-12">
-			
-			<form action="" method="post" enctype="multipart/form-data">
+			<form autocomplete='off' action="" method="post" enctype="multipart/form-data">
 			{% csrf_token %} 
 				{{form.activity_id}}
 				{{form.added_by_id}}
 				<div style="margin-bottom:5px;" class="card">
 					<div class="card-body">
-						
 						<div class="form-group row">
 							<label class="col-md-12 col-form-label" style="font-weight:100">Ticket: <span style="font-weight:500">{{activity_data.ticket}}</span>, DA: <span style="font-weight:500">{{activity_data.da}}</span>, EWO: <span style="font-weight:500">{{activity_data.ewo}}</span>, Job Assigned Date: <span style="font-weight:500">{{activity_data.rec_date|date:"m/d/Y"}}</span>, Client Provided ECD: <span style="font-weight:500">{{activity_data.ecd|date:"m/d/Y"}}</span>, Market: <span style="font-weight:500">{% if activity_data.market == 1 %}AL {% elif activity_data.market == 2 %}LA{% elif activity_data.market == 3 %}FL{% elif activity_data.market == 4 %}MS{% endif %}</span>, SOW: <span style="font-weight:500">{% for activities in activity_data.activity.all %}
 								{{activities}},
