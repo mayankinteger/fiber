@@ -74,17 +74,20 @@ def task_details(request):
                 messages.success(request, "Your task has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
         elif media_form.is_valid():
-                media_form.save()
-                media_id = Task_media.objects.latest('id').id
-                Task_media.objects.filter(id=media_id).update(task_id=exist_check.id, added_by=request.user.id)
-                messages.success(request, "Your task media has been added successfully")
-                return redirect('/task_details?step='+act_type+'&id='+activity_id)
+            media_form.save()
+            media_id = Task_media.objects.latest('id').id
+            Task_media.objects.filter(id=media_id).update(task_id=exist_check.id, added_by=request.user.id)
+            messages.success(request, "Your task media has been added successfully")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
         elif remark_form.is_valid():
-                remark_form.save()
-                remark_id = Task_remark.objects.latest('id').id
-                Task_remark.objects.filter(id=remark_id).update(task_id=exist_check.id, added_by=request.user.id)
-                messages.success(request, "Your task comment has been added successfully")
-                return redirect('/task_details?step='+act_type+'&id='+activity_id)
+            remark_form.save()
+            remark_id = Task_remark.objects.latest('id').id
+            Task_remark.objects.filter(id=remark_id).update(task_id=exist_check.id, added_by=request.user.id)
+            messages.success(request, "Your task comment has been added successfully")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
+        else:
+            messages.error(request, "Please fill mandatory fields")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
     if exist_check:
         old_start_date = exist_check.start_date
         old_complete_date = exist_check.complete_date
