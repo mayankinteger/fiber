@@ -237,21 +237,21 @@ class Subtasks(models.Model):
 
 class Activity_tasks(models.Model):
     id = models.AutoField(primary_key=True)
-    activity_id = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    activity_id = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
     type = models.IntegerField()
-    subtask = models.ForeignKey(Subtasks, on_delete=models.CASCADE)
-    start_date = models.DateField(auto_now_add=True)
-    complete_date = models.DateField(auto_now_add=True, blank=True, null=True)
+    subtask = models.ForeignKey(Subtasks, on_delete=models.CASCADE, blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    complete_date = models.DateField(blank=True, null=True)
     status = models.IntegerField()
     added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.activity_id
+        return str(self.id)
 
 class Task_media(models.Model):
     id = models.AutoField(primary_key=True)
-    task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE)
+    task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE, blank=True, null=True)
     media = models.FileField(upload_to='task_media/')
     added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
@@ -261,7 +261,7 @@ class Task_media(models.Model):
 
 class Task_remark(models.Model):
     id = models.AutoField(primary_key=True)
-    task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE)
+    task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE, blank=True, null=True)
     remark = models.TextField(blank=True, null=True)
     added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)

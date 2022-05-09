@@ -96,7 +96,7 @@
 								<td>{{ forloop.counter }}</td>
 								<td>{{ i.ticket }}</td>
 								<td>{{ i.job_no }}</td>
-								<td>{{ i.rec_date|date:"m/d/Y" }}</td>
+								<td>{{ i.rec_date|date:"d/m/Y" }}</td>
 								<td>{{ i.ewo }}</td>
 								<td>{{ i.job_type }}</td>
 								<td>{{ i.da }}</td>
@@ -106,13 +106,13 @@
 								<td>{{ i.f2cfas }}</td>
 								<td>{% for activities in i.activity.all %}
 									{% if activities.id is 1 %}
-										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-12">F</span></a>
+										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-12">F</span></a>
 									{% endif %}
 									{% if activities.id is 2 %}
-										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-primary font-size-12">P</span></a>
+										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-primary font-size-12">P</span></a>
 									{% endif %}
 									{% if activities.id is 3 %}
-										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-12">D</span></a>
+										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-12">D</span></a>
 									{% endif %}
 									{% endfor %}
 								</td>
@@ -154,7 +154,6 @@
 <!-- Datatable init js -->
 <script src="{% static 'js/pages/datatables.init.js' %}"></script>
 <script>
-
  $(document).ready(function() {
     $('#datatable').DataTable();
 	// start for next table //
