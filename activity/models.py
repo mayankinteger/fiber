@@ -259,6 +259,10 @@ class Task_media(models.Model):
     def __str__(self):
         return self.task_id
 
+    def delete(self, *args, **kwargs):
+        self.media.delete()
+        super().delete(*args, **kwargs)
+
 class Task_remark(models.Model):
     id = models.AutoField(primary_key=True)
     task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE, blank=True, null=True)

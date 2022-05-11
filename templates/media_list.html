@@ -5,24 +5,27 @@
 {% block title %} Media List {% endblock %}
 
 {% block css %}
-.font-weight{
-	font-weight: 300;
+.danger{
+	color:#ff715b;
 }
-.form-group>label{
-	line-height: 1.2;
+.col-form-label, .form-control{
+	font-size:10px;
 }
-.form-group>div>label{
-	line-height: .6;
+
+.form-control{
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	padding: 0.20rem 0.25rem;
 }
-.card-body>.row>h6 {
-	margin-bottom : 20px;
+.form-group {
+    margin-bottom: 0rem;
 }
-.card-body>h6{
-	margin-bottom : 20px;
+
+.container-fluid {
+    font-size: 10px;
 }
-.color{
-	color:black;
-	font-size: .8rem;
+label{
+	font-weight: 400;
 }
 
 {% endblock %}
@@ -35,6 +38,16 @@
 
 {% block page_content %}
 <div class="page-content">
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12"><b>All Media of Job - DA {{activity_data.da}}</b></p>
+			
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
 	{% for message in messages  %}            
       <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
             <strong>Message : </strong> {{ message }}
@@ -47,7 +60,6 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="page-title font-size-18">All Media of Job - DA {{activity_data.da}}</h4>
 					<div>
 						<label style="color:#3b5de7;" class="col-md-2">LUs - {{activity_data.lus}}</Label>
 						<label style="color:#3b5de7;" class="col-md-7">{{activity_data.pfp}}</Label>
@@ -59,25 +71,25 @@
 						<table class="table mb-5">
 							<thead>
 								<tr>
-									<th><b>F1 Media Files</b></th>
+									<th>F1 Media Files</th>
 									<th></th>
 									<th></th>
-									<th><button type="button" class="btn btn-primary waves-effect waves-light" onClick="Add_Files('f1')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
+									<th><button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onClick="Add_Files('f1')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<th><b>File Name</b></th>
-									<th><b>Date Time</b></th>
-									<th><b>Caption</b></th>
-									<th><b>Added BY</b></th>
+									<th>File Name</th>
+									<th>Date</th>
+									<th>Caption</th>
+									<th>Added By</th>
 									<th></th>
 								</tr>
 								{% if f1_files %}
 								{% for f1 in f1_files %}
 								<tr>
 									<td><a href="{{ f1.file_name.url }}" target="_blank" title="{{ f1.file_name }}">{{ f1.file_name|toStr|mysplit }}</a></td>
-									<td>{{ f1.added_date }}</td>
+									<td>{{ f1.added_date|date:"m/d/Y" }}</td>
 									<td>{{ f1.media_name }}</td>
 									<td>{{f1.added_by.fname}} {{f1.added_by.lname}}
 									</td>
@@ -92,18 +104,18 @@
 						<table class="table mb-5">
 							<thead>
 								<tr>
-									<th><b>F2 Media Files</b></th>
+									<th>F2 Media Files</th>
 									<th></th>
 									<th></th>
-									<th><button type="button" class="btn btn-primary waves-effect waves-light" onClick="Add_Files('f2')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
+									<th><button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onClick="Add_Files('f2')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
 								</tr>
 							</thead>
 							<tbody>
 							<tr>
-									<th><b>File Name</b></th>
-									<th><b>Date Time</b></th>
-									<th><b>Caption</b></th>
-									<th><b>Added BY</b></th> 
+									<th>File Name</th>
+									<th>Date</th>
+									<th>Caption</th>
+									<th>Added By</th> 
 									<!--<th><b>Filetype</b></th>-->
 									<th></th>
 								</tr>
@@ -113,7 +125,7 @@
 									<td>
 										<a href="{{ f2.file_name.url }}" target="_blank" title="{{ f2.file_name }}">{{ f2.file_name|toStr|mysplit }}</a>
 									</td>
-									<td>{{ f2.added_date }}</td>
+									<td>{{ f2.added_date|date:"m/d/Y" }}</td>
 									<td>{{ f2.media_name }}</td>
 									<td>{{f2.added_by.fname}} {{f2.added_by.lname}}
 									</td>
@@ -128,7 +140,7 @@
 						<table class="table mb-5">
 							<thead>
 								<tr>
-									<th><b>Fielders File</b></th>
+									<th>Fielders File</th>
 								</tr>
 							</thead>
 						</table>

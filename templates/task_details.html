@@ -21,84 +21,37 @@ input[type=number] {
 	color:#ff715b;
 }
 .col-form-label, .form-control{
-	font-size:.75rem;
-}
-.custom_pr_btn{
-	font-size:.75rem;
-	width:67px;
+	font-size:10px;
+	color:black;
 }
 
-.custom_dropbox{
-	background-color: transparent;
-		width: 100%;
-		font-size: 80%;
-		text-align: center;
-		/*text-transform: uppercase;*/
-		
-		padding: 1rem 2rem;
-		border: 0;
-}
-
-label.file {
-		position: relative;
-		display: block;
-		width: 100%;
-		font-size: 80%;
-		text-align: center;
-		text-transform: uppercase;
-		border: 2px dashed #ccc;
-		margin: 3rem 0;
-		padding: 3rem;
-}
-
-label.file:hover {
-		background-color: rgba(255, 255, 255, 0.3);
-}
-
-label.file:active,
-label.file.focus {
-		border-color: #09f;
-}
-
-.custom_inp_file{
-	position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		outline: 0;
-		border: 1px solid red;
-}
-.sml {
-		display: inline-block;
-		color: #eee;
-		background-color: rgba(0, 200, 0, 0.67);
-		border-radius: 1rem;
-		font-size: smaller;
-		margin: .2rem 0 0 0;
-		padding: 0.3rem 1rem;
-}
 .form-control{
-	height: calc(1.1em + 0.9rem + 1px);
-	padding: 0.27rem 0.75rem;
+	height: calc(0.6em + 0.9rem + 1px);
+	padding: 0.20rem 0.25rem;
+	border-radius:0px;
 }
 .form-group {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0rem;
 }
 
 .upper_area{
 	margin-bottom: 0rem;
-	font-size: 11px;
+	font-size: 10px;
+	color:black;
 }
 .container-fluid {
     font-size: 10px;
+}
+label{
+	font-weight: 400;
 }
 {% endblock %}
 
 {% block link %}
 <link href="{% static 'libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- Sweet Alert-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block page_content %}
@@ -242,13 +195,15 @@ label.file.focus {
 								<thead>
 									<th>User</th>
 									<th>File</th>
+									<th></th>
 								</thead>
 								<tbody>
 									{% if exist_media %}
 									{% for media in exist_media %}
 									<tr>
 										<td>{{media.added_by.fname}} - {{media.added_date|date:"m/d/Y"}}</td>
-										<td><a href="{{ media.media.url }}" target="_blank" title="{{ media.media }}">{{ media.media|toStr|mysplit }}</a></td>
+										<td><a href="{{ media.media.url }}" target="_blank">{{ media.media|toStr|mysplit }}</a></td>
+										<td><a href="javascript:void(0);" style="color:red;cursor:pointer;" class="delete_media" data-file-id="{{ media.id }}" data-file-name="{{ media.media }}"><i class="fas fa-trash"></i></a></td>
 									</tr>
 									{% endfor %}
 									{% endif %}
@@ -313,5 +268,50 @@ label.file.focus {
 	$('.custom_datepicker').datepicker({
 		format: 'mm-dd-yyyy'
 	})
-</script>	
+</script>
+<!-- Sweet Alert-->
+<script src="{% static '/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<script>
+
+	$(".delete_media").click(function(){
+		var fileid = $(this).data("file-id");
+		//alert(fileid);
+		 Swal.fire({
+					   title: "Are you sure?",
+					   text: "You won't be able to revert this!",
+					   type: "warning",
+					   showCancelButton: !0,
+					   confirmButtonColor: "#34c38f",
+					   cancelButtonColor: "#f46a6a",
+					   confirmButtonText: "Yes, delete it!",
+						preConfirm: function() {
+						
+						   var csr = $("input[name=csrfmiddlewaretoken]").val();
+							mydata = {id:fileid,csrfmiddlewaretoken:csr} 
+						 return new Promise(function(resolve) {
+						   $.ajax({
+							url: '{% url "task_media_delete" %}',
+							type: 'POST',
+							data: mydata,
+						   dataType: "json"
+						 })
+						 .done(function(response){
+							Swal.fire({
+									 type: 'success',
+									 title: 'File deleted succesfully',
+									 confirmButtonColor: "#5156be",
+									 preConfirm: function() {
+										   window.location.reload();
+										}
+							   })
+							})
+						 .fail(function(){
+							Swal.fire('Oops...', 'Something went wrong!', 'error');
+						 });
+						 });
+					 }
+				   });
+		});
+</script>
+
 {% endblock %}

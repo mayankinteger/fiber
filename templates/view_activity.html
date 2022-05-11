@@ -6,7 +6,8 @@
 
 {% block css %}
 .font-weight{
-	font-weight: 300;
+	font-weight: 400;
+	color:black;
 }
 .form-group>label{
 	line-height: 1.2;
@@ -22,7 +23,32 @@
 }
 .color{
 	color:black;
-	font-size: .8rem;
+	font-size:10px;
+}
+
+.danger{
+	color:#ff715b;
+}
+.col-form-label, .form-control{
+	font-size:10px;
+	
+}
+
+.form-control{
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	padding: 0.20rem 0.25rem;
+}
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.container-fluid {
+    font-size: 10px;
+}
+label{
+	font-weight: 400;
+	
 }
 
 {% endblock %}
@@ -37,7 +63,7 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-flex align-items-center justify-content-between">
-				<p class="page-title mb-0 font-size-12">Ticket ID : {{viewdata.ticket}}</b></p>
+				<p class="page-title mb-0 font-size-12"><b>Ticket ID : {{viewdata.ticket}}</b></p>
 				<div class="page-title-right">
 					<a class="" href="/media_list?activity_id={{ viewdata.id }}"><b>View Media</b></a>
 				</div>
@@ -60,14 +86,14 @@
 				<div style="margin-bottom:5px;" class="card">
 					<div class="card-body">
 						<div class="row">
-							<h6 class="col-md-8" style="color:#0caadc;"><b>General Details</b></h6>
+							<h6 class="col-md-8" style="color:#0caadc;">General Details</h6>
 						</div>
 						
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">Job receive date :</label>
 							<label class="col-md-2 color">{{viewdata.rec_date|date:"m/d/Y"}}</label>
 							<label class="col-md-2 font-weight">ECD :</label>
-							<label class="col-md-2 color">{% if viewdata.ecd|toStr != '1111-11-11' %}{{viewdata.ecd|date:"d/m/Y"}}{% endif %}</label>
+							<label class="col-md-2 color">{% if viewdata.ecd|toStr != '1111-11-11' %}{{viewdata.ecd|date:"m/d/Y"}}{% endif %}</label>
 							<label class="col-md-2 font-weight">Client :</label>
 							<label class="col-md-2 color">{{viewdata.client_id}}</label>
 						</div>
@@ -95,7 +121,7 @@
 				</div>
 				<div style="margin-bottom:5px;" class="card">
 					<div class="card-body">
-						<h6 style="color:#0caadc;"><b>F1 Details</b></h6>
+						<h6 style="color:#0caadc;">F1 Details</h6>
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">F1 CFAS :</label>
 							<label class="col-md-2 color">{{viewdata.f1cfas}}</label>
@@ -108,7 +134,7 @@
 				</div>
 				<div class="card">
 					<div class="card-body">
-						<h6 style="color:#0caadc;"><b>F2 Details</b></h6>
+						<h6 style="color:#0caadc;">F2 Details</h6>
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">F2 CFAS :</label>
 							<label class="col-md-2 color">{{viewdata.f2cfas}}</label>
@@ -136,7 +162,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-2 font-weight">Notes For Fielders</label>
+							<label class="col-md-2 font-weight">Notes For Fielders :</label>
 							<label class="col-md-6 color">{{viewdata.notes}}</label>
 						</div>
 					</div>

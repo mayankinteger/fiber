@@ -7,7 +7,7 @@ from activity.templatetags.myfilters import *
 
 status_choice = invoicing_status_list()
 class DateInput(forms.DateInput):
-    input_type = 'date'    
+    input_type = 'date'
 class TaskForm(forms.ModelForm):
     start_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'])
     complete_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False)
@@ -22,9 +22,8 @@ class TaskForm(forms.ModelForm):
         fields = "__all__"
 
 class TaskmediaForm(forms.ModelForm):
-    #media = forms.ImageField()
-    media = forms.ImageField(widget=forms.ClearableFileInput(attrs={"class": "form-control", "style":"padding: 0.15rem 0.75rem;", "multiple":True}))
-    #media = forms.IntegerField(widget=forms.NumberInput(attrs={"class": "form-control", 'title':'Total Footage', 'style':"padding: 0.15rem 0.75rem;"}), required=False)
+    #media = forms.ImageField(widget=forms.ClearableFileInput(attrs={"class": "form-control", "style":"padding: 0.15rem 0.75rem;", "multiple":True}))
+    media = forms.FileField(widget=forms.ClearableFileInput(attrs={"class": "form-control", "style":"padding: 0rem 0.75rem;"}))
     task_id_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     added_by_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 

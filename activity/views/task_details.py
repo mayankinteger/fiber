@@ -48,7 +48,6 @@ def task_details(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         media_form = TaskmediaForm(request.POST, request.FILES)
-        #media_form = TaskmediaForm(request.POST)
         remark_form = TaskcommentForm(request.POST)
         if form.is_valid():
             status_data = form.cleaned_data.get("status")
@@ -110,3 +109,15 @@ def task_details(request):
     
     params = {"form":form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':old_start_date, 'exist_comment':exist_comment, 'exist_media':exist_media}
     return render(request, 'task_details.html', params)
+
+
+@login_required(login_url="/login")
+def task_media_delete(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        #file_name = request.POST.get("file")
+        media_del = Task_media.objects.get(pk=id)
+        media_del.delete()
+        return JsonResponse({'status':'ok'})
+    else:
+        return JsonResponse({'status':0})

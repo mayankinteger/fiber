@@ -4,70 +4,38 @@
 {% block title %} Create Bill {% endblock %}
 
 {% block css %}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .danger{
 	color:#ff715b;
 }
 .col-form-label, .form-control{
-	font-size:.75rem;
-}
-.custom_pr_btn{
-	font-size:.75rem;
-	width:67px;
+	font-size:10px;
+	color:black;
 }
 
-.custom_dropbox{
-	background-color: transparent;
-		width: 100%;
-		font-size: 80%;
-		text-align: center;
-		/*text-transform: uppercase;*/
-		
-		padding: 1rem 2rem;
-		border: 0;
-}
-
-label.file {
-		position: relative;
-		display: block;
-		width: 100%;
-		font-size: 80%;
-		text-align: center;
-		text-transform: uppercase;
-		border: 2px dashed #ccc;
-		margin: 3rem 0;
-		padding: 3rem;
-}
-
-label.file:hover {
-		background-color: rgba(255, 255, 255, 0.3);
-}
-
-label.file:active,
-label.file.focus {
-		border-color: #09f;
-}
-
-.custom_inp_file{
-	position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		outline: 0;
-		border: 1px solid red;
-}
-.sml {
-		display: inline-block;
-		color: #eee;
-		background-color: rgba(0, 200, 0, 0.67);
-		border-radius: 1rem;
-		font-size: smaller;
-		margin: .2rem 0 0 0;
-		padding: 0.3rem 1rem;
-}
 .form-control{
-	padding: 0.26rem 0.25rem;
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	padding: 0.20rem 0.25rem;
+}
+.form-group {
+    margin-bottom: 0rem;
+}
+.container-fluid {
+    font-size: 10px;
+}
+label{
+	font-weight: 400;
 }
 {% endblock %}
 
@@ -82,8 +50,7 @@ label.file.focus {
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-flex align-items-center justify-content-between">
-				<h4 class="page-title mb-0 font-size-18">Enter Billing Details</h4>
-			
+				<p class="page-title mb-0 font-size-12"><b>Enter Billing Details</b></p>
 			</div>
 		</div>
 	</div>

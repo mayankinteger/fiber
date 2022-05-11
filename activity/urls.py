@@ -15,4 +15,5 @@ urlpatterns = [
     path('media_delete', views.media_delete, name='media_delete'),
     path('activities', views.activities, name='activities'),
     path('task_details', views.task_details, name='task_details'),
+    path('task_media_delete', views.task_media_delete, name='task_media_delete'),
 ]

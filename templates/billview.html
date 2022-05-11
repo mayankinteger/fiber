@@ -5,8 +5,41 @@
 {% block title %} Bill View {% endblock %}
 
 {% block css %}
+.danger{
+	color:#ff715b;
+}
+.col-form-label, .form-control{
+	font-size:10px;
+}
+
+.form-control{
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	padding: 0.20rem 0.25rem;
+}
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.container-fluid {
+    font-size: 10px;
+}
+label{
+	font-weight: 400;
+}
 .search_input{
 	width:100%;
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	border:1px solid;
+	padding: 0.20rem 0.25rem;
+}
+
+
+
+.custom-select {
+	//background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right 0.75rem center/8px 10px;
+	background: #fff;
 }
 {% endblock %}
 
@@ -25,8 +58,13 @@
 				<p class="page-title mb-0 font-size-12"><b>All Bill</b></p>
 
 				<div class="page-title-right">
-					<p class="card-title">
-					</p>
+					<!--<p class="card-title">-->
+						<div>
+							<span class="badge badge-soft-danger font-size-11">F - Fielding</span>
+							<span class="badge badge-soft-primary font-size-11">P - Planning</span>
+							<span class="badge badge-soft-success font-size-11">D - Drafting</span>
+						</div>
+					<!--</p>-->
 				</div>
 
 			</div>
@@ -98,13 +136,13 @@
 								<td>{{ i.activity.market|market }}</td>
 								<td>{% for activities in i.activity.activity.all %}
 									{% if activities.id is 1 %}
-										<span class="badge badge-soft-danger font-size-12">F</span>
+										<span class="badge badge-soft-danger font-size-11">F</span>
 									{% endif %}
 									{% if activities.id is 2 %}
-										<span class="badge badge-soft-primary font-size-12">P</span>
+										<span class="badge badge-soft-primary font-size-11">P</span>
 									{% endif %}
 									{% if activities.id is 3 %}
-										<span class="badge badge-soft-success font-size-12">D</span>
+										<span class="badge badge-soft-success font-size-11">D</span>
 									{% endif %}
 									{% endfor %}
 								</td>
