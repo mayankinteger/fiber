@@ -63,6 +63,7 @@ label{
 							<span class="badge badge-soft-danger font-size-11">F - Fielding</span>
 							<span class="badge badge-soft-primary font-size-11">P - Planning</span>
 							<span class="badge badge-soft-success font-size-11">D - Drafting</span>
+							<span class="badge badge-soft-info font-size-11">Q - QC Job</span>
 						</div>
 					<!--</p>-->
 				</div>
@@ -143,6 +144,9 @@ label{
 									{% endif %}
 									{% if activities.id is 3 %}
 										<span class="badge badge-soft-success font-size-11">D</span>
+									{% endif %}
+									{% if activities.id is 4 %}
+										<span class="badge badge-soft-info font-size-11">D</span>
 									{% endif %}
 									{% endfor %}
 								</td>

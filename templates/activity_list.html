@@ -67,6 +67,7 @@ table{
 							<span class="badge badge-soft-danger font-size-11">F - Fielding</span>
 							<span class="badge badge-soft-primary font-size-11">P - Planning</span>
 							<span class="badge badge-soft-success font-size-11">D - Drafting</span>
+							<span class="badge badge-soft-info font-size-11">Q - QC Job</span>
 						</div>
 					<!--</p>-->
 				</div>
@@ -141,6 +142,9 @@ table{
 									{% endif %}
 									{% if activities.id is 3 %}
 										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-11">D</span></a>
+									{% endif %}
+									{% if activities.id is 4 %}
+										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-info font-size-11">D</span></a>
 									{% endif %}
 									{% endfor %}
 								</td>
