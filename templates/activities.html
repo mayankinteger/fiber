@@ -1,59 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Activity List {% endblock %}
+{% block title %} Activity Task {% endblock %}
 
 {% block css %}
-body {
-    margin: 0;
-    //font-family: "SF UI Text",sans-serif;
-    font-size: 0.675rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #8687a7;
-    text-align: left;
-    background-color: #f3f5f7;
-}
-body[data-layout=horizontal] .page-content {
-    //margin-top: 55px;
-    //padding: 0 5px 60px 5px;
-}
-body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .navbar-header {
-    max-width: 98%;
-}
-.container-fluid{
-	font-size: 11px;
-}
-.container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    width: 100%;
-    padding-right: 12px;
-    padding-left: 12px;
-    margin-right: auto;
-    margin-left: auto;
-}
-.page-title-box .page-title {
-    line-height: 30px;
-}
-.form-control{
-	height: calc(1.1em + 0.9rem + 1px);
-	padding: 0.27rem 0.75rem;
-}
-.form-group {
-    margin-bottom: 0rem;
-}
-label {
-    margin-bottom: 0rem;
-}
-.wizard .btn {
-	 padding: 0.07rem 0.5rem;
-	font-size: 10px;
-    height: 20px;
-}
-.table td, .table th {
-    padding: 0.20rem;
-}
-
-/*---------signup-step-------------*/
+/*---------wizard-step-------------*/
 
 .activity-container{
 	padding: 5px 0px;
@@ -122,13 +73,41 @@ span.round-tab {
 	}
 }
 
-select{
-	font-size:10px !important;
-	padding: 0.07rem 0.75rem !important;
+.col-form-label, .form-control{
+	font-size:10px;
+	color:black;
+}
+
+.form-control{
+	height: calc(0.6em + 0.9rem + 1px);
+	padding: 0.20rem 0.25rem;
+	border-radius:0px;
+}
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.upper_area{
+	font-size: 10px;
+	color:black;
+}
+.container-fluid {
+    font-size: 10px;
+}
+label{
+	margin-bottom: 0rem;
+	font-weight: 400;
+}
+.wizard .btn {
+	padding: 0.07rem 0.5rem;
+   font-size: 10px;
+   height: 20px;
 }
 {% endblock %}
 
 {% block link %}
+<!-- Sweet Alert-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
@@ -189,7 +168,7 @@ select{
 													<div class="tab-pane active" role="tabpanel" id="fielding">
 														<h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;"></h6>
 														
-														<div class="row">
+														<div class="row upper_area">
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
 																	<label>Job receive date : {{activitydata.rec_date|date:"m/d/Y"}}</label> 
@@ -257,42 +236,49 @@ select{
 																	</tr>
 																</thead>
 																<tbody>
-																
+																{% if task_subtask %}
+																{% for tasks in task_subtask %}
 																<tr>
-																		<td>
-																			<label>Fielding QC</label>
-																			<input type="hidden" value="<?php echo $sub_id;?>" name="subtask">			
-																		</td>
-																		<td>
-																			<select class="form-control" name="status" required>
-																				<option value="">--Select--</option>
-																				<option value="0">Pending</option>
-																				<option value="1">Ongoing</option>
-																				<option value="2">Completed</option>
-																			</select>
-																		</td>
-																		<td>
-																			<input class="form-control" value="" type="text" autocomplete="off" name="start_date" title="Start Date" readonly style="background-color:#e9e9e9;">
-																		</td>
-																		<td>
-																			<input class="form-control" value="" type="text" autocomplete="off" name="complete_date" title="Complete Date" readonly style="background-color:#e9e9e9;">
-																		</td>
-																		<td>
-																			<div class="text-center">
-																				<button type="submit" class="btn btn-success waves-effect waves-light"><i class="fa fa-save"></i></button>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="text-center">
-																				<button type="button" class="btn btn-secondary waves-effect waves-light" data-toggle="modal" data-target="#remark_modal" disabled ><i class="far fa-comment-dots"></i></button>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="text-center">
-																				<button type="button" class="btn btn-secondary waves-effect waves-light"  data-toggle="modal" data-target="#attachment_modal" disabled ><i class="fas fa-paperclip"></i></button>
-																			</div>
-																		</td>
-																	</tr>
+																	<td>
+																		<label>{{tasks.subtask.subtask}}</label>
+																		<input type="hidden" value="{{tasks.subtask.subtask}}" name="subtask">			
+																	</td>
+																	<td>
+																		<select class="form-control" name="status" required>
+																			<option value="1" {% if tasks.status is 1 %}selected{% endif %}>Pending</option>
+																			<option value="2" {% if tasks.status is 2 %}selected{% endif %}>Ongoing</option>
+																			<option value="3" {% if tasks.status is 3 %}selected{% endif %}>Completed</option>
+																		</select>
+																	</td>
+																	<td>
+																		<input class="form-control custom_datepicker" data-provide="datepicker" data-date-autoclose="true" value="{{tasks.start_date|date:'m/d/Y'}}" type="text" autocomplete="off" name="start_date" title="Start Date" required>
+																	</td>
+																	<td>
+																		<input class="form-control custom_datepicker" data-provide="datepicker" data-date-autoclose="true" value="{{tasks.complete_date|date:'m/d/Y'}}" type="text" autocomplete="off" name="complete_date" title="Complete Date" required>
+																	</td>
+																	<td>
+																		<div class="text-center">
+																			<button type="submit" class="btn btn-success waves-effect waves-light"><i class="fa fa-save"></i></button>
+																		</div>
+																	</td>
+																	<td>
+																		<div class="text-center">
+																			<button type="button" class="btn btn-info waves-effect waves-light Remark" data-subtask="{{tasks.id}}"><i class="far fa-comment-dots"></i></button>
+																			<!--<button type="button" class="btn btn-info waves-effect waves-light Remark" data-subtask="{{tasks.id}}" data-toggle="modal" data-target="#remark_modal" ><i class="far fa-comment-dots"></i></button>-->
+																		</div>
+																	</td>
+																	<td>
+																		<div class="text-center">
+																			<button type="button" class="btn btn-info waves-effect waves-light Attach" 
+																			data-subtask="{{tasks.id}}"><i class="fas fa-paperclip"></i></button>
+																			<!--<button type="button" class="btn btn-info waves-effect waves-light Attach" 
+																			data-subtask="{{tasks.id}}" data-toggle="modal" data-target="#attachment_modal" ><i class="fas fa-paperclip"></i></button>-->
+																		</div>
+																	</td>
+																</tr>
+																{% endfor %}
+																{% endif %}
+																	
 																</tbody>
 															</table>
 														</div>
@@ -337,25 +323,15 @@ select{
 						<th>User</th>
 						<th>Comment</th>
 					</thead> 
-					<tbody>
-						<?php if(!empty($current_subtask_remarks)){
-							foreach($current_subtask_remarks as $r_k=>$r_v){ 
-								$added_name = user_info($r_v['added_by']);
-							?>
-								<tr>
-									<td><?php echo $added_name['fname']." ".$added_name['lname']; ?><br><?php echo date('d-m-Y H:i:s',strtotime($r_v['added_date'])); ?></td>
-									<td><?php echo $r_v['remark']; ?></td>
-								</tr>
-						<?php	
-							}
-						} ?>
+					<tbody class="Remark_Body">
+						
 					</tbody>
 				</table>
-				<textarea class="form-control" name="remark" rows=5 title="Remarks"><?php echo show_value('remark'); ?></textarea>
+				<textarea class="form-control" name="remark" rows=5 title="Remarks"></textarea>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save changes</button>
+				<button type="submit" class="btn btn-primary">Save</button>
 			</div>
 			</form>
 		</div>
@@ -365,7 +341,7 @@ select{
 </div>
 <!-- /.modal -->
 
-<div class="modal fade" id="comp_attachment_modal" tabindex="-1" role="dialog" aria-labelledby="attachment_modal_Title" aria-hidden="true">
+<div class="modal fade" id="attachment_modal" tabindex="-1" role="dialog" aria-labelledby="attachment_modal_Title" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -374,24 +350,29 @@ select{
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			
+			<form action="<?php echo site_url('activities/save_remark') ?>" method="post">
+				<input type="hidden" name="m_activity_id" value="<?php echo $editdata['id']; ?>">
+				<input type="hidden" name="m_type" value="<?php echo $act_type; ?>">
+				<input type="hidden" name="m_subtask_id" value="<?php echo $edit_subtask['id']; ?>">
+				<input type="hidden" name="m_added_by" value="<?php echo $login_sess['admin_user_id']?>">
 			<div class="modal-body">
 				<table class="table">
 					<thead>
 						<th>User</th>
 						<th>File</th>
+						<th>Delete</th>
 					</thead>
 					<tbody class="Attach_Body">
 						
 					</tbody>
 				</table>
-				
+				<input type="file" name="media" class="form-control" style="padding: 0rem 0.75rem;" required="" id="id_media">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				
+				<button type="submit" class="btn btn-primary">Save</button>
 			</div>
-			
+		</form>
 		</div>
 		<!-- /.modal-content -->
 	</div>
@@ -408,11 +389,12 @@ select{
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?php echo site_url('activities') ?>" method="post">
-			<input type="hidden" name="activity_id" value="<?php echo $_GET['id']; ?>">
-			<input type="hidden" name="type" value="<?php echo $act_type; ?>">
-			<input type="hidden" name="added_by" value="<?php echo $login_sess['admin_user_id']?>">
-			<input type="hidden" name="status" value="0">
+			<form action="/activities_subtask" method="post">
+				{% csrf_token %}
+			<input type="hidden" name="activity_id" value="{{request.GET.id}}">
+			<input type="hidden" name="type" value="{{request.GET.step}}">
+			<input type="hidden" name="added_by" value="{{request.user.id}}">
+			<input type="hidden" name="status" value="2">
 			<div class="modal-body">
 				<table class="table">
 					<thead>
@@ -420,31 +402,21 @@ select{
 						<th>Task</th>
 					</thead>
 					<tbody> 
-						<?php if(!empty($subtask_data)){
-							foreach($subtask_data as $s_k=>$sub_v){ 
-							
-							?>
-								<tr>
-									<td><input type="radio" name="subtask" value="<?php echo $sub_v['id'];?>"></td>
-									<td><?php 
-										echo $sub_v['subtask'];
-										 ?>
-									</td>
-								</tr>
-						<?php	
-							}
-						} ?>
+						{% if subtask_data %}
+						{% for subtask_list in subtask_data%}
+						<tr>
+							<td><input id='{{subtask_list.subtask}}' type="radio" name="subtask" value="{{subtask_list.id}}" required></td>
+							<td><label for="{{subtask_list.subtask}}">{{subtask_list.subtask}}</label>
+							</td>
+						</tr>
+						{% endfor %}
+						{% endif %}
 					</tbody>
 				</table>
 				
 			</div> 
 			<div class="modal-footer">
-			<?php if(!empty($last_row) && $last_row['status']!=2){?>
-			<?php if(!empty($last_row) && $last_row['status']!=2){?>
-			<a href="javascript:void();" class="btn btn-primary Alert_Pending_Task">Save</a>
-			<?php }else{ ?>
-			<button type="submit" class="btn btn-primary">Save</button>
-			<?php } ?>
+				<button type="submit" class="btn btn-primary">Save</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				
 			</div>
@@ -459,87 +431,98 @@ select{
 {% endblock %}
 
 {% block script %}
+<!-- Sweet Alert-->
+<script src="{% static '/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<script>
+	$(".delete_media").click(function(){
+		var fileid = $(this).data("file-id");
+		//alert(fileid);
+		alert('hello');
+		 Swal.fire({
+					   title: "Are you sure?",
+					   text: "You won't be able to revert this!",
+					   type: "warning",
+					   showCancelButton: !0,
+					   confirmButtonColor: "#34c38f",
+					   cancelButtonColor: "#f46a6a",
+					   confirmButtonText: "Yes, delete it!",
+						preConfirm: function() {
+						
+						   var csr = $("input[name=csrfmiddlewaretoken]").val();
+							mydata = {id:fileid,csrfmiddlewaretoken:csr} 
+						 return new Promise(function(resolve) {
+						   $.ajax({
+							url: '{% url "media_delete" %}',
+							type: 'POST',
+							data: mydata,
+						   dataType: "json"
+						 })
+						 .done(function(response){
+							Swal.fire({
+									 type: 'success',
+									 title: 'File deleted succesfully',
+									 confirmButtonColor: "#5156be",
+									 preConfirm: function() {
+										   window.location.reload();
+										}
+							   })
+							})
+						 .fail(function(){
+							Swal.fire('Oops...', 'Something went wrong!', 'error');
+						 });
+						 });
+					 }
+				   });
+		});
+</script>
 <!-- Required datatable js -->
 <script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
 <script>
-	// ------------step-wizard-------------
-	$(document).ready(function () {
-		$('.nav-tabs > li a[title]').tooltip();
-		
-		//Wizard
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-	
-			var target = $(e.target);
-		
-			if (target.parent().hasClass('disabled')) {
-				return false;
-			}
-		});
-	
-		$(".next-step").click(function (e) {
-	
-			var active = $('.wizard .nav-tabs li.active');
-			active.next().removeClass('disabled');
-			nextTab(active);
-	
-		});
-		$(".prev-step").click(function (e) {
-	
-			var active = $('.wizard .nav-tabs li.active');
-			prevTab(active);
-	
-		});
-	});
-	
-	function nextTab(elem) {
-		$(elem).next().find('a[data-toggle="tab"]').click();
-	}
-	function prevTab(elem) {
-		$(elem).prev().find('a[data-toggle="tab"]').click();
-	}
-	
-	
-	$('.nav-tabs').on('click', 'li', function() {
-		$('.nav-tabs li.active').removeClass('active');
-		$(this).addClass('active');
-	});
-	
+	$('.custom_datepicker').datepicker({
+		format: 'mm-dd-yyyy'
+	})
+</script>
+<script>
 	$(".Attach").click(function(){
-		var activity_id="<?php echo $_GET['id']; ?>";
-		var task="<?php echo $act_type; ?>";
-		var subtask = $(this).attr("data-subtask");
-			 $.ajax({
-				 url: "<?php echo site_url('activities/ajax_all_attach');?>",
-				 type: "post",
-				 data: "activity_id="+activity_id+"&task="+task+"&subtask="+subtask ,
-				 success: function (response) {
-					 console.log(response);
-						  $(".Attach_Body").html(response);
-				  },
-				 error: function(jqXHR, textStatus, errorThrown) {
-					//console.log(textStatus, errorThrown);
-				 }
-			  });
+		var task_id = $(this).attr("data-subtask");
+		var csr = $("input[name=csrfmiddlewaretoken]").val();
+		//mydata = {task_id:task_id, csrfmiddlewaretoken:csr};
+		//alert(mydata);
+		$.ajax({
+			url: "{% url 'ajax_all_attach' %}",
+			method: "POST",
+			data: "task_id="+task_id+"&csrfmiddlewaretoken="+csr,
+			success: function(data){
+				//console.log(data);
+				$(".Attach_Body").html(data);
+				$('#attachment_modal').modal('show');
+			},
+		});
 		
 	});
 	$(".Remark").click(function(){
-		var activity_id="<?php echo $_GET['id']; ?>";
-		var task="<?php echo $act_type; ?>";
-		var subtask = $(this).attr("data-subtask");
-			 $.ajax({
-				 url: "<?php echo site_url('activities/ajax_all_remark');?>",
-				 type: "post",
-				 data: "activity_id="+activity_id+"&task="+task+"&subtask="+subtask ,
-				 success: function (response) {
-					 console.log(response);
-						  $(".Remark_Body").html(response);
-				  },
-				 error: function(jqXHR, textStatus, errorThrown) {
-					//console.log(textStatus, errorThrown);
-				 }
-			  });
+		var task_id = $(this).attr("data-subtask");
+		var csr = $("input[name=csrfmiddlewaretoken]").val();
+		mydata = {task_id:task_id,csrfmiddlewaretoken:csr};
+		//alert('bye');
+		$.ajax({
+			url: "{% url 'ajax_all_remark' %}",
+			method: "POST",
+			data: mydata,
+			success: function(data){
+				//alert(JSON.stringify(data.status));
+				//alert(data);
+				/*$.each(data, function( index, value ) {
+					alert( index + ": " + value );
+				  });*/
+				//console.log(data);
+				$(".Remark_Body").html(data);
+				$('#remark_modal').modal('show');
+			},
+		});
 	});
 	</script>
+	
 	<script>
 	$(".Alert_Pending_Task").click(function(){
 		alert("Please complete previous task first!");

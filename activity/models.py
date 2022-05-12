@@ -128,10 +128,12 @@ class Activities(models.Model):
     FIELDING = 1
     PLANNING = 2
     DRAFTING = 3
+    QCJob = 4
     TYPE_CHOICES = (
         (FIELDING, 'Fielding'),
         (PLANNING, 'Planning'),
-        (DRAFTING, 'Drafting')
+        (DRAFTING, 'Drafting'),
+        (QCJob, 'QC Job'),
     )
     id = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, primary_key=True)
 
@@ -271,4 +273,4 @@ class Task_remark(models.Model):
     added_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.task_id
+        return str(self.task_id)

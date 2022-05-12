@@ -1,0 +1,23 @@
+{% load myfilters %}
+{% if page == 'remark' %}
+	{% if data %}
+	{% for i in data %}
+	<tr>
+		<td>{{i.added_by.fname}} - {{ i.added_by.added_date|toStr|mysplit }}</td>
+		<td>{{i.remark}}</td>
+	</tr>
+	{% endfor %}
+	{% endif %}
+{% endif %}
+
+{% if page == 'media' %}
+	{% if data %}
+	{% for i in data %}
+	<tr>
+		<td>{{i.added_by.fname}} - {{i.added_date|date:"m/d/Y"}}</td>
+		<td><a href="{{ i.media.url }}" target="_blank">{{ i.media|toStr|mysplit }}</a></td>
+		<td><a href="javascript:void(0);" style="color:red;cursor:pointer;" class="delete_media" data-file-id="{{ i.id }}" data-file-name="{{ i.media }}"><i class="fas fa-trash"></i></a></td>
+	</tr>
+	{% endfor %}
+	{% endif %}
+{% endif %}

@@ -16,4 +16,7 @@ urlpatterns = [
     path('activities', views.activities, name='activities'),
     path('task_details', views.task_details, name='task_details'),
     path('task_media_delete', views.task_media_delete, name='task_media_delete'),
+    path('activities_subtask', views.activities_subtask, name='activities_subtask'),
+    path('ajax_all_remark', views.ajax_all_remark, name='ajax_all_remark'),
+    path('ajax_all_attach', views.ajax_all_attach, name='ajax_all_attach'),
 ]
