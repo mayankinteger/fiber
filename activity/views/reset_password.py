@@ -66,7 +66,7 @@ def reset_password(request):
             try:
                 check_user = Bay_users.objects.get(email=email, otp=exist_otp)
             except:
-                messages.error(request, "Something went wrong reset password again!")
+                messages.error(request, "Something went wrong! Please try again")
                 return redirect('reset_password')
             user_data.set_password(password)
             user_data.save()
