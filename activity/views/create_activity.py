@@ -111,8 +111,6 @@ def create_activity(request):
         ecd = request.POST.get("ecd")
         if ecd:
             ecd = datetime.datetime.strptime(ecd, '%m/%d/%Y').strftime('%Y-%m-%d')
-        else:
-            ecd = "1111-11-11"
         client_id = request.POST.get("client")
         client = Clients.objects.get(id=client_id)
         market = request.POST.get("market")
