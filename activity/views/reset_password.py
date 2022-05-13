@@ -57,15 +57,21 @@ def reset_password(request):
         if request.POST.get("form_edit_id") and request.POST.get("form_edit_otp") and user_data:
             password = request.POST.get("password")
             confirm_password = request.POST.get("confirm_password")
+            exist_otp = request.POST.get("exist_otp")
             if password!=confirm_password:
                 messages.error(request, "Password not matching !")
                 #return redirect('/reset_password?email='+email+'&&id='+str(user_data.id)+'&&otp=yes')
-                params = {'email':email, 'id':user_data.id, 'otp':'yes'}
+                params = {'email':email, 'id':user_data.id, 'otp':exist_otp}
                 return render(request, 'reset_password.html', params)
+            try:
+                check_user = Bay_users.objects.get(email=email, otp=exist_otp)
+            except:
+                messages.error(request, "Something went wrong reset password again!")
+                return redirect('reset_password')
             user_data.set_password(password)
             user_data.save()
-            user=authenticate(email= email, password= password)
-            if user is not None:
+            user=authenticate(email=email, password=password, otp=exist_otp)
+            if user:
                 login(request, user)
                 messages.success(request, "Successfully reset your password and Logged In")
                 return redirect("activity_list")
@@ -84,7 +90,7 @@ def reset_password(request):
             else:
                 messages.success(request, "Enter your new Password.")
                 #return redirect('/reset_password?email='+email+'&&id='+str(user_data.id)+'&&otp=yes')
-                params = {'email':email, 'id':user_data.id, 'otp':'yes'}
+                params = {'email':email, 'id':user_data.id, 'otp':otp_check}
                 return render(request, 'reset_password.html', params)
         else:
             if user_data:
