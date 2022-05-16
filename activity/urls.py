@@ -14,5 +14,7 @@ urlpatterns = [
     path('activities', views.activities, name='activities'),
     path('task_details', views.task_details, name='task_details'),
     path('activities_subtask', views.activities_subtask, name='activities_subtask'),
+    path('subtask_remark', views.subtask_remark, name='subtask_remark'),
+    path('subtask_media', views.subtask_media, name='subtask_media'),
     path('ajax', views.ajax, name='ajax'),
 ]

@@ -313,11 +313,12 @@ label{
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?php echo site_url('activities/save_remark') ?>" method="post">
-			<input type="hidden" name="r_activity_id" value="<?php echo $editdata['id']; ?>">
-			<input type="hidden" name="r_type" value="<?php echo $act_type; ?>">
-			<input type="hidden" name="r_subtask_id" value="<?php echo $edit_subtask['id']; ?>">
-			<input type="hidden" name="r_added_by" value="<?php echo $login_sess['admin_user_id']?>">
+			<form action="/subtask_remark" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="r_activity_id" value="{{request.GET.id}}">
+				<input type="hidden" name="r_type" value="{{request.GET.step}}">
+				<input type="hidden" name="r_task_id" value="">
+				<input type="hidden" name="r_added_by" value="{{request.user.id}}">
 			<div class="modal-body">
 				<table class="table">
 					<thead>
@@ -328,7 +329,7 @@ label{
 						
 					</tbody>
 				</table>
-				<textarea class="form-control" name="remark" rows=5 title="Remarks"></textarea>
+				<textarea class="form-control" name="remark" rows=5 title="Remarks" required></textarea>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -351,11 +352,12 @@ label{
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?php echo site_url('activities/save_remark') ?>" method="post">
-				<input type="hidden" name="m_activity_id" value="<?php echo $editdata['id']; ?>">
-				<input type="hidden" name="m_type" value="<?php echo $act_type; ?>">
-				<input type="hidden" name="m_subtask_id" value="<?php echo $edit_subtask['id']; ?>">
-				<input type="hidden" name="m_added_by" value="<?php echo $login_sess['admin_user_id']?>">
+			<form action="/subtask_media" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<input type="hidden" name="m_activity_id" value="{{request.GET.id}}">
+				<input type="hidden" name="m_type" value="{{request.GET.step}}">
+				<input type="hidden" name="m_task_id" value="">
+				<input type="hidden" name="m_added_by" value="{{request.user.id}}">
 			<div class="modal-body">
 				<table class="table">
 					<thead>
@@ -367,7 +369,7 @@ label{
 						
 					</tbody>
 				</table>
-				<input type="file" name="media" class="form-control" style="padding: 0rem 0.75rem;" required="" id="id_media">
+				<input type="file" name="media" class="form-control" style="padding: 0rem 0.75rem;" required id="id_media">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -381,7 +383,7 @@ label{
 </div>
 <!-- /.modal -->
 
-<div class="modal fade" id="add_subtask_modal" tabindex="-1" role="dialog" aria-labelledby="attachment_modal_Title" aria-hidden="true">
+<div class="modal fade" id="add_subtask_modal" tabindex="-1" role="dialog" aria-labelledby="subtask_modal_Title" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -569,6 +571,7 @@ label{
 				//console.log(data);
 				$(".Attach_Body").html(data);
 				$('#attachment_modal').modal('show');
+				$("input[name=m_task_id]").val(task_id);
 			},
 		});
 		
@@ -585,6 +588,7 @@ label{
 			success: function(data){
 				$(".Remark_Body").html(data);
 				$('#remark_modal').modal('show');
+				$("input[name=r_task_id]").val(task_id);
 			},
 		});
 	});

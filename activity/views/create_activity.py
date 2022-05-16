@@ -74,14 +74,14 @@ def create_activity(request):
     #driver.implicitly_wait(30)
     #driver.get('http://127.0.0.1:8000/create_activity')
     activity_id = request.GET.get("id")
-    edit_recdate=""
-    edit_ecd=""
+    edit_recdate=None
+    #edit_ecd=None
     if activity_id:
         edit_data = Activity.objects.get(id=activity_id)
-        edit_recdate = datetime.datetime.strptime(str(edit_data.rec_date), '%Y-%m-%d').strftime('%m/%d/%Y')
+        edit_recdate = datetime.datetime.strptime(str(edit_data.rec_date), '%Y-%m-%d').strftime('%m-%d-%Y')
         
-        if str(edit_data.ecd)!=None:
-            edit_ecd = datetime.datetime.strptime(str(edit_data.ecd), '%Y-%m-%d').strftime('%m/%d/%Y')
+        if edit_data.ecd!=None:
+            edit_ecd = datetime.datetime.strptime(str(edit_data.ecd), '%Y-%m-%d').strftime('%m-%d-%Y')
         #select = Select(driver.find_element(By.ID,'Client'))
         
 
@@ -107,10 +107,10 @@ def create_activity(request):
         ticket_no = todate+"-"+str1
         formedit = request.POST.get("form_edit_id")
         rec_date = request.POST.get("rec_date")
-        rec_date = datetime.datetime.strptime(rec_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        rec_date = datetime.datetime.strptime(rec_date, '%m-%d-%Y').strftime('%Y-%m-%d')
         ecd = request.POST.get("ecd")
         if ecd:
-            ecd = datetime.datetime.strptime(ecd, '%m/%d/%Y').strftime('%Y-%m-%d')
+            ecd = datetime.datetime.strptime(ecd, '%m-%d-%Y').strftime('%Y-%m-%d')
         else:
             ecd = None
         client_id = request.POST.get("client")
@@ -226,7 +226,7 @@ def create_activity(request):
         else:
             messages.error(request, " Please fill all the required fields")
             return redirect('create_activity')
-    params = {"activities_list": activities_list, "clients_list": clients_list, "feusers_list": feusers_list, "bayusers_list": bayusers_list,"added_by":request.user.pk,"edit_data":edit_data,"edit_recdate":edit_recdate,"edit_ecd":edit_ecd}            
+    params = {"activities_list": activities_list, "clients_list": clients_list, "feusers_list": feusers_list, "bayusers_list": bayusers_list,"added_by":request.user.pk,"edit_data":edit_data,"edit_recdate":edit_recdate}            
     
     return render(request, 'create_activity.html', params)
 

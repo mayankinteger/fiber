@@ -48,6 +48,11 @@ def ajax(request):
                 for delete_allmedia in media_del:
                     print(delete_allmedia)
                     delete_allmedia.delete()
+            task_media_del = Task_media.objects.filter(task_id__activity_id=get_id)
+            if task_media_del:
+                for delete_taskmedia in task_media_del:
+                    print(delete_taskmedia)
+                    delete_taskmedia.delete()
             deleted = Activity.objects.filter(id=get_id).delete()
             #payload = {'response': 'ok'}
             if deleted:
