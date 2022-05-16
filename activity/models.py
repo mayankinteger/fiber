@@ -259,7 +259,7 @@ class Task_media(models.Model):
     added_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.task_id
+        return str(self.task_id)
 
     def delete(self, *args, **kwargs):
         self.media.delete()

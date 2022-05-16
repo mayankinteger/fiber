@@ -271,10 +271,10 @@ table{
 					preConfirm: function() {
 					
 					   var csrf = $("input[name=csrfmiddlewaretoken]").val();
-						mydata = {act_id:act_id,csrfmiddlewaretoken:csrf} 
+						mydata = {page:'activity_delete',act_id:act_id,csrfmiddlewaretoken:csrf} 
 					 return new Promise(function(resolve) {
 					   $.ajax({
-						url: '{% url "delete_activity" %}',
+						url: '{% url "ajax" %}',
 						type: 'POST',
 						data: mydata,
 					   dataType: "json"

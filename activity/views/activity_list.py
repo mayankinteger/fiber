@@ -25,18 +25,3 @@ def activity_list(request):
     act_list = myFilter.qs   
 
     return render(request, 'activity_list.html', {'act_list':act_list,'myFilter':myFilter})
-    
-
-@login_required(login_url="/login")
-def delete_activity(request):
-    if request.method == "POST":
-        get_id = request.POST.get("act_id")
-        media_del = Activity_media.objects.filter(activity_id=get_id)
-        if media_del:
-            for delete_allmedia in media_del:
-                print(delete_allmedia)
-                delete_allmedia.delete()
-        deleted = Activity.objects.filter(id=get_id).delete()
-        payload = {'response': 'ok'}
-        if deleted:
-            return JsonResponse(payload)

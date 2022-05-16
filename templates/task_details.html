@@ -287,10 +287,10 @@ label{
 						preConfirm: function() {
 						
 						   var csr = $("input[name=csrfmiddlewaretoken]").val();
-							mydata = {id:fileid,csrfmiddlewaretoken:csr} 
+							mydata = {page:'task_media_delete', id:fileid,csrfmiddlewaretoken:csr} 
 						 return new Promise(function(resolve) {
 						   $.ajax({
-							url: '{% url "task_media_delete" %}',
+							url: '{% url "ajax" %}',
 							type: 'POST',
 							data: mydata,
 						   dataType: "json"

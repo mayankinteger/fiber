@@ -24,16 +24,21 @@ def task_details(request):
     act_type = request.GET.get("step")
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
+        
         try:
             exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).latest('id')
         except:
             exist_check = ''
         try:
-            exist_media = Task_media.objects.filter(task_id=exist_check.id)
+            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__type=act_type)
+            #print(exist_media)
+            #exist_media = Task_media.objects.filter(task_id=exist_check.id)
         except:
             exist_media = ''
         try:
-            exist_comment = Task_remark.objects.filter(task_id=exist_check.id)
+            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__type=act_type)
+            #print(exist_comment)
+            #exist_comment = Task_remark.objects.filter(task_id=exist_check.id)
         except:
             exist_comment = ''
     else:
@@ -109,15 +114,3 @@ def task_details(request):
     
     params = {"form":form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':old_start_date, 'exist_comment':exist_comment, 'exist_media':exist_media}
     return render(request, 'task_details.html', params)
-
-
-@login_required(login_url="/login")
-def task_media_delete(request):
-    if request.method == "POST":
-        id = request.POST.get("id")
-        #file_name = request.POST.get("file")
-        media_del = Task_media.objects.get(pk=id)
-        media_del.delete()
-        return JsonResponse({'status':'ok'})
-    else:
-        return JsonResponse({'status':0})

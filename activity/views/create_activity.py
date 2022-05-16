@@ -80,7 +80,7 @@ def create_activity(request):
         edit_data = Activity.objects.get(id=activity_id)
         edit_recdate = datetime.datetime.strptime(str(edit_data.rec_date), '%Y-%m-%d').strftime('%m/%d/%Y')
         
-        if str(edit_data.ecd)!="1111-11-11":
+        if str(edit_data.ecd)!=None:
             edit_ecd = datetime.datetime.strptime(str(edit_data.ecd), '%Y-%m-%d').strftime('%m/%d/%Y')
         #select = Select(driver.find_element(By.ID,'Client'))
         
@@ -111,6 +111,8 @@ def create_activity(request):
         ecd = request.POST.get("ecd")
         if ecd:
             ecd = datetime.datetime.strptime(ecd, '%m/%d/%Y').strftime('%Y-%m-%d')
+        else:
+            ecd = None
         client_id = request.POST.get("client")
         client = Clients.objects.get(id=client_id)
         market = request.POST.get("market")

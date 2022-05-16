@@ -22,7 +22,7 @@ from django.utils.html import strip_tags
 def activities(request):
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
-    task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type)
+    task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).order_by('id')
     subtask_data = Subtasks.objects.filter(status=0, task_id=act_type)
     activitydata = Activity.objects.get(pk=activity_id)
     #print(task_subtask)
@@ -50,21 +50,3 @@ def activities_subtask(request):
     activities_subtask = Activity_tasks(activity_id=activity_id, type=type, subtask=subtask_id, status=status, added_by=added_by_id)
     activities_subtask.save()
     return redirect('/activities?step='+type+'&id='+activity)
-
-@login_required(login_url="/login")
-def ajax_all_remark(request):
-    if request.method == "POST":
-        task_id = request.POST.get("task_id")
-        all_remark = Task_remark.objects.filter(task_id=task_id)
-        remark = {'page':'remark', 'data':all_remark}
-        html_content = render_to_string("ajax.html", remark)
-        return HttpResponse(html_content)
-
-@login_required(login_url="/login")
-def ajax_all_attach(request):
-    if request.method == "POST":
-        task_id = request.POST.get("task_id")
-        all_media = Task_media.objects.filter(task_id=task_id)
-        media = {'page':'media', 'data':all_media}
-        html_content = render_to_string("ajax.html", media)
-        return HttpResponse(html_content)

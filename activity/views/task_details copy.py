@@ -22,15 +22,27 @@ from django.utils.html import strip_tags
 def task_details(request):
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
-    
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
         try:
-            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).latest('id')
-            #print(exist_check)
-            #print('bye')
+            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type)
         except:
             exist_check = ''
+        try:
+            exist_media = []
+            for activity_task in exist_check:
+                media_data = Task_media.objects.filter(task_id=activity_task.id)
+                print(media_data)
+                if media_data:
+                    exist_media.append(media_data)
+            print(exist_media)
+        except:
+            exist_media = ''
+        try:
+            for activity_task in exist_check:
+                exist_comment = Task_remark.objects.filter(task_id=activity_task.id)
+        except:
+            exist_comment = ''
     else:
         return redirect('activity_list')
         
@@ -40,51 +52,48 @@ def task_details(request):
         subtask_name = 5
     else:
         subtask_name = 9
-    subtaskdata = Subtasks.objects.get(pk=subtask_name)
     if request.method == 'POST':
         form = TaskForm(request.POST)
+        media_form = TaskmediaForm(request.POST, request.FILES)
+        remark_form = TaskcommentForm(request.POST)
         if form.is_valid():
-            #exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).order_by('-id')
-            #print('hello')
-            #print(exist_check[0].status)
             status_data = form.cleaned_data.get("status")
             if status_data == '0':
                 messages.error(request, "Status Field is required")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
             if exist_check:
-                if exist_check.status == 3:
-                    added_by_id = form.cleaned_data.get("added_by_id")
-                    form.save()
-                    print('add after status check 3')
-                    task_id = Activity_tasks.objects.latest('id').id
-                    Activity_tasks.objects.filter(id=task_id).update(activity_id=activity_id, added_by=added_by_id)
-                    messages.success(request, "Your task has been added successfully")
-                    return redirect('/task_details?step='+act_type+'&id='+activity_id)
+                if exist_check.subtask is None:
+                    subtask_info = ''
                 else:
-                    print(exist_check.subtask)
-                    if exist_check.subtask is None:
-                        subtask_info = ''
-                    else:
-                        subtask_info = exist_check.subtask
-                    added_by_id = form.cleaned_data.get("added_by_id")
-                    update_form = TaskForm(request.POST, instance=exist_check)
-                    update_form.save()
-                    print('update')
-                    print(exist_check.subtask)
-                    Activity_tasks.objects.filter(id=exist_check.id).update(activity_id=activity_id, added_by=added_by_id, subtask=subtask_info)
-                    messages.success(request, "Your task has been updated successfully")
-                    return redirect('/task_details?step='+act_type+'&id='+activity_id)
+                    subtask_info = exist_check.subtask
+                added_by_id = form.cleaned_data.get("added_by_id")
+                update_form = TaskForm(request.POST, instance=exist_check)
+                update_form.save()
+                Activity_tasks.objects.filter(id=exist_check.id).update(activity_id=activity_id, added_by=added_by_id, subtask=subtask_info)
+                messages.success(request, "Your task has been updated successfully")
+                return redirect('/task_details?step='+act_type+'&id='+activity_id)
             else:
                 added_by_id = form.cleaned_data.get("added_by_id")
                 form.save()
-                print('first add')
                 task_id = Activity_tasks.objects.latest('id').id
                 Activity_tasks.objects.filter(id=task_id).update(activity_id=activity_id, added_by=added_by_id, subtask=subtask_name)
                 messages.success(request, "Your task has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
+        elif media_form.is_valid():
+            media_form.save()
+            media_id = Task_media.objects.latest('id').id
+            Task_media.objects.filter(id=media_id).update(task_id=exist_check.id, added_by=request.user.id)
+            messages.success(request, "Your task media has been added successfully")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
+        elif remark_form.is_valid():
+            remark_form.save()
+            remark_id = Task_remark.objects.latest('id').id
+            Task_remark.objects.filter(id=remark_id).update(task_id=exist_check.id, added_by=request.user.id)
+            messages.success(request, "Your task comment has been added successfully")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
         else:
-            print(form.errors)
-            messages.error(request, form.errors)
+            messages.error(request, "Please fill mandatory fields")
+            return redirect('/task_details?step='+act_type+'&id='+activity_id)
     if exist_check:
         old_start_date = exist_check.start_date
         old_complete_date = exist_check.complete_date
@@ -94,8 +103,8 @@ def task_details(request):
         old_complete_date = ''
         old_status = ''
     form = TaskForm(initial={'activity_id_id':activity_id, 'type':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
-    mediaform = TaskmediaForm(request.POST or None)
-    remarkform = TaskcommentForm(request.POST or None)
+    mediaform = TaskmediaForm()
+    remarkform = TaskcommentForm()
     if act_type == '1':
         step = 'Fielding'
     elif act_type == '2':
@@ -105,8 +114,17 @@ def task_details(request):
     elif act_type == '10':
         step = 'Invoicing'
     
-    params = {"form": form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':old_start_date}
+    params = {"form":form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':old_start_date, 'exist_comment':exist_comment, 'exist_media':exist_media}
     return render(request, 'task_details.html', params)
 
-def task_comments(request):
-    print("sdsd")
+
+@login_required(login_url="/login")
+def task_media_delete(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        #file_name = request.POST.get("file")
+        media_del = Task_media.objects.get(pk=id)
+        media_del.delete()
+        return JsonResponse({'status':'ok'})
+    else:
+        return JsonResponse({'status':0})

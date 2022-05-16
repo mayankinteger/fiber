@@ -7,3 +7,4 @@ from activity.views.activities import *
 from activity.views.login import *
 from activity.views.logout import *
 from activity.views.reset_password import *
+from activity.views.ajax import *

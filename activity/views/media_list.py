@@ -53,15 +53,3 @@ def media_save(request):
         else:
             messages.error(request, " Something went wrong")
             return redirect('/media_list?activity_id='+act_id)
-
-#@csrf_exempt
-@login_required(login_url="/login")
-def media_delete(request):
-    if request.method == "POST":
-        id = request.POST.get("id")
-        #file_name = request.POST.get("file")
-        media_del = Activity_media.objects.get(pk=id)
-        media_del.delete()
-        return JsonResponse({'status':'ok'})
-    else:
-        return JsonResponse({'status':0})
