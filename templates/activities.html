@@ -264,14 +264,14 @@ label{
 																	</td>
 																	<td>
 																		<div class="text-center">
-																			<button type="button" class="btn btn-info waves-effect waves-light Remark" data-subtask="{{tasks.id}}"><i class="far fa-comment-dots"></i></button>
+																			<button type="button" class="btn btn-info waves-effect waves-light Remark" data-subtask="{{tasks.id}}">{{tasks.id|count_remark}}&nbsp;<i class="far fa-comment-dots"></i></button>
 																			<!--<button type="button" class="btn btn-info waves-effect waves-light Remark" data-subtask="{{tasks.id}}" data-toggle="modal" data-target="#remark_modal" ><i class="far fa-comment-dots"></i></button>-->
 																		</div>
 																	</td>
 																	<td>
 																		<div class="text-center">
 																			<button type="button" class="btn btn-info waves-effect waves-light Attach" 
-																			data-subtask="{{tasks.id}}"><i class="fas fa-paperclip"></i></button>
+																			data-subtask="{{tasks.id}}">{{tasks.id|count_media}}&nbsp;<i class="fas fa-paperclip"></i></button>
 																			<!--<button type="button" class="btn btn-info waves-effect waves-light Attach" 
 																			data-subtask="{{tasks.id}}" data-toggle="modal" data-target="#attachment_modal" ><i class="fas fa-paperclip"></i></button>-->
 																		</div>
@@ -308,7 +308,7 @@ label{
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title mt-0" id="remark_modal_Title">{{step}} Remark</h5>
+				<h5 class="modal-title mt-0" id="remark_modal_Title"></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -347,7 +347,7 @@ label{
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title mt-0" id="attachment_modal_Title">{{step}} Media</h5>
+				<h5 class="modal-title mt-0" id="attachment_modal_Title"></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -477,47 +477,6 @@ label{
 		  }
 		});
  	}
-	$(".delete_media").click(function(){
-		alert('hello');
-		//var fileid = $(this).data("file-id");
-		//alert(fileid);
-		
-		Swal.fire({
-					   title: "Are you sure?",
-					   text: "You won't be able to revert this!",
-					   type: "warning",
-					   showCancelButton: !0,
-					   confirmButtonColor: "#34c38f",
-					   cancelButtonColor: "#f46a6a",
-					   confirmButtonText: "Yes, delete it!",
-						preConfirm: function() {
-						
-						   var csr = $("input[name=csrfmiddlewaretoken]").val();
-							mydata = {page:'task_media_delete',id:fileid,csrfmiddlewaretoken:csr} 
-						 return new Promise(function(resolve) {
-						   $.ajax({
-							url: '{% url "ajax" %}',
-							type: 'POST',
-							data: mydata,
-						   dataType: "json"
-						 })
-						 .done(function(response){
-							Swal.fire({
-									 type: 'success',
-									 title: 'File deleted succesfully',
-									 confirmButtonColor: "#5156be",
-									 preConfirm: function() {
-										   window.location.reload();
-										}
-							   })
-							})
-						 .fail(function(){
-							Swal.fire('Oops...', 'Something went wrong!', 'error');
-						 });
-						 });
-					 }
-				   });
-		});
 </script>
 <!-- Required datatable js -->
 <script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
@@ -529,13 +488,9 @@ label{
 <script>
 	$(".save_button").click(function(){
 		var task_id = $(this).attr("id");
-		//alert(task_id)
 		var subtask = $("#subtask_id_"+task_id).val();
-		//alert(subtask)
 		var status = $("#status_id_"+task_id).val();
-		//alert(status_id)
 		var start_date = $("#startdate_id_"+task_id).val();
-		//alert(startdate_id)
 		var complete_date = $("#completedate_id_"+task_id).val();
 		
 		var csr = $("input[name=csrfmiddlewaretoken]").val();
@@ -559,7 +514,9 @@ label{
 <script>
 	$(".Attach").click(function(){
 		var task_id = $(this).attr("data-subtask");
+		var subtask_name = $("#subtask_id_"+task_id).val();
 		var csr = $("input[name=csrfmiddlewaretoken]").val();
+		//alert(subtask_name);
 		mydata = {page:'attachment_fetch',task_id:task_id, csrfmiddlewaretoken:csr};
 		//alert(mydata);
 		$.ajax({
@@ -570,6 +527,7 @@ label{
 			success: function(data){
 				//console.log(data);
 				$(".Attach_Body").html(data);
+				$("#attachment_modal_Title").html(subtask_name+" Media");
 				$('#attachment_modal').modal('show');
 				$("input[name=m_task_id]").val(task_id);
 			},
@@ -578,6 +536,7 @@ label{
 	});
 	$(".Remark").click(function(){
 		var task_id = $(this).attr("data-subtask");
+		var subtask_name = $("#subtask_id_"+task_id).val();
 		var csr = $("input[name=csrfmiddlewaretoken]").val();
 		mydata = {page:'remark_fetch',task_id:task_id,csrfmiddlewaretoken:csr};
 		//alert('bye');
@@ -587,6 +546,7 @@ label{
 			data: mydata,
 			success: function(data){
 				$(".Remark_Body").html(data);
+				$("#remark_modal_Title").html(subtask_name+" Remark");
 				$('#remark_modal').modal('show');
 				$("input[name=r_task_id]").val(task_id);
 			},

@@ -1,5 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
+from activity.models import *
 
 register = template.Library()
 
@@ -22,6 +23,16 @@ def toStr(integer):
 def mysplit(value):
     filename = value.split("/")
     return filename[-1]
+
+@register.filter
+def count_media(value):
+    task_media = Task_media.objects.filter(task_id=value)
+    return len(task_media)
+
+@register.filter
+def count_remark(value):
+    task_remark = Task_remark.objects.filter(task_id=value)
+    return len(task_remark)
 
 def job_status_list():
     Job_status = [
