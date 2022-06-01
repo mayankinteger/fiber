@@ -62,7 +62,7 @@ label{
 				<div class="card-body">
 					<div>
 						<label style="color:#3b5de7;" class="col-md-2">LUs - {{activity_data.lus}}</Label>
-						<label style="color:#3b5de7;" class="col-md-7">{{activity_data.pfp}}</Label>
+						<label style="color:#3b5de7;" class="col-md-7">PFP - {{activity_data.pfp}}</Label>
 					</div>
 					<div>
 						<label style="color:#ffffff; background-color:#3b5de7; text-align:center;" class="col-md-2">Aramis Drafting</Label>
@@ -202,7 +202,7 @@ label{
 		  $(".Type").val(type);
 	}
 	
-	/*$(".delete_media").click(function(){
+	{% comment %}(".delete_media").click(function(){
 		var fileid = $(this).data("file-id");
 		var filename = $(this).data("file-name");
 		var activity_da = $('.activity_da_class').val();
@@ -219,7 +219,7 @@ label{
 				},
 			});
 		}
-	});*/
+	});{% endcomment %}
 
 	$(".delete_media").click(function(){
 		var fileid = $(this).data("file-id");

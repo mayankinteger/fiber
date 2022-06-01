@@ -1,0 +1,70 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\Mayank Kumar> cd D:
+PS D:\> cd python\django\fiber
+PS D:\python\django\fiber> ./myprojectenv/Scripts/activate.ps1
+(myprojectenv) PS D:\python\django\fiber> heroku login
+ »   Warning: heroku update available from 7.53.0 to 7.60.1.
+heroku: Press any key to open up the browser to login or q to exit:
+Opening browser to https://cli-auth.heroku.com/auth/cli/browser/4a100733-b0b6-4228-98bf-fec2eb4c7ede?requestor=SFMyNTY.g2gDbQAAAA8xMDMuMTM0LjExMi4xMjZuBgCAtjNQgAFiAAFRgA.ZJNbL5RpwYVYgr-LJGgISNZVMM98v5pezzJLRC2JIKM
+Logging in... done
+Logged in as mayank.kumar@integertel.com
+(myprojectenv) PS D:\python\django\fiber> git add .
+(myprojectenv) PS D:\python\django\fiber> git commit -m "Update"
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+(myprojectenv) PS D:\python\django\fiber> heroku git:remote -a ospfiber
+ »   Warning: heroku update available from 7.53.0 to 7.60.1.
+set git remote heroku to https://git.heroku.com/ospfiber.git
+(myprojectenv) PS D:\python\django\fiber> git push heroku master
+Enumerating objects: 35, done.
+Counting objects: 100% (35/35), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (24/24), done.
+Writing objects: 100% (24/24), 124.21 KiB | 3.76 MiB/s, done.
+Total 24 (delta 17), reused 0 (delta 0), pack-reused 0
+remote: Compressing source files... done.
+remote: Building source:
+remote:
+remote: -----> Building on the Heroku-20 stack
+remote: -----> Using buildpack: heroku/python
+remote: -----> Python app detected
+remote: -----> Using Python version specified in runtime.txt
+remote:  !     Python has released a security update! Please consider upgrading to python-3.10.4
+remote:        Learn More: https://devcenter.heroku.com/articles/python-runtimes
+remote: -----> No change in requirements detected, installing from cache
+remote: -----> Using cached install of python-3.10.2
+remote: -----> Installing pip 22.0.4, setuptools 60.10.0 and wheel 0.37.1
+remote: -----> Installing SQLite3
+remote: -----> Installing requirements with pip
+remote: -----> Skipping Django collectstatic since the env var DISABLE_COLLECTSTATIC is set.
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote:
+remote: -----> Compressing...
+remote:        Done: 105.1M
+remote: -----> Launching...
+remote:        Released v10
+remote:        https://ospfiber.herokuapp.com/ deployed to Heroku
+remote:
+remote: Verifying deploy... done.
+To https://git.heroku.com/ospfiber.git
+   3e39a5e..d37fc11  master -> master
+(myprojectenv) PS D:\python\django\fiber> heroku pg:reset DATABASE
+ »   Warning: heroku update available from 7.53.0 to 7.60.1.
+ !    WARNING: Destructive action
+ !    postgresql-asymmetrical-44550 will lose all of its data
+ !
+ !    To proceed, type ospfiber or re-run this command with --confirm ospfiber
+
+> ospfiber
+Resetting postgresql-asymmetrical-44550... done
+(myprojectenv) PS D:\python\django\fiber> pg_dump --no-acl --no-owner -h localhost -U postgres fiber | heroku pg:psql
+
+(myprojectenv) PS D:\python\django\fiber> heroku run python manage.py migrate

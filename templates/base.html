@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 	{% load static %}
 <head>
@@ -10,9 +9,6 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-
-    <!-- jquery.vectormap css -->
-    <link href="{% static 'libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
 
     <!-- jquery.vectormap css -->
     <link href="{% static 'libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
@@ -99,6 +95,13 @@
         }
         .d-none{
             font-size:12px;
+        }
+        .col-form-label {
+            padding-top: calc(0.17rem + 1px);
+            padding-bottom: calc(0.47rem + 1px);
+            margin-bottom: 0;
+            font-size: inherit;
+            line-height: 1.5;
         }
 
         {% block css %} {% endblock %}

@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+
+{% block title %} Dashboard1 {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Dashboard</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">Dashboard 2</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+		<div class="col-xl-3">
+			<div class="card">
+				<div class="card-body">
+                    <div class="float-right">
+                        <form method="Post">
+                            {% csrf_token %}
+                            <div class="input-group input-group-sm">
+                                <select name="activity_month" class="custom-select custom-select-sm">
+                                    <option value="1" {% if act_month == 1 %}selected{% endif %}>Jan</option>
+                                    <option value="2" {% if act_month == 2 %}selected{% endif %}>Feb</option>
+                                    <option value="3" {% if act_month == 3 %}selected{% endif %}>Mar</option>
+                                    <option value="4" {% if act_month == 4 %}selected{% endif %}>Apr</option>
+                                    <option value="5" {% if act_month == 5 %}selected{% endif %}>May</option>
+                                    <option value="6" {% if act_month == 6 %}selected{% endif %}>Jun</option>
+                                    <option value="7" {% if act_month == 7 %}selected{% endif %}>Jul</option>
+                                    <option value="8" {% if act_month == 8 %}selected{% endif %}>Aug</option>
+                                    <option value="9" {% if act_month == 9 %}selected{% endif %}>Sep</option>
+                                    <option value="10" {% if act_month == 10 %}selected{% endif %}>Oct</option>
+                                    <option value="11" {% if act_month == 11 %}selected{% endif %}>Nov</option>
+                                    <option value="12" {% if act_month == 12 %}selected{% endif %}>Dec</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" type="submit">Go</button>
+                                    <!--<label class="input-group-text">Month</label>-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+					<h4 class="card-title mb-4">Activity</h4>
+
+					<div>
+						<div class="">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<p class="mb-2">Fielding</p>
+								</div>
+                                <div class="col-4 text-right">
+									<p class="mb-2">{{result.fielding_month}}</p>
+								</div>
+                                <div class="col-8">
+									<p class="mb-2">Planning</p>
+								</div>
+                                <div class="col-4 text-right">
+									<p class="mb-2">{{result.planning_month}}</p>
+								</div>
+                                <div class="col-8">
+									<p class="mb-2">Drafting</p>
+								</div>
+                                <div class="col-4 text-right">
+									<p class="mb-2">{{result.drafting_month}}</p>
+								</div>
+                                <div class="col-8">
+									<p class="mb-2">QC</p>
+								</div>
+                                <div class="col-4 text-right">
+									<p class="mb-2">{{result.qc_month}}</p>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Clients</h4>
+
+                    <div id="client-chart" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+        {% comment %}<div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="float-right">
+                        <ul class="nav nav-pills">
+                            {% if client_list %}
+                            {% for clients in client_list %}
+                            <li class="nav-item">
+                                <button class="btn nav-link {% if client == clients.id %}active{% endif %} client_button" value="{{clients.id}}" id="cl_btn_{{clients.id}}" data-id="{{clients.id}}">{{clients.name}}</button>
+                            </li>
+                            {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <h4 class="card-title mb-4">Clients</h4>
+
+                    <div id="client-chart" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>{% endcomment %}
+	</div>
+	<!-- end row -->
+
+</div>
+{% endblock %}
+<!-- End Page-content -->
+
+{% block script %}
+
+ <!-- apexcharts -->
+ <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
+
+ <script>
+var options = {
+    series: [{
+        name: "Amdocs",
+        type: "column",
+        data: [{{first_cl_result.cl_jan}}, {{first_cl_result.cl_feb}}, {{first_cl_result.cl_mar}}, {{first_cl_result.cl_apr}}, {{first_cl_result.cl_may}}, {{first_cl_result.cl_jun}}, {{first_cl_result.cl_jul}}, {{first_cl_result.cl_aug}}, {{first_cl_result.cl_sep}}, {{first_cl_result.cl_oct}}, {{first_cl_result.cl_nov}}, {{first_cl_result.cl_dec}}]
+    }, {
+        name: "Byers",
+        type: "column",
+        data: [{{sec_cl_result.cl_jan}}, {{sec_cl_result.cl_feb}}, {{sec_cl_result.cl_mar}}, {{sec_cl_result.cl_apr}}, {{sec_cl_result.cl_may}}, {{sec_cl_result.cl_jun}}, {{sec_cl_result.cl_jul}}, {{sec_cl_result.cl_aug}}, {{sec_cl_result.cl_sep}}, {{sec_cl_result.cl_oct}}, {{sec_cl_result.cl_nov}}, {{sec_cl_result.cl_dec}}]
+    }, {
+        name: "DraftPros",
+        type: "column",
+        data: [{{third_cl_result.cl_jan}}, {{third_cl_result.cl_feb}}, {{third_cl_result.cl_mar}}, {{third_cl_result.cl_apr}}, {{third_cl_result.cl_may}}, {{third_cl_result.cl_jun}}, {{third_cl_result.cl_jul}}, {{third_cl_result.cl_aug}}, {{third_cl_result.cl_sep}}, {{third_cl_result.cl_oct}}, {{third_cl_result.cl_nov}}, {{third_cl_result.cl_dec}}]
+    }],
+    chart: {
+        height: 275,
+        type: "line",
+        stacked: !1,
+        toolbar: {
+            show: !1
+        }
+    },
+    stroke: {
+        width: [0, 2, 2],
+        curve: "smooth",
+        dashArray: [0, 0, 0]
+    },
+    fill: {
+        opacity: [.85, .25, 1],
+        gradient: {
+            inverseColors: !1,
+            shade: "light",
+            type: "vertical",
+            opacityFrom: .85,
+            opacityTo: .55,
+            stops: [0, 100, 100, 100]
+        }
+    },
+    xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    },
+    colors: ["#3b5de7", "#eeb902", "#5fd195"],
+    markers: {
+        size: 0
+    }
+};
+(chart = new ApexCharts(document.querySelector("#client-chart"), options)).render();
+
+{% comment %}
+function client_chart(client_id){
+    var csr = $("input[name=csrfmiddlewaretoken]").val();
+		//alert(client_id);
+		mydata = {page:'dashboard',client_chart:client_id, csrfmiddlewaretoken:csr};
+        
+		//alert(mydata);
+		$.ajax({
+			url: "{% url 'ajax' %}",
+			method: "POST",
+			//data: "task_id="+task_id+"&csrfmiddlewaretoken="+csr,
+			data: mydata,
+			success: function(client_result){
+				//console.log(client_result.cl_may);
+                $('.client_button').removeClass('active');
+                $('#cl_btn_'+client_id).addClass('active');
+                var  options = {
+                    /*series: [{
+                        name: "Clients",
+                        type: "column",
+                        data: [client_result.cl_jan, client_result.cl_feb, client_result.cl_mar, client_result.cl_apr, client_result.cl_may, client_result.cl_jun, client_result.cl_jul, client_result.cl_aug, client_result.cl_sep, client_result.cl_oct, client_result.cl_nov, client_result.cl_dec]
+                    }],*/
+                    series: [{
+                        name: "Series A",
+                        type: "column",
+                        data: [23, 11, 53, 27, 13, 19, 22, 37, 21, 44, 22, 30]
+                    }, {
+                        name: "Series B",
+                        type: "area",
+                        data: [36, 47, 33, 41, 22, 37, 43, 21, 41, 56, 27, 43]
+                    }, {
+                        name: "Series C",
+                        type: "line",
+                        data: [46, 57, 43, 51, 32, 47, 53, 31, 51, 66, 37, 53]
+                    }],
+                    chart: {
+                        height: 275,
+                        type: "line",
+                        stacked: !1,
+                        toolbar: {
+                            show: !1
+                        }
+                    },
+                    stroke: {
+                        width: [0, 2, 2],
+                        curve: "smooth",
+                        dashArray: [0, 0, 4]
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: "15%",
+                            endingShape: "rounded"
+                        }
+                    },
+                    fill: {
+                        opacity: [.85, .25, 1],
+                        gradient: {
+                            inverseColors: !1,
+                            shade: "light",
+                            type: "vertical",
+                            opacityFrom: .85,
+                            opacityTo: .55,
+                            stops: [0, 100, 100, 100]
+                        }
+                    },
+                    xaxis: {
+                        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                    },
+                    colors: ["#3b5de7", "#eeb902", "#5fd195"],
+                    markers: {
+                        size: 0
+                    }
+                };
+                (chart = new ApexCharts(document.querySelector("#client-chart"), options)).render();
+			},
+		});
+		
+}
+
+    $(".client_button").click(function(){
+		//var client_id = $(this).attr("data-id");
+		var client_id = $(this).val();
+		client_chart(client_id);
+	});
+    client_chart(1);
+{% endcomment %}
+ </script>
+ <script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

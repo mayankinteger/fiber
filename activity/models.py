@@ -85,7 +85,7 @@ class Bay_users(AbstractBaseUser, PermissionsMixin):
     secret_code = models.CharField(max_length=100, blank=True, null=True)
     otp_code = models.IntegerField(blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
-    timestamp=models.DateTimeField(default=now)
+    timestamp=models.DateTimeField(default=timezone.now)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELD = []
 
@@ -112,7 +112,7 @@ class Fe_users(models.Model):
     web_password = models.CharField(max_length=225, blank=True, null=True)
     forgot_password_status = models.IntegerField(blank=True, null=True)
     token = models.CharField(max_length=225, blank=True, null=True)
-    timestamp=models.DateTimeField(default=now)
+    timestamp=models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.email
@@ -174,7 +174,7 @@ class Activity(models.Model):
     terminal = models.CharField(max_length=20, blank=True, null=True)
     added_by = models.ForeignKey(Bay_users, related_name='added_by', on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
-    timestamp=models.DateTimeField(default=now)
+    timestamp=models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.ticket
@@ -188,7 +188,7 @@ class Activity_media(models.Model):
     caption = models.TextField(blank=True, null=True)
     added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
-    timestamp=models.DateTimeField(default=now)
+    timestamp=models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.file_name)

@@ -62,3 +62,20 @@ def ajax(request):
             Activity_tasks.objects.filter(id=task_id).update(status=status, start_date=start_date, complete_date=complete_date)
             messages.success(request, " Your task has been updated successfully")
             return HttpResponse('done')
+        elif page == 'dashboard':
+            client_chart = request.POST.get("client_chart")
+            clients_result = Activity.objects.aggregate(
+                cl_jan=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='1')),
+                cl_feb=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='2')),
+                cl_mar=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='3')),
+                cl_apr=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='4')),
+                cl_may=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='5')),
+                cl_jun=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='6')),
+                cl_jul=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='7')),
+                cl_aug=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='8')),
+                cl_sep=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='9')),
+                cl_oct=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='10')),
+                cl_nov=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='11')),
+                cl_dec=models.Count('id', filter=models.Q(client_id=client_chart,rec_date__month='12')),
+            )
+            return JsonResponse(clients_result)

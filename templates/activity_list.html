@@ -43,6 +43,12 @@ label{
 table{
 	width:100% !important;
 }
+
+.custom_btn{
+	height:21px;
+	padding: 0.05rem 0.65rem;
+}
+
 {% endblock %}
 
 {% block link %}
@@ -77,7 +83,7 @@ table{
 	</div>
 	<!-- end page title -->
 
-	{% for message in messages  %}            
+	{% for message in messages  %}
       <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
             <strong>Message : </strong> {{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -95,6 +101,29 @@ table{
 				{{myFilter.form}}
 		    <button class="btn btn-primary" type="submit">Search</button>
 		  </form>-->
+					<form method="get" action="">
+						<div class="form-group row">
+							<label class="col-md-1 col-form-label">Client</label>
+							<div class="col-md-2">
+								<select class="form-control" name="client" id="Client">
+									<option value="">Select</option>
+									{% for single_client in client_list %}
+									<option value="{{single_client.id}}" {% if client_ins == single_client %} selected {% endif %}>{{single_client.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<label class="col-md-1 col-form-label">Start Date</label>
+							<div class="col-md-2">
+								<input class="form-control custom_datepicker" value="{{request.GET.start_date}}" type="text" name="start_date" autocomplete="off" title="Start Date" data-provide="datepicker" data-date-autoclose="true">
+							</div>
+							<label class="col-md-1 col-form-label">End Date</label>
+							<div class="col-md-2">
+								<input class="form-control custom_datepicker" value="{{request.GET.end_date}}" type="text" name="end_date" autocomplete="off" title="End Date" data-provide="datepicker" data-date-autoclose="true">
+							</div>
+							<button class="col-md-1 btn btn-sm btn-primary custom_btn" type="submit">Search</button>&nbsp;
+							<a href="{% url 'activity_list' %}" class="col-md-1 btn btn-sm btn-danger custom_btn">Reset</a>
+						</div>
+					</form>
 					<div class="table-responsive">
 					
 						<table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
@@ -168,6 +197,12 @@ table{
 {% endblock %}
 
 {% block script %}
+<script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<script>
+	$('.custom_datepicker').datepicker({
+		format: 'mm-dd-yyyy'
+	})
+</script>
 <!-- Required datatable js -->
 <script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>

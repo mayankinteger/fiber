@@ -81,7 +81,7 @@ label{
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label">Job receive date<span class="danger">*</span></label>
 							<div class="col-md-2">
-								<input class="form-control custom_datepicker" value="{{edit_recdate}}" type="text" autocomplete="off" name="rec_date" title="Job receive date" data-provide="datepicker" data-date-autoclose="true" required>
+								<input class="form-control custom_datepicker" value="{%if edit_recdate%}{{edit_recdate}}{%endif%}" type="text" autocomplete="off" name="rec_date" title="Job receive date" data-provide="datepicker" data-date-autoclose="true" required>
 							</div>
 							<label class="col-md-1 col-form-label">ECD</label>
 							<div class="col-md-2">
@@ -212,16 +212,25 @@ label{
 							<div class="col-md-5">
 								<textarea class="form-control" name="notes" rows=5 title="Notes For Fielders">{{edit_data.notes}}</textarea>
 							</div>
-							<div class="col-md-4">
-								<label class="col-form-label">Activity<span class="danger">*</span></label>
+							<!--<label class="col-md-1 col-form-label">Activity<span class="danger">*</span></label>
+							<div class="col-md-3">
 								{% for activities in activities_list %}
-									
-									
 									<div class="custom-control custom-checkbox">
 										<input type="checkbox" class="custom-control-input" value="{{activities.id}}" 
 										{% if activities in edit_data.activity.all  %} checked {% endif %}
 										 name="activity" id="activity_{{activities.id}}" >
-										<label class="custom-control-label" for="activity_{{activities.id}}">{{activities}}</label>
+										<label class="custom-control-label" style="padding-top: 3px;" for="activity_{{activities.id}}">{{activities}}</label>
+									</div>
+								{% endfor %}
+							</div>-->
+							<div class="col-md-4">
+								<label class="col-form-label">Activity<span class="danger">*</span></label>
+								{% for activities in activities_list %}
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" value="{{activities.id}}" 
+										{% if activities in edit_data.activity.all  %} checked {% endif %}
+										 name="activity" id="activity_{{activities.id}}" >
+										<label class="custom-control-label" style="padding-top: 3px;" for="activity_{{activities.id}}">{{activities}}</label>
 									</div>
 								{% endfor %}
 							</div>
