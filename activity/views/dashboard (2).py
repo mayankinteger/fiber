@@ -1,6 +1,9 @@
+from errno import EWOULDBLOCK
 from http import client
+from itertools import count
+from unicodedata import name
 from activity.views.import_data import *
-from activity.models import Activity
+from activity.models import Activity,Fe_users
 current_date = date.today()
 def dashboard(request):
     
@@ -79,11 +82,12 @@ def dashboard(request):
     context  = {'added': added,'fe_name':fe_name,'completed': completed,'complete_date':complete_date,'receive_date':receive_date,'ewo_list':ewo_list,'days_list':days_list, 'field_cl1_output':cl1_fe_data,'field_cl2_output':cl2_fe_data,'field_cl3_output':cl3_fe_data,'act_month':int(act_month)}
     return render(request, 'dashboard.html', context)
 
-
+    
 
 def dashboard1(request):
-    # year_count = Activity.objects.filter(rec_date__year='2022').count()
+     # year_count = Activity.objects.filter(rec_date__year='2022').count()
     client_list = Clients.objects.order_by('name')
+    # print(client_list)
     #clients_list = Activity.objects.filter(client_id=3, rec_date__month='5').count()
     client_chart = 1
     
@@ -106,6 +110,7 @@ def dashboard1(request):
         cl_nov=models.Count('id', filter=models.Q(client_id=1,rec_date__month='11')),
         cl_dec=models.Count('id', filter=models.Q(client_id=1,rec_date__month='12')),
     )
+    # print(first_cl_result)
     sec_cl_result = Activity.objects.aggregate(
         cl_jan=models.Count('id', filter=models.Q(client_id=2,rec_date__month='1')),
         cl_feb=models.Count('id', filter=models.Q(client_id=2,rec_date__month='2')),
@@ -141,6 +146,7 @@ def dashboard1(request):
         drafting_month=models.Count('id', filter=models.Q(activity=3,rec_date__month=act_month)),
         qc_month=models.Count('id', filter=models.Q(activity=4,rec_date__month=act_month)),
     )
+    # print(result)
     context = {'result': result, 'first_cl_result': first_cl_result, 'sec_cl_result': sec_cl_result, 'third_cl_result': third_cl_result, 'act_month':int(act_month), 'client_list':client_list}
     return render(request, 'dashboard1.html', context)  # type: ignore
 

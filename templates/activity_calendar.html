@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Activity Calendar {% endblock %}
+{% block title %} Fielder's Activity Calendar {% endblock %}
 
 {% block css %}
 /* Chrome, Safari, Edge, Opera */
@@ -52,17 +52,17 @@ label{
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-flex align-items-center justify-content-between">
-				<h4 class="page-title mb-0 font-size-18">Calendar</h4>
+				<h4 class="page-title mb-0 font-size-18">Fielder's Activity Calendar</h4>
 				{%if act_list%}
 				{%for activity in act_list%}
 				{{activity.assign_fielder.fname}}
 				{%endfor%}
 				{%endif%}
-				<div class="page-title-right">
+				<!--<div class="page-title-right">
 					<ol class="breadcrumb m-0">
 						<li class="breadcrumb-item active">Calendar</li>
 					</ol>
-				</div>
+				</div>-->
 
 			</div>
 		</div>
@@ -179,16 +179,7 @@ label{
 		function e() {}
 		e.prototype.init = function() {
 			if (i.isFunction(i.fn.fullCalendar)) {
-				i("#external-events .fc-event").each(function() {
-					var e = {
-						title: i.trim(i(this).text())
-					};
-					i(this).data("eventObject", e), i(this).draggable({
-						zIndex: 999,
-						revert: !0,
-						revertDuration: 0
-					})
-				});
+				
 				var e = new Date,
 					t = e.getDate(),
 					a = e.getMonth(),
@@ -205,22 +196,6 @@ label{
 						n.start = e, n.allDay = t, i("#calendar").fullCalendar("renderEvent", n, !0), i("#drop-remove").is(":checked") && i(this).remove()
 					},
 					events: {{act_data|safe}}
-				}), i("#add_event_form").on("submit", function(e) {
-					e.preventDefault();
-					var t = i(this).find(".new-event-form"),
-						a = t.val();
-					if (3 <= a.length) {
-						var n = "new" + Math.random().toString(36).substring(7);
-						i("#external-events").append('<div id="' + n + '" class="fc-event">' + a + "</div>");
-						var r = {
-							title: i.trim(i("#" + n).text())
-						};
-						i("#" + n).data("eventObject", r), i("#" + n).draggable({
-							revert: !0,
-							revertDuration: 0,
-							zIndex: 999
-						}), t.val("").focus()
-					} else t.focus()
 				})
 			} else alert("Calendar plugin is not installed")
 		}, i.CalendarPage = new e, i.CalendarPage.Constructor = e

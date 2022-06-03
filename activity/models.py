@@ -175,6 +175,7 @@ class Activity(models.Model):
     added_by = models.ForeignKey(Bay_users, related_name='added_by', on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
     timestamp=models.DateTimeField(default=timezone.now)
+    cmplt_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.ticket

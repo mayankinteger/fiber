@@ -9,7 +9,16 @@ def activity_calendar(request):
         start_date = datetime.datetime.strptime(str(activity.rec_date), '%Y-%m-%d').strftime('%Y-%m-%d')
         date_arr = start_date.split("-")
         #print(date_arr)
-        single_data = {'title':'"'+activity.assign_fielder.fname+" "+activity.assign_fielder.lname+'"','start':"new Date("+date_arr[0]+", "+str(int(date_arr[1])-1)+", "+date_arr[2]+")"}
+        market = ""
+        if activity.market==1:
+            market = "AL"
+        elif activity.market==2:
+            market = "LA"
+        elif activity.market==3:
+            market = "FL"
+        elif activity.market==4:
+            market = "MS"
+        single_data = {'title':'"'+activity.assign_fielder.fname+" "+activity.assign_fielder.lname+" - "+activity.ewo+" - "+market+'"','start':"new Date("+date_arr[0]+", "+str(int(date_arr[1])-1)+", "+str(int(date_arr[2]))+")"}
         act_data.append(single_data)
     act_data = str(act_data)
     #act_data = act_data[1:-1]
