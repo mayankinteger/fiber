@@ -19,10 +19,10 @@ def activity_calendar(request):
         elif activity.market==4:
             market = "MS"
         if activity.assign_fielder:
-            fielder_fname = activity.assign_fielder.fname
+            fielder_fname = activity.assign_fielder.fname+" - "
         else:
             fielder_fname = ""
-        single_data = {'title':'"'+fielder_fname+" - "+activity.ewo+" - "+market+'"','start':"new Date("+date_arr[0]+", "+str(int(date_arr[1])-1)+", "+str(int(date_arr[2]))+")"}
+        single_data = {'title':'"'+fielder_fname+activity.ewo+" - "+market+'"','start':"new Date("+date_arr[0]+", "+str(int(date_arr[1])-1)+", "+str(int(date_arr[2]))+")"}
         act_data.append(single_data)
     act_data = str(act_data)
     #act_data = act_data[1:-1]
