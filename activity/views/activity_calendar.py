@@ -27,6 +27,6 @@ def activity_calendar(request):
     act_data = str(act_data)
     #act_data = act_data[1:-1]
     act_data = act_data.replace("'", "")
-    print(act_data)
+    #print(act_data)
     params = {'act_data':act_data}
     return render(request, 'activity_calendar.html', params)
