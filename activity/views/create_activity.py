@@ -1,4 +1,5 @@
 from activity.views.import_data import *
+from activity.views.page_permission import *
 
 def send_mail(mydata, page, subject):
     mail_setting = Mail_settings.objects.get(priority=2)
@@ -51,6 +52,11 @@ def Enquiry(lis1):
 
 @login_required(login_url="/login")
 def create_activity(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     ##driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     #driver.implicitly_wait(30)
     #driver.get('http://127.0.0.1:8000/create_activity')

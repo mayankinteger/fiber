@@ -33,6 +33,7 @@ class BillForm(forms.ModelForm):
     invoicing_status_field =  forms.ChoiceField(choices = Invoicing_status,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     invoicing_remark = forms.CharField(widget=forms.Textarea(attrs={"placeholder": "Invoicing Remark", "rows":'2', "class": "form-control"}), required=False)
     invoicing_status_design =  forms.ChoiceField(choices = Invoicing_status,widget=forms.Select(attrs={'class':'form-control'}), required=False)
+    complete_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False)
     activity_id = forms.CharField(widget=forms.HiddenInput())
     added_by_id = forms.CharField(widget=forms.HiddenInput())
     class Meta:

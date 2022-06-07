@@ -1,3 +1,4 @@
+from activity.views.page_permission import *
 from activity.views.task_details import *
 from activity.views.create_activity import *
 from activity.views.activity_list import *

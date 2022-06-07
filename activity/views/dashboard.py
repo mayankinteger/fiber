@@ -1,9 +1,15 @@
 from http import client
 from activity.views.import_data import *
 from activity.models import Activity
+from activity.views.page_permission import *
+
 current_date = date.today()
 def dashboard(request):
-    
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     present = datetime.date.today()
     now = timezone.now()
     added = Activity.objects.aggregate(
@@ -25,7 +31,8 @@ def dashboard(request):
         this_week=models.Count('id', filter=models.Q(ecd__gte=(now - timedelta(days=7)).date())),
     )
 
-    ewos = Activity.objects.all().order_by('-id')[:10]
+    ewos = Activity.objects.filter(cmplt_date__isnull = False).order_by('-id')[:10]
+    print(ewos)
     days_list=[]
     ewo_list=[]
     complete_date = []
@@ -68,9 +75,9 @@ def dashboard(request):
             fe=models.Count('id', filter=models.Q(client_id=3,assign_fielder=i.id,rec_date__month=act_month))
             )
         cl3_fe_data.append(field_cl3_data['fe'])
-    print(cl1_fe_data)
-    print(cl2_fe_data)
-    print(cl3_fe_data)
+    #print(cl1_fe_data)
+    #print(cl2_fe_data)
+    #print(cl3_fe_data)
     
     fielder_list = Activity.objects.all()
     # print(fielder_list)
@@ -82,6 +89,11 @@ def dashboard(request):
 
 
 def dashboard1(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     # year_count = Activity.objects.filter(rec_date__year='2022').count()
     client_list = Clients.objects.order_by('name')
     #clients_list = Activity.objects.filter(client_id=3, rec_date__month='5').count()

@@ -1,7 +1,13 @@
 from activity.views.import_data import *
+from activity.views.page_permission import *
 
 @login_required(login_url="/login")
 def activities(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
     task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).order_by('id')

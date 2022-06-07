@@ -153,15 +153,15 @@ table{
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td>{{ i.ticket }}</td>
-								<td>{{ i.job_no }}</td>
-								<td>{{ i.rec_date|date:"m/d/Y" }}</td>
-								<td>{{ i.ewo }}</td>
-								<td>{{ i.job_type }}</td>
-								<td>{{ i.da }}</td>
-								<td>{{ i.lus }}</td>
-								<td>{{ i.wire_center }}</td>
-								<td>{{ i.f1cfas }}</td>
-								<td>{{ i.f2cfas }}</td>
+								<td>{% if i.job_no != "None" %}{{ i.job_no }}{% endif %}</td>
+								<td>{% if i.rec_date != "None" %}{{ i.rec_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.ewo != "None" %}{{ i.ewo }}{% endif %}</td>
+								<td>{% if i.job_type != "None" %}{{ i.job_type }}{% endif %}</td>
+								<td>{% if i.da != "None" %}{{ i.da }}{% endif %}</td>
+								<td>{% if i.lus != "None" %}{{ i.lus }}{% endif %}</td>
+								<td>{% if i.wire_center != "None" %}{{ i.wire_center }}{% endif %}</td>
+								<td>{% if i.f1cfas != "None" %}{{ i.f1cfas }}{% endif %}</td>
+								<td>{% if i.f2cfas != "None" %}{{ i.f2cfas }}{% endif %}</td>
 								<td>{% for activities in i.activity.all %}
 									{% if activities.id is 1 %}
 										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-11">F</span></a>

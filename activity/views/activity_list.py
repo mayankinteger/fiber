@@ -1,7 +1,13 @@
 from activity.views.import_data import *
+from activity.views.page_permission import *
 
 @login_required(login_url="/login")
 def activity_list(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     client_id = request.GET.get("client")
     start = request.GET.get("start_date")
     end = request.GET.get("end_date")

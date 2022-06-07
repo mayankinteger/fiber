@@ -275,3 +275,32 @@ class Task_remark(models.Model):
 
     def __str__(self):
         return str(self.task_id)
+
+class Task_remark(models.Model):
+    id = models.AutoField(primary_key=True)
+    task_id = models.ForeignKey(Activity_tasks, on_delete=models.CASCADE, blank=True, null=True)
+    remark = models.TextField(blank=True, null=True)
+    added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
+    added_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.task_id)
+
+class Page_role(models.Model):
+    id = models.AutoField(primary_key=True)
+    pages = models.CharField(max_length=225)
+    order_number = models.IntegerField(default=0)
+    admin = models.IntegerField(default=0)
+    sales = models.IntegerField(default=0)
+    customer_service = models.IntegerField(default=0)
+    operations = models.IntegerField(default=0)
+    production = models.IntegerField(default=0)
+    r_n_d = models.IntegerField(default=0)
+    hr = models.IntegerField(default=0)
+    account = models.IntegerField(default=0)
+    marketing = models.IntegerField(default=0)
+    logistics = models.IntegerField(default=0)
+    management = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.pages)

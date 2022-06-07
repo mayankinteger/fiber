@@ -21,3 +21,4 @@ from django.core.serializers import serialize
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.urls import resolve
