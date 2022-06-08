@@ -29,7 +29,7 @@ input[type=number] {
 	padding: 0.20rem 0.25rem;
 }
 .form-group {
-    margin-bottom: 0rem;
+    margin-bottom: 0px;
 }
 .container-fluid {
     font-size: 10px;
@@ -157,6 +157,12 @@ label{
 								<input class="form-control" value="{{edit_data.longitude}}" type="text" name="longitude" title="Longitude" placeholder="Longitude">
 							</div>
 						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Revised ECD</label>
+							<div class="col-md-2">
+								<input class="form-control custom_datepicker" value="{{edit_data.revised_ecd|date:'m-d-Y'}}" type="text" name="revised_ecd" autocomplete="off" title="Revised ECD" data-provide="datepicker" data-date-autoclose="true">
+							</div>
+						</div>
 					</div>
 				</div>
 				<div style="margin-bottom:5px;" class="card">
@@ -171,16 +177,12 @@ label{
 							<div class="col-md-2">
 								<input class="form-control" value="{{edit_data.f2job_no}}" type="text" name="f1job_no" title="F1 Job No#">
 							</div>
-							
-							
 						</div>
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label">F1 SOW</label>
 							<div class="col-md-5">
 								<input class="form-control" value="{{edit_data.f1_sow}}" type="text" name="f1_sow" title="F1 SOW">
 							</div>
-							
-							
 						</div>
 					</div>
 				</div>
@@ -211,18 +213,20 @@ label{
 							<div class="col-md-5">
 								<textarea class="form-control" name="notes" rows=5 title="Notes For Fielders">{{edit_data.notes}}</textarea>
 							</div>
-							<!--<label class="col-md-1 col-form-label">Activity<span class="danger">*</span></label>
-							<div class="col-md-3">
+							<label class="col-md-1 col-form-label">Activity<span class="danger">*</span></label>
+							<div class="col-md-4">
+								<div class="row">
 								{% for activities in activities_list %}
-									<div class="custom-control custom-checkbox">
+									<div class="custom-control custom-checkbox col-md-3">
 										<input type="checkbox" class="custom-control-input" value="{{activities.id}}" 
 										{% if activities in edit_data.activity.all  %} checked {% endif %}
 										 name="activity" id="activity_{{activities.id}}" >
 										<label class="custom-control-label" style="padding-top: 3px;" for="activity_{{activities.id}}">{{activities}}</label>
 									</div>
 								{% endfor %}
-							</div>-->
-							<div class="col-md-4">
+								</div>
+							</div>
+							<!--<div class="col-md-4">
 								<label class="col-form-label">Activity<span class="danger">*</span></label>
 								{% for activities in activities_list %}
 									<div class="custom-control custom-checkbox">
@@ -232,9 +236,9 @@ label{
 										<label class="custom-control-label" style="padding-top: 3px;" for="activity_{{activities.id}}">{{activities}}</label>
 									</div>
 								{% endfor %}
-							</div>
+							</div>-->
 						</div>
-						<div class="form-group row">
+						<div class="form-group row mt-2">
 							<label class="col-md-2 col-form-label">Assign Fielder</label>
 							<div class="col-md-2">
 								<select class="form-control" name="assign_fielder">
@@ -244,24 +248,25 @@ label{
 									{% endfor %}
 								</select>
 							</div>
-							<label class="col-md-1 col-form-label">Integer Eng</label>
+							<label class="col-md-1 col-form-label">Engineer 1</label>
 							<div class="col-md-2">
 								<select class="form-control" name="assign_int_eng">
 									<option value="0">--Select--</option>
 									{% for single_bayuser in bayusers_list %}
-									
+									{% if single_bayuser.role.id == 5 %}
 									<option value="{{single_bayuser.id}}" {% if edit_data.assign_int_eng == single_bayuser %} selected {% endif %}>{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
-									
-									
+									{% endif %}
 									{% endfor %}
 								</select>
 							</div>
-							<label class="col-md-1 col-form-label">Integer Eng</label>
+							<label class="col-md-1 col-form-label">Engineer 2</label>
 							<div class="col-md-2">
 								<select class="form-control" name="int_eng2">
 									<option value="0">--Select--</option>
 									{% for single_bayuser in bayusers_list %}
+									{% if single_bayuser.role.id == 5 %}
 									<option value="{{single_bayuser.id}}" {% if edit_data.int_eng2 == single_bayuser %} selected {% endif %}>{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
+									{% endif %}
 									{% endfor %}
 								</select>
 							</div>
@@ -273,7 +278,9 @@ label{
 								<select class="form-control" name="lead_eng">
 									<option value="0">--Select--</option>
 									{% for single_bayuser in bayusers_list %}
+									{% if single_bayuser.role.id == 5 and single_bayuser.if_lead == 1 %}
 									<option value="{{single_bayuser.id}}" {% if edit_data.lead_eng == single_bayuser %} selected {% endif %}>{{single_bayuser.fname}} {{single_bayuser.lname}}</option>
+									{% endif %}
 									{% endfor %}
 								</select>
 							</div>

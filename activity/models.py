@@ -129,11 +129,13 @@ class Activities(models.Model):
     PLANNING = 2
     DRAFTING = 3
     QCJob = 4
+    RESEARCH = 5
     TYPE_CHOICES = (
         (FIELDING, 'Fielding'),
         (PLANNING, 'Planning'),
         (DRAFTING, 'Drafting'),
         (QCJob, 'QC Job'),
+        (RESEARCH, 'Research'),
     )
     id = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, primary_key=True)
 
@@ -145,6 +147,7 @@ class Activity(models.Model):
     ticket = models.CharField(max_length=100, blank=True, null=True)
     rec_date = models.DateField(blank=True, null=True)
     ecd = models.DateField(blank=True, null=True, help_text='Date of ecd')
+    revised_ecd = models.DateField(blank=True, null=True)
     client_id = models.ForeignKey(Clients, on_delete=models.CASCADE, blank=True, null=True)
     market = models.IntegerField(default=0)
     ewo = models.CharField(max_length=225, blank=True, null=True)

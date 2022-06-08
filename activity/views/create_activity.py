@@ -100,6 +100,11 @@ def create_activity(request):
             ecd = datetime.datetime.strptime(ecd, '%m-%d-%Y').strftime('%Y-%m-%d')
         else:
             ecd = None
+        revised_ecd = request.POST.get("revised_ecd")
+        if revised_ecd:
+            revised_ecd = datetime.datetime.strptime(revised_ecd, '%m-%d-%Y').strftime('%Y-%m-%d')
+        else:
+            revised_ecd = None
         client_id = request.POST.get("client")
         client = Clients.objects.get(id=client_id)
         market = request.POST.get("market")
@@ -156,10 +161,10 @@ def create_activity(request):
         #file_name = request.FILES.get("build_package1")
         
         if rec_date != '':
-            activity_data = Activity(ticket=ticket_no,rec_date=rec_date, ecd=ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal, added_by=added_by, added_date=added_date)
+            activity_data = Activity(ticket=ticket_no,rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal, added_by=added_by, added_date=added_date)
             if formedit != '':
                 if Enquiry(activitylist):
-                    Activity.objects.filter(id=formedit).update(rec_date=rec_date, ecd=ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal)
+                    Activity.objects.filter(id=formedit).update(rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal)
                     u = Activity.objects.get(pk=formedit)
                     u.activity.clear()
                     u.activity.add(*activitylist)

@@ -20,6 +20,12 @@ def activities(request):
         step = 'Planning(design)'
     elif act_type == '3':
         step = 'Drafting'
+    elif act_type == '4':
+        step = 'QC Project'
+    elif act_type == '5':
+        step = 'Researcher'
+    elif act_type == '6':
+        step = 'Permit'
     elif act_type == '10':
         step = 'Invoicing'
     param = {'activitydata':activitydata, 'step':step, 'act_type':act_type, 'task_subtask':task_subtask, 'subtask_data':subtask_data}

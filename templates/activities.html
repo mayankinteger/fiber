@@ -25,7 +25,7 @@
     height: 2px;
     background: #e0e0e0;
     position: absolute;
-    width: 75%;
+    width: 82%;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -53,12 +53,12 @@ span.round-tab {
 }
 
 .wizard .nav-tabs > li {
-    width: 24.8%;
+    width: 13.94%;
 }
 .wizard .nav-tabs > li a i{
 	position: absolute;
-    top: -15px;
-    transform: translate(-50%, -50%);
+    top: -10px;
+    transform: translate(-25%, -50%);
 }
 .wizard .tab-pane {
     padding-top: 20px;
@@ -159,8 +159,17 @@ label{
 													<li role="presentation" class="{% if request.GET.step == '3' %}active{% else %}disabled{% endif %}">
 														<a href="/activities?step=3&id={{request.GET.id}}" data-toggle="drafting" aria-controls="drafting" role="tab" aria-expanded="true"><span class="round-tab">3</span> <i>Drafting</i></a>
 													</li>
+													<li role="presentation" class="{% if request.GET.step == '4' %}active{% else %}disabled{% endif %}">
+														<a href="/activities?step=4&id={{request.GET.id}}" data-toggle="qc_project" aria-controls="qc_project" role="tab" aria-expanded="true"><span class="round-tab">4</span> <i>QC Project</i></a>
+													</li>
+													<li role="presentation" class="{% if request.GET.step == '5' %}active{% else %}disabled{% endif %}">
+														<a href="/activities?step=5&id={{request.GET.id}}" data-toggle="researcher" aria-controls="researcher" role="tab" aria-expanded="true"><span class="round-tab">5</span> <i>Researcher</i></a>
+													</li>
+													<li role="presentation" class="{% if request.GET.step == '6' %}active{% else %}disabled{% endif %}">
+														<a href="/activities?step=6&id={{request.GET.id}}" data-toggle="permit" aria-controls="permit" role="tab" aria-expanded="true"><span class="round-tab">6</span> <i>Permit</i></a>
+													</li>
 													<li role="presentation" class="{% if request.GET.step == '10' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=10&id={{request.GET.id}}" data-toggle="invoicing" aria-controls="invoicing" role="tab" aria-expanded="true"><span class="round-tab">4</span> <i>Invoicing</i></a>
+														<a href="/activities?step=10&id={{request.GET.id}}" data-toggle="invoicing" aria-controls="invoicing" role="tab" aria-expanded="true"><span class="round-tab">7</span> <i>Invoicing</i></a>
 													</li>
 												</ul>
 											</div>

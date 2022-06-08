@@ -156,6 +156,15 @@ label{
 							{{form.added_by_id}}
 							{{form.subtask_id}}
 							{{form.type}}
+							{%if request.GET.step != '4' %}
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">{% if request.GET.step == '1' %}Digitizer{% elif request.GET.step == '2' %}Designer{% elif request.GET.step == '3' %}Drafter{% elif request.GET.step == '5' %}Researcher{%endif%} Name</label>
+								<div class="col-md-2">
+									{{form.doer}}
+									<!--<input class="form-control" value="" type="text" autocomplete="off" name="start_date" title="Start Date" readonly style="background-color:#e9e9e9;">-->
+								</div>
+							</div>
+							{%endif%}
 							<div class="form-group row">
 								<label class="col-md-2 col-form-label">Start date<span class="danger">*</span></label>
 								<div class="col-md-2">
@@ -175,8 +184,20 @@ label{
 								<div class="col-md-2">
 									{{form.footage}}
 								</div>-->
-								
-								
+							</div>
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Internal QC Rating(<span class="danger">%</span>)</label>
+								<div class="col-md-2">
+									{{form.internal_qc}}
+								</div>
+								<label class="col-md-2 col-form-label">External QC Rating(<span class="danger">%</span>)</label>
+								<div class="col-md-2">
+									{{form.external_qc}}
+								</div>
+								<label class="col-md-2 col-form-label">ATT QC Rating(<span class="danger">%</span>)</label>
+								<div class="col-md-2">
+									{{form.att_qc}}
+								</div>
 							</div>
 							<div class="form-group row mt-4 text-center">
 								<div class="col-md-12">

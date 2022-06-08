@@ -238,6 +238,7 @@ table{
     var table = $('#actdatatable').DataTable({
         orderCellsTop: true,
         fixedHeader: true,
+		"pageLength": 50,
         initComplete: function () {
             var api = this.api();
  

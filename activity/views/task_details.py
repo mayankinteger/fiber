@@ -12,7 +12,6 @@ def task_details(request):
     act_type = request.GET.get("step")
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
-        
         try:
             exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).latest('id')
         except:
@@ -97,6 +96,10 @@ def task_details(request):
         step = 'Planning(design)'
     elif act_type == '3':
         step = 'Drafting'
+    elif act_type == '4':
+        step = 'QC Job'
+    elif act_type == '5':
+        step = 'Research'
     elif act_type == '10':
         step = 'Invoicing'
     
