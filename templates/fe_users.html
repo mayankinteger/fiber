@@ -1,0 +1,563 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Field Users {% endblock %}
+
+{% block css %}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.danger{
+	color:#ff715b;
+}
+.col-form-label, .form-control{
+	font-size:10px;
+	color:black;
+}
+.form-control-sm{
+    display:none;
+}
+
+.dataTables_filter{
+    display:none;
+}
+.form-control{
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	padding: 0.20rem 0.25rem;
+}
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.container-fluid {
+    font-size: 10px;
+}
+.fa-big{
+    font-size: 15px;
+}
+label{
+	font-weight: 400;
+}
+.search_input{
+	width:100%;
+	height: calc(0.6em + 0.9rem + 1px);
+	border-radius:0px;
+	border:1px solid;
+	padding: 0.20rem 0.25rem;
+}
+{% comment %} button{
+    margin:0% 40%;
+} {% endcomment %}
+.custom-select {
+	//background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right 0.75rem center/8px 10px;
+	background: #fff;
+}
+table{
+	width:100% !important;
+}
+.custom_btn{
+	height:21px;
+	padding: 0.05rem 0.65rem;
+}
+{% endblock %}
+
+{% block link %}
+<!-- Plugins css -->
+<link href="{% static 'libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<!--Sweat alert-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_content %}
+<div class="page-content">
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12"><b>Fielder Detail</b></p>
+			
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	{% for message in messages  %}            
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endfor %}  
+
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+                <input type="hidden" name="form_edit_id" value="{{edit_data.id}}">
+				<div style="margin-bottom:5px;" class="card">
+					<div class="card-body">
+						{% comment %} <h6 style="color:#0caadc;">General Details</h6> {% endcomment %}
+						<div class="form-group row">
+                            <label class="col-md-2 col-form-label">First Name</label>
+                            <div class="col-md-4">
+                                <input class="form-control" value="{{edit_data.fname}}" type="text" name="fname"  id = "fname" placeholder = "First Name" title="First Name" >
+                            </div>
+                            <label class="col-md-1 col-form-label">Last Name</label>
+                            <div class="col-md-4">
+                                <input class="form-control" value="{{edit_data.lname}}" type="text" name="lname"  id = "lname" placeholder = "Last Name" title="Last Name" >
+                            </div>
+						</div>
+						<div class="form-group row">
+                            <label class="col-md-2 col-form-label">Cell Number</label>
+                            <div class="col-md-4">
+                                <input class="form-control" value="{{edit_data.cell_number}}" type="number" name="cellnumber"  placeholder = "(999) 999-9999" title="cellnumber" id="cellnumber">
+                            </div>
+                            <label class="col-md-1 col-form-label">Email</label>
+                            <div class="col-md-4">
+                                <input class="form-control" value="{{edit_data.email}}" type="email" name="email" id="email"  placeholder = "example@integertel.com" title="email">
+                                {% if request.GET.id %}
+                                    <input class="form-control" type="hidden" value="{{edit_data.email}}" name="check_email">
+                                {% endif %}
+                            </div>
+							
+							
+						</div>
+						
+						<div class="form-group row">
+                            <label class="col-md-2 col-form-label">Supervisor<span class="danger"></span></label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="supervisor" id="supervisor" >
+                                    <option value="1">Select</option>
+                                    <option value="1">1</option>
+                                    
+                                    <option value="{{edit_data.supervisor}}" ></option>
+                                    
+                                </select>
+                            </div>
+                            {% if not request.GET.id %}
+							<label class="col-md-1 col-form-label">Password</label>
+							<div class="col-md-4">
+								<input class="form-control" value="{{edit_data.password}}" type="Password" id = "password" name="password" title="Password" placeholder="Password" required>
+							</div>
+							{% endif %}
+						</div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">State<span class="danger"></span></label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="state" id="state" >
+                                    <option value="">Select</option>
+                                    <option value="Alaska"{% if edit_data.state == "Alaska" %} selected="selected"{% endif %}>Alaska</option>
+                                    <option value="Alabama"{% if edit_data.state == "Albama" %} selected="selected"{% endif %}>Alabama</option>
+                                    <option value="Arizona"{% if edit_data.state == "Arizona" %} selected="selected"{% endif %}>Arizona</option>
+                                    <option value="Arkansas"{% if edit_data.state == "Arkansas" %} selected="selected"{% endif %}>Arkansas</option>
+                                    <option value="California"{% if edit_data.state == "California" %} selected="selected"{% endif %}>California</option>
+                                    <option value="Colorado"{% if edit_data.state == "Colorado" %} selected="selected"{% endif %}>Colorado</option>
+                                    <option value="Conneticut"{% if edit_data.state == "Conneticut" %} selected="selected"{% endif %}>Conneticut</option>
+                                    <option value="Delaware"{% if edit_data.state == "Delaware" %} selected="selected"{% endif %}>Delaware</option>
+                                    <option value="Florida"{% if edit_data.state == "Florida" %} selected="selected"{% endif %}>Florida</option>
+                                    <option value="Georgia"{% if edit_data.state == "Gregoria" %} selected="selected"{% endif %}>Gregoria</option>
+                                    <option value="Hawaii"{% if edit_data.state == "Hawaii" %} selected="selected"{% endif %}>Hawaii</option>
+                                    <option value="Idaho"{% if edit_data.state == "Idaho" %} selected="selected"{% endif %}>Idaho</option>
+                                    <option value="Illinois"{% if edit_data.state == "Illinois" %} selected="selected"{% endif %}>Illinois</option>
+                                    <option value="Indiana"{% if edit_data.state == "Indiana" %} selected="selected"{% endif %}>Indiana</option>
+                                    <option value="Iowa"{% if edit_data.state == "Iowa" %} selected="selected"{% endif %}>Iowa</option>
+                                    <option value="Kansas"{% if edit_data.state == "Kansas" %} selected="selected"{% endif %}>Kansas</option>
+                                    <option value="Kentucky"{% if edit_data.state == "Kentucky" %} selected="selected"{% endif %}>Kentucky</option>
+                                    <option value="Maine"{% if edit_data.state == "Maine" %} selected="selected"{% endif %}>Maine</option>
+                                    <option value="Maryland"{% if edit_data.state == "Maryland" %} selected="selected"{% endif %}>Maryland</option>
+                                    <option value="Massachusetts"{% if edit_data.state == "Massachusetts" %} selected="selected"{% endif %}>Massachusetts</option>
+                                    <option value="Michigan"{% if edit_data.state == "Michigan" %} selected="selected"{% endif %}>Michigan</option>
+                                    <option value="Minnesota"{% if edit_data.state == "Minnesota" %} selected="selected"{% endif %}>Minnesota</option>
+                                    <option value="Utah"{% if edit_data.state == "Utah" %} selected="selected"{% endif %}>Utah</option>
+                                    <option value="Oregon"{% if edit_data.state == "Oregon" %} selected="selected"{% endif %}>Oregon</option>
+                                    <option value="Ohio"{% if edit_data.state == "Ohio" %} selected="selected"{% endif %}>Ohio</option>
+                                    <option value="New York"{% if edit_data.state == "New York" %} selected="selected"{% endif %}>New York</option>
+                                    <option value="Nevada"{% if edit_data.state == "Nevada" %} selected="selected"{% endif %}>Nevada</option>
+                                    <option value="Washington"{% if edit_data.state == "Washington" %} selected="selected"{% endif %}>Washington</option>
+                                    <option value="Virginia"{% if edit_data.state == "Virginia" %} selected="selected"{% endif %}>Virginia</option>
+                                    <option value="Texas"{% if edit_data.state == "Texas" %} selected="selected"{% endif %}>Texas</option>
+                                    <option value="West Virginia"{% if edit_data.state == "West Virginia" %} selected="selected"{% endif %}>West Virginia</option>
+                                    <option value="Vermont"{% if edit_data.state == "Vermont" %} selected="selected"{% endif %}>Vermont</option>
+                                    <option value="Wyoming"{% if edit_data.state == "Wyoming" %} selected="selected"{% endif %}>Wyoming</option>
+                                    <option value="South Dakota"{% if edit_data.state == "South Dakota" %} selected="selected"{% endif %}>South Dakota</option>
+                                    <option value="Oklahoma"{% if edit_data.state == "Oklahoma" %} selected="selected"{% endif %}>Oklahoma</option>
+                                    <option value="New Jersey"{% if edit_data.state == "New Jersey" %} selected="selected"{% endif %}>New Jersey</option>
+                                    <option value="New Mexico"{% if edit_data.state == "New Mexico" %} selected="selected"{% endif %}>New Mexico</option>
+                                    <option value="New Hemisphere"{% if edit_data.state == "New Hemisphere" %} selected="selected"{% endif %}>New Hemisphere</option>
+                                    <option value="Mississippi"{% if edit_data.state == "Mississippi" %} selected="selected"{% endif %}>Mississippi</option>
+                                    <option value="Montana"{% if edit_data.state == "Montana" %} selected="selected"{% endif %}>Montana</option>
+                                    
+                                </select>
+                            </div>
+							
+						</div>
+						<div class="form-group row">
+                            <button style="margin:auto;" class="col-md-2 btn btn-sm btn-primary">Submit</button>
+						</div>
+					</div>
+                    
+				</div>
+                
+                
+				
+		</div>
+	</div>
+    <div class="row">
+		<div class="col-12">
+			<div class="page-title-box d-flex align-items-center justify-content-between">
+				<p class="page-title mb-0 font-size-12"><b>Fielders List</b></p>
+			
+			</div>
+		</div>
+	</div>
+    <div class='row'>
+        <div class="col-lg-12">
+            
+            <div style="margin-bottom:5px;" class="card">
+                
+            
+            
+                <div class="card-body">	
+                    <div class="table-responsive">
+                        {% comment %} <div id="actdatatable_wrapper " class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="actdatatable_length">
+                                        <label>
+                                            Show 
+                                            <select name="actdatatable_length" aria-controls="actdatatable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="25">25</option>
+                                            </select>
+                                             enteries
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>                    {% endcomment %}
+                        <div class="row"></div>
+
+                        <table id="actdatatable" class="table table-bordered" style="border-collapse: collapse; border-spacing: 0;">
+
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Cell Number</th>
+                                    <th>State</th>
+                                    
+                                    <th>Supervisor Id</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--<td><span class="badge badge-soft-danger font-size-12">F</span></td>
+                            <td><span class="badge badge-soft-primary font-size-12">P</span></td>
+                            <td><span class="badge badge-soft-success font-size-12">D</span></td>-->
+                            
+                            {% for i in fe_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.fname}}</td>
+                                <td>{{i.lname}}</td>
+                                <td>{{i.email}}</td>
+                                <td>{{i.cell_number}}</td>
+                                <td>{{i.state}}</td>
+                                <td>{{i.superviser_id}}</td>
+                                
+                                <td>
+                                
+                                    {% if i.is_active == 1 %}
+                                    
+                                    <a title="Change to active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=0><span><i class='mdi mdi-account-multiple-remove-outline fa-big'></i></span></a>&nbsp;
+                                    {% elif i.is_active == 0 %}
+                                    
+                                    <a  title="Change to not active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=1><span><i class='mdi mdi-account-multiple-check-outline fa-big'></i></span></a>&nbsp;
+                                    {% endif %}
+                                    <a title="Edit" href='/fe_users?id={{ i.id }}'><span><i class='mdi mdi-pencil-outline fa-big'></i></span></a>&nbsp;
+                                    
+                                    <a title="Change Password" href='javascript:void(0);' class='change_password' change_id="{{ i.id }}"><span><i class='mdi mdi-cloud-lock-outline fa-big'></i></span></a>&nbsp;
+                                    
+                                    <a title="Delete" href='javascript:void(0);' class="delete_user" delete-id="{{ i.id }}"><span><i class='mdi mdi-delete fa-big' ></i></span></a></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="change_password_modal" tabindex="-1" role="dialog" aria-labelledby="change_password_modal_title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title mt-0" id="change_password_modal_title">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form  method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form-group row">
+						<input type="hidden" name="fe_id" value="">
+					</div>
+			   		<div class="form-group row">
+						<label class="col-md-4 col-form-label">New Password</label>
+						<div class="col-md-8">
+							<input class="form-control" type="password" name="pass_word" placeholder="Enter New password">
+						</div>
+					</div>
+			   		<div class="form-group row">
+						<label class="col-md-4 col-form-label">Confirm Password</label>
+						<div class="col-md-8">
+							<input class="form-control" type="password" name="cpassword" placeholder="Confirm New Password">
+						</div>
+					</div>
+                    <div class="form-group row">
+                        <a class="col-md-12 btn btn-primary save_password"  href='javascript:void(0);' style="margin:0px 0px 0px 0px">Change Password</a>
+                    </div>
+				</form>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+	<!-- end row -->
+</div>
+<!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+
+<!-- Plugins js -->
+<script src="{% static 'libs/dropzone/min/dropzone.min.js' %}"></script>
+
+
+    <!-- Required datatable js -->
+    <script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Buttons examples -->
+    <script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'libs/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'libs/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+    <!-- Responsive examples -->
+    <script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+    
+    <!--Sweat alert-->
+    <script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+    
+    <!-- Datatable init js -->
+    <script src="{% static 'js/pages/datatables.init.js' %}"></script>
+    <script>
+        $(".save_password").click(function(){
+            var fe_id = $("input[name=fe_id]").val();
+            var password = $("input[name=pass_word]").val();
+            var cpassword = $("input[name=cpassword]").val();
+            var csr = $("input[name=csrfmiddlewaretoken]").val();
+            if (password == '' || cpassword == '' ){
+                alert("Both password field must be filled! ");
+            }
+            else if (password!=cpassword){
+                alert(" Password and Confirm Password doesn't match! ")    
+            }
+            else
+            {
+                 mydata = {page:'fe_change_password',fe_id:fe_id,csrfmiddlewaretoken:csr,password:password,cpassword:cpassword};
+                $.ajax({
+                    url: "{% url 'ajax' %}",
+                    method: "POST",
+                    data: mydata,
+                    success: function(data){
+                        window.location.reload();
+                    },
+                });
+            }
+        });
+    </script>
+    <script>
+        $(".change_password").click(function(){
+            var user_id = $(this).attr("change_id");
+            $('#change_password_modal').modal('show');
+            $("input[name=fe_id]").val(user_id);
+            
+        });
+    </script>
+    <script>
+       
+        $(".user_status").click(function(){
+        var feuser_id = $(this).attr("user-id");
+        var status = $(this).attr("change-value");
+        
+        
+         Swal.fire({
+                title: "Are you sure you want to change status?",
+                text: "You won't be able to revert this!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Yes, Change it!",
+                
+                preConfirm: function() {
+                
+                    var csrf = $("input[name=csrfmiddlewaretoken]").val();
+                    mydata = {page:'feuser_status_change',feuser_id:feuser_id,status:status,csrfmiddlewaretoken:csrf} 
+                    return new Promise(function(resolve) {
+                    $.ajax({
+                    url: '{% url "ajax" %}', 
+                    type: 'POST',
+                    data: mydata,
+                    dataType: "json"
+                    })
+                    .done(function(response){
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Status Changed',
+                        confirmButtonColor: "#5156be",
+                        preConfirm: function() {
+                            window.location.reload();
+                            }
+                        })
+                    })
+                    .fail(function(){
+                    Swal.fire('Oops...', 'Something went wrong!', 'error');
+                    });
+                    });
+                }
+            });
+        });
+        </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+            $('#actdatatable thead tr')
+               .clone(true)
+               .addClass('filters')
+               .appendTo('#actdatatable thead');
+        
+           var table = $('#actdatatable').DataTable({
+               orderCellsTop: true,
+               fixedHeader: true,
+               initComplete: function () {
+                   var api = this.api();
+        
+                   // For each column
+                   api
+                       .columns()
+                       .eq(0)
+                       .each(function (colIdx) {
+                           // Set the header cell to contain the input element
+                           var cell = $('.filters th').eq(
+                               $(api.column(colIdx).header()).index()
+                           );
+                           var title = $(cell).text();
+                           $(cell).html('<input type="text" class="search_input" placeholder="' + title + '" />');
+        
+                           // On every keypress in this input
+                           $(
+                               'input',
+                               $('.filters th').eq($(api.column(colIdx).header()).index())
+                           )
+                               .off('keyup change')
+                               .on('keyup change', function (e) {
+                                   e.stopPropagation();
+        
+                                   // Get the search value
+                                   $(this).attr('title', $(this).val());
+                                   var regexr = '({search})'; //$(this).parents('th').find('select').val();
+        
+                                   var cursorPosition = this.selectionStart;
+                                   // Search the column for that value
+                                   api
+                                       .column(colIdx)
+                                       .search(
+                                           this.value != ''
+                                               ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                               : '',
+                                           this.value != '',
+                                           this.value == ''
+                                       )
+                                       .draw();
+        
+                                   $(this)
+                                       .focus()[0]
+                                       .setSelectionRange(cursorPosition, cursorPosition);
+                               });
+                       });
+               }
+           });
+           
+       });
+        </script>
+       
+        <script>
+       
+            $(".delete_user").click(function(){
+            var act_id = $(this).attr("delete-id");
+            
+             Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Yes, delete it!",
+                
+                preConfirm: function() {
+                
+                    var csrf = $("input[name=csrfmiddlewaretoken]").val();
+                    mydata = {page:'fielder_delete',act_id:act_id,csrfmiddlewaretoken:csrf} 
+                    return new Promise(function(resolve) {
+                    $.ajax({
+                    url: '{% url "ajax" %}', 
+                    type: 'POST',
+                    data: mydata,
+                    dataType: "json"
+                    })
+                    .done(function(response){
+                    Swal.fire({
+                                type: 'success',
+                                title: 'Activity Deleted',
+                                confirmButtonColor: "#5156be",
+                                preConfirm: function() {
+                                    window.location.reload();
+                                }
+                        })
+                    })
+                    .fail(function(){
+                    Swal.fire('Oops...', 'Something went wrong!', 'error');
+                    });
+                    });
+                }
+            });
+            });
+            </script>
+{% endblock %}

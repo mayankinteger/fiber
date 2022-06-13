@@ -119,10 +119,10 @@ label{
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-flex align-items-center justify-content-between">
-				<p class="page-title mb-0 font-size-12"><b>{{activitydata.ticket}}>>{{activitydata.job_no}}>>DA {{activitydata.da}}>>{{step}}</b></p>
+				<p class="page-title mb-0 font-size-12"><b>{{activitydata.ticket}}>>EWO: {{activitydata.ewo}}>>DA: {{activitydata.da}}>>{{step}}</b></p>
 				<div class="page-title-right">
-					<a class="" href="/view_activity?id={{ request.GET.id }}">View Activity</a>&nbsp;
-					<a class="" href="/media_list?activity_id={{ request.GET.id }}">Media File</a>
+					<a class="" href="/view_activity?id={{ request.GET.id }}"><b><u>View Activity</u></b></a>&nbsp;
+					<a class="" href="/media_list?activity_id={{ request.GET.id }}"><b><u>Media File</u></b></a>
 				</div>
 			</div>
 		</div>
@@ -150,20 +150,20 @@ label{
 											<div class="wizard-inner">
 												<div class="connecting-line"></div>
 												<ul class="nav nav-tabs" role="tablist">
+													<li role="presentation" class="{% if request.GET.step == '5' %}active{% else %}disabled{% endif %}">
+														<a href="/activities?step=5&id={{request.GET.id}}" data-toggle="researcher" aria-controls="researcher" role="tab" aria-expanded="true"><span class="round-tab">1</span> <i>Research</i></a>
+													</li>
 													<li role="presentation" class="{% if request.GET.step == '1' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=1&id={{request.GET.id}}" data-toggle="fielding" aria-controls="fielding" role="tab" aria-expanded="true"><span class="round-tab">1</span> <i>Fielding</i></a>
+														<a href="/activities?step=1&id={{request.GET.id}}" data-toggle="fielding" aria-controls="fielding" role="tab" aria-expanded="true"><span class="round-tab">2</span> <i>Fielding</i></a>
 													</li>
 													<li role="presentation" class="{% if request.GET.step == '2' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=2&id={{request.GET.id}}" data-toggle="planning" aria-controls="planning" role="tab" aria-expanded="true"><span class="round-tab">2</span> <i>Planning(design)</i></a>
+														<a href="/activities?step=2&id={{request.GET.id}}" data-toggle="planning" aria-controls="planning" role="tab" aria-expanded="true"><span class="round-tab">3</span> <i>Planning(Design)</i></a>
 													</li>
 													<li role="presentation" class="{% if request.GET.step == '3' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=3&id={{request.GET.id}}" data-toggle="drafting" aria-controls="drafting" role="tab" aria-expanded="true"><span class="round-tab">3</span> <i>Drafting</i></a>
+														<a href="/activities?step=3&id={{request.GET.id}}" data-toggle="drafting" aria-controls="drafting" role="tab" aria-expanded="true"><span class="round-tab">4</span> <i>Drafting</i></a>
 													</li>
 													<li role="presentation" class="{% if request.GET.step == '4' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=4&id={{request.GET.id}}" data-toggle="qc_project" aria-controls="qc_project" role="tab" aria-expanded="true"><span class="round-tab">4</span> <i>QC Project</i></a>
-													</li>
-													<li role="presentation" class="{% if request.GET.step == '5' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=5&id={{request.GET.id}}" data-toggle="researcher" aria-controls="researcher" role="tab" aria-expanded="true"><span class="round-tab">5</span> <i>Researcher</i></a>
+														<a href="/activities?step=4&id={{request.GET.id}}" data-toggle="qc_project" aria-controls="qc_project" role="tab" aria-expanded="true"><span class="round-tab">5</span> <i>QC Project</i></a>
 													</li>
 													<li role="presentation" class="{% if request.GET.step == '6' %}active{% else %}disabled{% endif %}">
 														<a href="/activities?step=6&id={{request.GET.id}}" data-toggle="permit" aria-controls="permit" role="tab" aria-expanded="true"><span class="round-tab">6</span> <i>Permit</i></a>
@@ -177,11 +177,11 @@ label{
 												<div class="tab-content" id="main_form">
 													<div class="tab-pane active" role="tabpanel" id="fielding">
 														<h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;"></h6>
-														
+														<a href="/task_details?step={{request.GET.step}}&id={{request.GET.id}}" class="btn btn-xs btn-primary pull-right text-white">Update Status</a><br>
 														<div class="row upper_area">
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
-																	<label>Job receive date : {{activitydata.rec_date|date:"m/d/Y"}}</label> 
+																	<label>Job Receive Date : {{activitydata.rec_date|date:"m/d/Y"}}</label> 
 																</div>
 															</div>
 															<div class="col-md-3 col-sm-4">

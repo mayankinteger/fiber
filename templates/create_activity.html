@@ -78,7 +78,7 @@ label{
 					<div class="card-body">
 						<h6 style="color:#0caadc;">General Details</h6>
 						<div class="form-group row">
-							<label class="col-md-2 col-form-label">Job receive date<span class="danger">*</span></label>
+							<label class="col-md-2 col-form-label">Job Receive Date<span class="danger">*</span></label>
 							<div class="col-md-2">
 								<input class="form-control custom_datepicker" value="{%if edit_recdate%}{{edit_recdate}}{%endif%}" type="text" autocomplete="off" name="rec_date" title="Job receive date" data-provide="datepicker" data-date-autoclose="true" required>
 							</div>
@@ -161,6 +161,10 @@ label{
 							<label class="col-md-2 col-form-label">Revised ECD</label>
 							<div class="col-md-2">
 								<input class="form-control custom_datepicker" value="{{edit_data.revised_ecd|date:'m-d-Y'}}" type="text" name="revised_ecd" autocomplete="off" title="Revised ECD" data-provide="datepicker" data-date-autoclose="true">
+							</div>
+							<label class="col-md-1 col-form-label">Client Ticket</label>
+							<div class="col-md-2">
+								<input class="form-control" value="{{edit_data.client_ticket}}" type="text" name="client_ticket" title="Client Ticket">
 							</div>
 						</div>
 					</div>

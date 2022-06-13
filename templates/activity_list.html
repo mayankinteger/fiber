@@ -70,6 +70,7 @@ table{
 				<div class="page-title-right">
 					<!--<p class="card-title">-->
 						<div>
+							<span class="badge badge-soft-warning font-size-11">R - Research</span>
 							<span class="badge badge-soft-danger font-size-11">F - Fielding</span>
 							<span class="badge badge-soft-primary font-size-11">P - Planning</span>
 							<span class="badge badge-soft-success font-size-11">D - Drafting</span>
@@ -153,24 +154,27 @@ table{
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td>{{ i.ticket }}</td>
-								<td>{% if i.job_no != "None" %}{{ i.job_no }}{% endif %}</td>
-								<td>{% if i.rec_date != "None" %}{{ i.rec_date|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.ewo != "None" %}{{ i.ewo }}{% endif %}</td>
-								<td>{% if i.job_type != "None" %}{{ i.job_type }}{% endif %}</td>
-								<td>{% if i.da != "None" %}{{ i.da }}{% endif %}</td>
-								<td>{% if i.lus != "None" %}{{ i.lus }}{% endif %}</td>
-								<td>{% if i.wire_center != "None" %}{{ i.wire_center }}{% endif %}</td>
-								<td>{% if i.f1cfas != "None" %}{{ i.f1cfas }}{% endif %}</td>
-								<td>{% if i.f2cfas != "None" %}{{ i.f2cfas }}{% endif %}</td>
+								<td>{% if i.job_no %}{{ i.job_no }}{% endif %}</td>
+								<td>{% if i.rec_date %}{{ i.rec_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.ewo %}{{ i.ewo }}{% endif %}</td>
+								<td>{% if i.job_type %}{{ i.job_type }}{% endif %}</td>
+								<td>{% if i.da %}{{ i.da }}{% endif %}</td>
+								<td>{% if i.lus %}{{ i.lus }}{% endif %}</td>
+								<td>{% if i.wire_center %}{{ i.wire_center }}{% endif %}</td>
+								<td>{% if i.f1cfas %}{{ i.f1cfas }}{% endif %}</td>
+								<td>{% if i.f2cfas %}{{ i.f2cfas }}{% endif %}</td>
 								<td>{% for activities in i.activity.all %}
+									{% if activities.id is 5 %}
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-warning font-size-11">R</span></a>
+									{% endif %}
 									{% if activities.id is 1 %}
-										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-11">F</span></a>
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-danger font-size-11">F</span></a>
 									{% endif %}
 									{% if activities.id is 2 %}
-										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-primary font-size-11">P</span></a>
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-primary font-size-11">P</span></a>
 									{% endif %}
 									{% if activities.id is 3 %}
-										<a href="/task_details?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-11">D</span></a>
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-11">D</span></a>
 									{% endif %}
 									{% if activities.id is 4 %}
 										<a><span class="badge badge-soft-info font-size-11">Q</span></a>

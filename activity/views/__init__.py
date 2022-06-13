@@ -11,3 +11,4 @@ from activity.views.logout import *
 from activity.views.reset_password import *
 from activity.views.ajax import *
 from activity.views.dashboard import *
+from activity.views.fe_users import *

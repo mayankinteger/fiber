@@ -65,6 +65,7 @@ label{
 				<div class="page-title-right">
 					<!--<p class="card-title">-->
 						<div>
+							<span class="badge badge-soft-warning font-size-11">R - Research</span>
 							<span class="badge badge-soft-danger font-size-11">F - Fielding</span>
 							<span class="badge badge-soft-primary font-size-11">P - Planning</span>
 							<span class="badge badge-soft-success font-size-11">D - Drafting</span>
@@ -158,11 +159,14 @@ label{
 							<tr>
 								<td><a href='/create_bill?id={{ i.activity.id }}'><span><i class='mdi mdi-pencil-outline'></i></span></a></td>
 								<td>{{ forloop.counter }}</td>
-								<td>{% if i.activity.da != "None" %}{{ i.activity.da }}{% endif %}</td>
-								<td>{% if i.activity.ewo != "None" %}{{ i.activity.ewo }}{% endif %}</td>
-								<td>{% if i.activity.ticket != "None" %}{{ i.activity.ticket }}{% endif %}</td>
+								<td>{% if i.activity.da %}{{ i.activity.da }}{% endif %}</td>
+								<td>{% if i.activity.ewo %}{{ i.activity.ewo }}{% endif %}</td>
+								<td>{% if i.activity.ticket %}{{ i.activity.ticket }}{% endif %}</td>
 								<td>{{ i.activity.market|market }}</td>
 								<td>{% for activities in i.activity.activity.all %}
+									{% if activities.id is 5 %}
+										<span class="badge badge-soft-warning font-size-11">R</span>
+									{% endif %}
 									{% if activities.id is 1 %}
 										<span class="badge badge-soft-danger font-size-11">F</span>
 									{% endif %}
@@ -178,19 +182,19 @@ label{
 									{% endfor %}
 								</td>
 								<td>{{ i.job_status|job_status }}</td>
-								<td>{% if i.drafting_week != "None" %}{{ i.drafting_week|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.drafting_week %}{{ i.drafting_week|date:"m/d/Y" }}{% endif %}</td>
 								<td>{{ i.bucket|bucket }}</td>
-								<td>{% if i.activity.rec_date != "None" %}{{ i.activity.rec_date|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.activity.assign_fielder.fname != "None" %}{{ i.activity.assign_fielder.fname }}{% endif %} {% if i.activity.assign_fielder.lname != "None" %}{{ i.activity.assign_fielder.lname }}{% endif %}</td>
-								<td>{% if i.fielder_ecd != "None" %}{{ i.fielder_ecd|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.activity.ecd != "None" %}{{ i.activity.ecd|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.fielder_sub_date != "None" %}{{ i.fielder_sub_date|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.design_sub_date != "None" %}{{ i.design_sub_date|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.field_correct_sub_date != "None" %}{{ i.field_correct_sub_date|date:"m/d/Y" }}{% endif %}</td>
-								<td>{% if i.design_correct_sub_date != "None" %}{{ i.design_correct_sub_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.activity.rec_date %}{{ i.activity.rec_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.activity.assign_fielder.fname %}{{ i.activity.assign_fielder.fname }}{% endif %} {% if i.activity.assign_fielder.lname %}{{ i.activity.assign_fielder.lname }}{% endif %}</td>
+								<td>{% if i.fielder_ecd %}{{ i.fielder_ecd|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.activity.ecd %}{{ i.activity.ecd|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.fielder_sub_date %}{{ i.fielder_sub_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.design_sub_date %}{{ i.design_sub_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.field_correct_sub_date %}{{ i.field_correct_sub_date|date:"m/d/Y" }}{% endif %}</td>
+								<td>{% if i.design_correct_sub_date %}{{ i.design_correct_sub_date|date:"m/d/Y" }}{% endif %}</td>
 								<td>{% if i.activity.appr_footage %}{{ i.activity.appr_footage }}{% endif %}</td>
 								<td>{{ i.invoicing_status_field|invoicing_status }}</td>
-								<td>{% if i.invoicing_remark != "None" %}{{ i.invoicing_remark }}{% endif %}</td>
+								<td>{% if i.invoicing_remark %}{{ i.invoicing_remark }}{% endif %}</td>
 								<td>{{ i.invoicing_status_design|invoicing_status }}</td>
 							</tr>
 							{% endfor%}

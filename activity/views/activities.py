@@ -23,7 +23,7 @@ def activities(request):
     elif act_type == '4':
         step = 'QC Project'
     elif act_type == '5':
-        step = 'Researcher'
+        step = 'Research'
     elif act_type == '6':
         step = 'Permit'
     elif act_type == '10':

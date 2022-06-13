@@ -10,7 +10,7 @@
 	color:black;
 }
 .form-group>label{
-	line-height: 1.2;
+	line-height: 2.2;
 }
 .form-group>div>label{
 	line-height: .6;
@@ -65,7 +65,7 @@ label{
 			<div class="page-title-box d-flex align-items-center justify-content-between">
 				<p class="page-title mb-0 font-size-12"><b>Ticket ID : {{viewdata.ticket}}</b></p>
 				<div class="page-title-right">
-					<a class="" href="/media_list?activity_id={{ viewdata.id }}"><b>View Media</b></a>
+					<a class="" href="/media_list?activity_id={{ viewdata.id }}"><b><u>View Media</u></b></a>
 				</div>
 			</div>
 		</div>
@@ -90,7 +90,7 @@ label{
 						</div>
 						
 						<div class="form-group row">
-							<label class="col-md-2 font-weight">Job receive date :</label>
+							<label class="col-md-2 font-weight">Job Receive Date :</label>
 							<label class="col-md-2 color">{{viewdata.rec_date|date:"m/d/Y"}}</label>
 							<label class="col-md-2 font-weight">ECD :</label>
 							<label class="col-md-2 color">{{viewdata.ecd|date:"m/d/Y"}}</label>
@@ -110,6 +110,14 @@ label{
 							<label class="col-md-2 color">{{viewdata.job_type}}</label>
 							<label class="col-md-2 font-weight">Job No. :</label>
 							<label class="col-md-2 color">{{viewdata.job_no}}</label>
+							<label class="col-md-2 font-weight">EWO :</label>
+							<label class="col-md-2 color">{{viewdata.ewo}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Client Ticket No. :</label>
+							<label class="col-md-2 color">{{viewdata.client_ticket}}</label>
+							<label class="col-md-2 font-weight">Market :</label>
+							<label class="col-md-2 color">{{viewdata.market|market}}</label>
 							<label class="col-md-2 font-weight">Revised ECD :</label>
 							<label class="col-md-2 color">{{viewdata.revised_ecd|date:"m/d/Y"}}</label>
 						</div>
@@ -146,15 +154,23 @@ label{
 							<label class="col-md-2 color">{{viewdata.f2_sow}}</label>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-2 font-weight">Assign Fielder :</label>
+							<label class="col-md-2 font-weight">Work Print :</label>
+							<label class="col-md-2 color">{{viewdata.work_print}}</label>
+							<label class="col-md-2 font-weight">Footage :</label>
+							<label class="col-md-2 color">{{viewdata.footage}}</label>
+							<label class="col-md-2 font-weight">Terminals :</label>
+							<label class="col-md-2 color">{{viewdata.terminal}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Fielder :</label>
 							<label class="col-md-2 color">{{viewdata.assign_fielder.fname}} {{viewdata.assign_fielder.lname}}</label>
-							<label class="col-md-2 font-weight">Assign Int.Eng :</label>
+							<label class="col-md-2 font-weight">Engineer 1 :</label>
 							<label class="col-md-2 color">{{viewdata.assign_int_eng.fname}} {{viewdata.assign_int_eng.lname}}</label>
-							<label class="col-md-2 font-weight">Assign Int.Eng2 :</label>
+							<label class="col-md-2 font-weight">Engineer 2 :</label>
 							<label class="col-md-2 color">{{viewdata.int_eng2.fname}} {{viewdata.int_eng2.lname}}</label>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-2 font-weight">Assign Lead Eng :</label>
+							<label class="col-md-2 font-weight">Lead Eng :</label>
 							<label class="col-md-2 color">{{viewdata.lead_eng.fname}} {{viewdata.lead_eng.lname}}</label>
 							<label class="col-md-2 font-weight">Activity :</label>
 							<div class="col-md-2">

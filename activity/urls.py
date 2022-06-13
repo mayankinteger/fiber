@@ -20,4 +20,5 @@ urlpatterns = [
     path('ajax', views.ajax, name='ajax'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('dashboard1', views.dashboard1, name='dashboard1'),
+    path('fe_users', views.fe_users,name='fe_users'),
 ]

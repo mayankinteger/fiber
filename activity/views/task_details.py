@@ -90,6 +90,7 @@ def task_details(request):
     form = TaskForm(initial={'activity_id_id':activity_id, 'type':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
     mediaform = TaskmediaForm()
     remarkform = TaskcommentForm()
+
     if act_type == '1':
         step = 'Fielding'
     elif act_type == '2':
@@ -97,9 +98,11 @@ def task_details(request):
     elif act_type == '3':
         step = 'Drafting'
     elif act_type == '4':
-        step = 'QC Job'
+        step = 'QC Project'
     elif act_type == '5':
         step = 'Research'
+    elif act_type == '6':
+        step = 'Permit'
     elif act_type == '10':
         step = 'Invoicing'
     

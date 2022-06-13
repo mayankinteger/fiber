@@ -93,6 +93,7 @@ def create_activity(request):
         todate = today.strftime("%d%m%Y")
         ticket_no = todate+"-"+str1
         formedit = request.POST.get("form_edit_id")
+        client_ticket = request.POST.get("client_ticket")
         rec_date = request.POST.get("rec_date")
         rec_date = datetime.datetime.strptime(rec_date, '%m-%d-%Y').strftime('%Y-%m-%d')
         ecd = request.POST.get("ecd")
@@ -161,10 +162,10 @@ def create_activity(request):
         #file_name = request.FILES.get("build_package1")
         
         if rec_date != '':
-            activity_data = Activity(ticket=ticket_no,rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal, added_by=added_by, added_date=added_date)
+            activity_data = Activity(ticket=ticket_no, client_ticket=client_ticket,rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal, added_by=added_by, added_date=added_date)
             if formedit != '':
                 if Enquiry(activitylist):
-                    Activity.objects.filter(id=formedit).update(rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal)
+                    Activity.objects.filter(id=formedit).update(client_ticket=client_ticket, rec_date=rec_date, ecd=ecd, revised_ecd=revised_ecd, client_id=client, market=market, ewo=ewo, da=da, lus=lus, wire_center=wire_center, pfp=pfp, latitude=latitude, longitude=longitude, job_type=job_type, job_no=job_no, f1cfas=f1cfas, f1job_no=f1job_no, f1_sow=f1_sow, f2cfas=f2cfas, f2job_no=f2job_no, f2_sow=f2_sow, notes=notes, assign_fielder=assign_fielder, assign_int_eng=assign_int_eng, int_eng2=int_eng2, lead_eng=lead_eng, work_print=work_print, footage=footage, appr_footage=appr_footage, terminal=terminal)
                     u = Activity.objects.get(pk=formedit)
                     u.activity.clear()
                     u.activity.add(*activitylist)
@@ -220,5 +221,5 @@ def create_activity(request):
             return redirect('create_activity')
     params = {"activities_list": activities_list, "clients_list": clients_list, "feusers_list": feusers_list, "bayusers_list": bayusers_list,"added_by":request.user.pk,"edit_data":edit_data,"edit_recdate":edit_recdate}            
     
-    return render(request, 'create_activity.html', params)
+    return render(request, 'email/fe_user.html', params)
 
