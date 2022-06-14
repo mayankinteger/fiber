@@ -243,10 +243,18 @@ class Subtasks(models.Model):
     def __str__(self):
         return self.subtask
 
+class Task_status(models.Model):
+    id = models.AutoField(primary_key=True)
+    task_id = models.IntegerField()
+    status = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.status
+
 class Activity_tasks(models.Model):
     id = models.AutoField(primary_key=True)
     activity_id = models.ForeignKey(Activity, on_delete=models.CASCADE, blank=True, null=True)
-    type = models.IntegerField()
+    task = models.IntegerField()
     subtask = models.ForeignKey(Subtasks, on_delete=models.CASCADE, blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     complete_date = models.DateField(blank=True, null=True)

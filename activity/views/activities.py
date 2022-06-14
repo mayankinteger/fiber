@@ -10,7 +10,7 @@ def activities(request):
         return render(request,'404.html')
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
-    task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).order_by('id')
+    task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
     subtask_data = Subtasks.objects.filter(status=0, task_id=act_type)
     activitydata = Activity.objects.get(pk=activity_id)
     #print(task_subtask)
@@ -41,7 +41,7 @@ def activities_subtask(request):
     added_by = request.POST.get("added_by")
     added_by_id = Bay_users.objects.get(id=added_by)
     status = request.POST.get("status")
-    activities_subtask = Activity_tasks(activity_id=activity_id, type=type, subtask=subtask_id, status=status, added_by=added_by_id)
+    activities_subtask = Activity_tasks(activity_id=activity_id, task=type, subtask=subtask_id, status=status, added_by=added_by_id)
     activities_subtask.save()
     return redirect('/activities?step='+type+'&id='+activity)
 

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load myfilters %}
 
 {% block title %} Activity List {% endblock %}
 
@@ -142,6 +143,7 @@ table{
 									<th>F1</th>
 									<th>F2</th>
 									<th>Activity</th>
+									<th>QC Count</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -177,7 +179,25 @@ table{
 										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-success font-size-11">D</span></a>
 									{% endif %}
 									{% if activities.id is 4 %}
-										<a><span class="badge badge-soft-info font-size-11">Q</span></a>
+										<a href="/activities?step={{activities.id}}&id={{i.id}}"><span class="badge badge-soft-info font-size-11">Q</span></a>
+									{% endif %}
+									{% endfor %}
+								</td>
+								<td>{% for activities in i.activity.all %}
+									{% if activities.id is 1 %}
+										{% if i.id|qc_count:'2' %}
+											<span class="badge badge-soft-danger font-size-11">{{i.id|qc_count:'2'}}</span>
+										{% endif %}
+									{% endif %}
+									{% if activities.id is 2 %}
+										{% if i.id|qc_count:'6' %}
+											<span class="badge badge-soft-primary font-size-11">{{i.id|qc_count:'6'}}</span>
+										{% endif %}
+									{% endif %}
+									{% if activities.id is 3 %}
+										{% if i.id|qc_count:'10' %}
+											<span class="badge badge-soft-success font-size-11">{{i.id|qc_count:'10'}}</span>
+										{% endif %}
 									{% endif %}
 									{% endfor %}
 								</td>

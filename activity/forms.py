@@ -30,7 +30,7 @@ class TaskForm(forms.ModelForm):
     permit_assign = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'])
     permit_submission = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'])
     status =  forms.ChoiceField(choices = status_choice,widget=forms.Select(attrs={'class':'form-control'}))
-    type = forms.CharField(widget=forms.HiddenInput())
+    task = forms.CharField(widget=forms.HiddenInput())
     #footage = forms.IntegerField(widget=forms.NumberInput(attrs={"class": "form-control", 'title':'Total Footage'}), required=False)
     subtask_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     activity_id_id = forms.CharField(widget=forms.HiddenInput(), required=False)

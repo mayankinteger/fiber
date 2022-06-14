@@ -17,6 +17,7 @@ from django.conf import settings
 from random import randint
 from django.core.serializers import serialize
 
+
 #html email required stuff
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string

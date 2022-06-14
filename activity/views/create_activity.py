@@ -221,5 +221,5 @@ def create_activity(request):
             return redirect('create_activity')
     params = {"activities_list": activities_list, "clients_list": clients_list, "feusers_list": feusers_list, "bayusers_list": bayusers_list,"added_by":request.user.pk,"edit_data":edit_data,"edit_recdate":edit_recdate}            
     
-    return render(request, 'email/fe_user.html', params)
+    return render(request, 'create_activity.html', params)
 

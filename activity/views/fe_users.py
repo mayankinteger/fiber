@@ -1,5 +1,5 @@
-import email
 from activity.views.import_data import *
+from activity.views.page_permission import *
 
 def sendfe_mail(mydata, page, subject):
     mail_setting = Mail_settings.objects.get(priority=2)
@@ -8,7 +8,7 @@ def sendfe_mail(mydata, page, subject):
     if page == 'reset_password.html':
         receiver = [mydata['email']]
     else:
-        receiver = [mydata['email'],'amit@integertel.com']
+        receiver = [mydata['email'], "amit@integertel.com"]
     email = EmailMultiAlternatives(
         # subject
         subject,
@@ -29,6 +29,11 @@ def Enquiry(lis1):
         return 1
 @login_required(login_url="/login")
 def fe_users(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     fe_list = Fe_users.objects.order_by('-id')
     user_id = request.GET.get("id")
     if user_id:
@@ -72,8 +77,8 @@ def fe_users(request):
                 fe_dataa.save()
                 new_act_id = Fe_users.objects.latest('id').id
                 new_act_id = Fe_users.objects.get(id=new_act_id)
-                params = {'email':email}
-                sendfe_mail(params, 'fe_user.html', 'New fielder - '+fname)
+                params = {'email':email, 'password':password}
+                sendfe_mail(params, 'fe_user.html', 'New fielder added - '+fname+' '+lname)
                 messages.success(request, " Your details has been added successfully")
                 return redirect('fe_users')
             else:

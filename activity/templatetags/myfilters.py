@@ -11,6 +11,11 @@ register = template.Library()
 #register.filter("mysplit",split)
 
 @register.filter
+def qc_count(activity_id, subtask_id):
+    count = Activity_tasks.objects.filter(activity_id=activity_id, subtask=subtask_id).count()
+    return count
+
+@register.filter
 def toInt(string):
     return int(string)
 

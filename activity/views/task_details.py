@@ -13,19 +13,15 @@ def task_details(request):
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
         try:
-            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type).latest('id')
+            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).latest('id')
         except:
             exist_check = ''
         try:
-            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__type=act_type)
-            #print(exist_media)
-            #exist_media = Task_media.objects.filter(task_id=exist_check.id)
+            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
         except:
             exist_media = ''
         try:
-            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__type=act_type)
-            #print(exist_comment)
-            #exist_comment = Task_remark.objects.filter(task_id=exist_check.id)
+            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
         except:
             exist_comment = ''
     else:
@@ -87,7 +83,7 @@ def task_details(request):
         old_start_date = ''
         old_complete_date = ''
         old_status = ''
-    form = TaskForm(initial={'activity_id_id':activity_id, 'type':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
+    form = TaskForm(initial={'activity_id_id':activity_id, 'task':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
     mediaform = TaskmediaForm()
     remarkform = TaskcommentForm()
 
