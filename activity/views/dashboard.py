@@ -32,7 +32,7 @@ def dashboard(request):
     )
 
     ewos = Activity.objects.filter(cmplt_date__isnull = False).order_by('-id')[:10]
-    print(ewos)
+    #print(ewos)
     days_list=[]
     ewo_list=[]
     complete_date = []

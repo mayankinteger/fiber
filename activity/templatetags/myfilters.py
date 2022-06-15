@@ -1,6 +1,7 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 from activity.models import *
+from django.urls import resolve
 
 register = template.Library()
 
@@ -9,6 +10,8 @@ register = template.Library()
 #    return value.split(arg)
 
 #register.filter("mysplit",split)
+
+
 
 @register.filter
 def qc_count(activity_id, subtask_id):

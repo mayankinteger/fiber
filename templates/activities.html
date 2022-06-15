@@ -177,7 +177,9 @@ label{
 												<div class="tab-content" id="main_form">
 													<div class="tab-pane active" role="tabpanel" id="fielding">
 														<h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;"></h6>
+														{% if request.GET.step != '10' %}
 														<a href="/task_details?step={{request.GET.step}}&id={{request.GET.id}}" class="btn btn-xs btn-primary pull-right text-white">Update Status</a><br>
+														{% endif %}
 														<div class="row upper_area">
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
