@@ -261,6 +261,7 @@ class Activity_tasks(models.Model):
     start_date = models.DateField(blank=True, null=True)
     complete_date = models.DateField(blank=True, null=True)
     status = models.IntegerField()
+    assigned_to = models.ForeignKey(Bay_users, related_name='assigned_to', on_delete=models.CASCADE, blank=True, null=True)
     added_by = models.ForeignKey(Bay_users, on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateField(auto_now_add=True)
 

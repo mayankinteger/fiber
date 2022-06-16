@@ -18,15 +18,14 @@ Percentage = list(percentage)
 class DateInput(forms.DateInput):
     input_type = 'date'
 class TaskForm(forms.ModelForm):
-    '''def __init__(self,**kwargs):
+    def __init__(self,**kwargs):
         super(TaskForm, self).__init__(**kwargs)
         self.status_data = Task_status.objects.filter(task_id=kwargs['initial']['task'])
         self.task_status = tuple((n.id,str(n.status)) for n in self.status_data)
         self.task_status = list(self.task_status)
         add_tuple = (0,'')
         self.task_status.insert(0, add_tuple)
-        if self.status_data:
-            self.fields['status'] = forms.ChoiceField(choices = self.task_status,widget=forms.Select(attrs={'class':'form-control'}))'''
+        self.fields['status'] = forms.ChoiceField(choices = self.task_status,widget=forms.Select(attrs={'class':'form-control'}))
 
     doer = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}))
     qc1 = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}))

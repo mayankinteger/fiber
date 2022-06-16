@@ -164,24 +164,28 @@ label{
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">Fielder :</label>
 							<label class="col-md-2 color">{{viewdata.assign_fielder.fname}} {{viewdata.assign_fielder.lname}}</label>
+							<label class="col-md-2 font-weight">Work Start Date :</label>
+							<label class="col-md-2 color">{{viewdata.fielding_start_date|date:"m/d/Y"}}</label>
+							<label class="col-md-2 font-weight">Fielder ECD :</label>
+							<label class="col-md-2 color">{{viewdata.fielder_ecd|date:"m/d/Y"}}</label>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Lead Eng :</label>
+							<label class="col-md-2 color">{{viewdata.lead_eng.fname}} {{viewdata.lead_eng.lname}}</label>
 							<label class="col-md-2 font-weight">Engineer 1 :</label>
 							<label class="col-md-2 color">{{viewdata.assign_int_eng.fname}} {{viewdata.assign_int_eng.lname}}</label>
 							<label class="col-md-2 font-weight">Engineer 2 :</label>
 							<label class="col-md-2 color">{{viewdata.int_eng2.fname}} {{viewdata.int_eng2.lname}}</label>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-2 font-weight">Lead Eng :</label>
-							<label class="col-md-2 color">{{viewdata.lead_eng.fname}} {{viewdata.lead_eng.lname}}</label>
+							<label class="col-md-2 font-weight">Notes For Fielders :</label>
+							<label class="col-md-6 color">{{viewdata.notes}}</label>
 							<label class="col-md-2 font-weight">Activity :</label>
 							<div class="col-md-2">
 								{% for activities in viewdata.activity.all %}
 								<label class=" color">{{activities}}, </label>
 								{% endfor %}
 							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-md-2 font-weight">Notes For Fielders :</label>
-							<label class="col-md-6 color">{{viewdata.notes}}</label>
 						</div>
 					</div>
 				</div>
