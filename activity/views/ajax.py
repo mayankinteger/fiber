@@ -45,18 +45,26 @@ def ajax(request):
         elif page == 'subtask_update':
             task_id = request.POST.get("task_id")
             status = request.POST.get("status")
+            
             start_date = request.POST.get("start_date")
             if start_date:
                 start_date = datetime.datetime.strptime(start_date, '%m-%d-%Y').strftime('%Y-%m-%d')
             else:
                 start_date = None
+            
             complete_date = request.POST.get("complete_date")
             if complete_date:
                 complete_date = datetime.datetime.strptime(complete_date, '%m-%d-%Y').strftime('%Y-%m-%d')
             else:
                 complete_date = None
+            
+            assigned_to = request.POST.get("assigned_to")
+            try:
+                assigned_to = Bay_users.objects.get(id=assigned_to)
+            except:
+                assigned_to = None
 
-            Activity_tasks.objects.filter(id=task_id).update(status=status, start_date=start_date, complete_date=complete_date)
+            Activity_tasks.objects.filter(id=task_id).update(status=status, start_date=start_date, complete_date=complete_date, assigned_to=assigned_to)
             messages.success(request, " Your task has been updated successfully")
             return HttpResponse('done')
         elif page == 'dashboard':

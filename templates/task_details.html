@@ -176,8 +176,9 @@ label{
 								</div>
 								{%endif%}
 							</div>
-							{%if request.GET.step != '6' %}
+							
 							<div class="form-group row">
+								{%if request.GET.step != '6' %}
 								<label class="col-md-2 col-form-label">Start Date</label>
 								<div class="col-md-2">
 									{{form.start_date}}
@@ -188,6 +189,16 @@ label{
 									{{form.complete_date}}
 								
 								</div>
+								{%elif request.GET.step == '6' %}
+								<label class="col-md-2 col-form-label">Permit Assigned Date</label>
+								<div class="col-md-2">
+									{{form.start_date}}
+								</div>
+								<label class="col-md-2 col-form-label">Permit Submission Date</label>
+								<div class="col-md-2">
+									{{form.complete_date}}
+								</div>
+								{%endif%}
 								<label class="col-md-2 col-form-label">Status</label>
 								<div class="col-md-2">
 									{{form.status}}
@@ -197,19 +208,8 @@ label{
 									{{form.footage}}
 								</div>-->
 							</div>
-							{%elif request.GET.step == '6' %}
-							<div class="form-group row">
-								<label class="col-md-2 col-form-label">Permit Assigned Date</label>
-								<div class="col-md-2">
-									{{form.start_date}}
-								</div>
-								<label class="col-md-2 col-form-label">Permit Submission Date</label>
-								<div class="col-md-2">
-									{{form.complete_date}}
-								
-								</div>
-							</div>
-							{%endif%}
+							
+							
 							<div class="form-group row">
 								<label class="col-md-2 col-form-label">Internal QC Rating(<span class="danger">%</span>)</label>
 								<div class="col-md-2">
