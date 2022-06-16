@@ -12,7 +12,6 @@ class Bill(models.Model):
     job_status = models.IntegerField(default=0)
     bucket = models.IntegerField(default=0)
     drafting_week = models.DateField(blank=True, null=True)
-    fielder_ecd = models.DateField(blank=True, null=True)
     fielder_sub_date = models.DateField(blank=True, null=True)
     design_sub_date = models.DateField(blank=True, null=True)
     field_correct_sub_date = models.DateField(blank=True, null=True)

@@ -4,6 +4,7 @@ from activity.models import Activity
 from activity.views.page_permission import *
 
 current_date = date.today()
+@login_required(login_url="/login")
 def dashboard(request):
     current_url = resolve(request.path_info).url_name
     user_id = request.user.id
@@ -87,7 +88,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
-
+@login_required(login_url="/login")
 def dashboard1(request):
     current_url = resolve(request.path_info).url_name
     user_id = request.user.id

@@ -181,6 +181,8 @@ class Activity(models.Model):
     added_date = models.DateField(auto_now_add=True)
     timestamp=models.DateTimeField(default=timezone.now)
     cmplt_date = models.DateField(blank=True, null=True)
+    fielder_ecd = models.DateField(blank=True, null=True)
+    fielding_start_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.ticket
