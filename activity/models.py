@@ -292,6 +292,23 @@ class Task_remark(models.Model):
     def __str__(self):
         return str(self.task_id)
 
+class Task_detail(models.Model):
+    id = models.AutoField(primary_key=True)
+    activity = models.ForeignKey(Activity, related_name='task_detail_activity_id', on_delete=models.CASCADE, blank=True, null=True)
+    task_id = models.IntegerField()
+    doer = models.ForeignKey(Bay_users, related_name='task_detail_doer', on_delete=models.CASCADE, blank=True, null=True)
+    qc_eng_1 = models.ForeignKey(Bay_users, related_name='task_detail_qc_eng_1', on_delete=models.CASCADE, blank=True, null=True)
+    qc_eng_2 = models.ForeignKey(Bay_users, related_name='task_detail_qc_eng_2', on_delete=models.CASCADE, blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    complete_date = models.DateField(blank=True, null=True)
+    status = models.ForeignKey(Task_status, related_name='task_detail_status', on_delete=models.CASCADE, blank=True, null=True)
+    internal_qc_rating = models.IntegerField(blank=True, null=True)
+    external_qc_rating = models.IntegerField(blank=True, null=True)
+    att_qc_rating = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
+
 class Page_role(models.Model):
     id = models.AutoField(primary_key=True)
     pages = models.CharField(max_length=225)
