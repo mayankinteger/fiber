@@ -1,28 +1,27 @@
 from activity.views.import_data import *
+from activity.views.page_permission import *
 
 @login_required(login_url="/login")
 def task_details(request):
+    current_url = resolve(request.path_info).url_name
+    user_id = request.user.id
+    page_check = permision_check(current_url,user_id)
+    if page_check == False:
+        return render(request,'404.html')
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
         try:
-            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, type=act_type)
+            exist_check = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).latest('id')
         except:
             exist_check = ''
         try:
-            exist_media = []
-            for activity_task in exist_check:
-                media_data = Task_media.objects.filter(task_id=activity_task.id)
-                print(media_data)
-                if media_data:
-                    exist_media.append(media_data)
-            print(exist_media)
+            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
         except:
             exist_media = ''
         try:
-            for activity_task in exist_check:
-                exist_comment = Task_remark.objects.filter(task_id=activity_task.id)
+            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
         except:
             exist_comment = ''
     else:
@@ -84,29 +83,24 @@ def task_details(request):
         old_start_date = ''
         old_complete_date = ''
         old_status = ''
-    form = TaskForm(initial={'activity_id_id':activity_id, 'type':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
+    form = TaskForm(initial={'activity_id_id':activity_id, 'task':act_type,'added_by_id':request.user.id, 'start_date':old_start_date, 'complete_date':old_complete_date, 'status':old_status})
     mediaform = TaskmediaForm()
     remarkform = TaskcommentForm()
+
     if act_type == '1':
         step = 'Fielding'
     elif act_type == '2':
         step = 'Planning(design)'
     elif act_type == '3':
         step = 'Drafting'
+    elif act_type == '4':
+        step = 'QC Project'
+    elif act_type == '5':
+        step = 'Research'
+    elif act_type == '6':
+        step = 'Permit'
     elif act_type == '10':
         step = 'Invoicing'
     
     params = {"form":form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':old_start_date, 'exist_comment':exist_comment, 'exist_media':exist_media}
     return render(request, 'task_details.html', params)
-
-
-@login_required(login_url="/login")
-def task_media_delete(request):
-    if request.method == "POST":
-        id = request.POST.get("id")
-        #file_name = request.POST.get("file")
-        media_del = Task_media.objects.get(pk=id)
-        media_del.delete()
-        return JsonResponse({'status':'ok'})
-    else:
-        return JsonResponse({'status':0})

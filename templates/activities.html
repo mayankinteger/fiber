@@ -104,6 +104,7 @@ label{
    font-size: 10px;
    height: 20px;
 }
+
 {% endblock %}
 
 {% block link %}
@@ -168,7 +169,7 @@ label{
 												<div class="connecting-line"></div>
 												<ul class="nav nav-tabs" role="tablist">
 													<li role="presentation" class="{% if request.GET.step == '5' %}active{% else %}disabled{% endif %}">
-														<a href="/activities?step=5&id={{request.GET.id}}" data-toggle="researcher" aria-controls="researcher" role="tab" aria-expanded="true"><span class="round-tab">1</span> <i>Research</i></a>
+														<a href="/activities?step=5&id={{request.GET.id}}" data-toggle="researcher" aria-controls="researcher" role="tab" aria-expanded="true"><span class="round-tab {% if 5 not in activitydata.activity.all %} anchor_disable {% endif %}">1</span> <i>Research</i></a>
 													</li>
 													<li role="presentation" class="{% if request.GET.step == '1' %}active{% else %}disabled{% endif %}">
 														<a href="/activities?step=1&id={{request.GET.id}}" data-toggle="fielding" aria-controls="fielding" role="tab" aria-expanded="true"><span class="round-tab">2</span> <i>Fielding</i></a>

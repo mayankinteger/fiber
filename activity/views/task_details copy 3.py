@@ -59,6 +59,7 @@ def task_details(request):
         activitydata = Activity.objects.get(pk=activity_id)
         status_data = 0
         doer = 0
+        doer = 0
         qc_eng_1 = 0
         qc_eng_2 = 0
         internal_qc_rating = 0
@@ -67,12 +68,16 @@ def task_details(request):
         start_date = None
         complete_date = None
         if task_details:
+            status_data = 0
             if task_details.status:
                 status_data = task_details.status.id
+            doer = 0
             if task_details.doer:
                 doer = task_details.doer.id
+            qc_eng_1 = 0
             if task_details.qc_eng_1:
                 qc_eng_1 = task_details.qc_eng_1.id
+            qc_eng_2 = 0
             if task_details.qc_eng_2:
                 qc_eng_2 = task_details.qc_eng_2.id
             internal_qc_rating = task_details.internal_qc_rating
@@ -80,6 +85,7 @@ def task_details(request):
             att_qc_rating = task_details.att_qc_rating
             start_date = task_details.start_date
             complete_date = task_details.complete_date
+        
         else:
             activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type)
             counter = 1
@@ -95,10 +101,12 @@ def task_details(request):
             if len(data_list)>0 and start_date == None:
                 if data_list[0].start_date:
                     start_date = data_list[0].start_date
+                    
             
             if len(data_list)>1 and complete_date == None:
                 if data_list[1].complete_date:
                     complete_date = data_list[1].complete_date
+                
         
         try:
             exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)

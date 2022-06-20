@@ -19,6 +19,7 @@ Job_status = job_status_list()
 class DateInput(forms.DateInput):
     input_type = 'date'
 class BillForm(forms.ModelForm):
+        
     job_status = forms.ChoiceField(choices = Job_status,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     drafting_week = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False)
     bucket = forms.ChoiceField(choices = Bucket_choices,widget=forms.Select(attrs={'class':'form-control'}), required=False)

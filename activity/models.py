@@ -240,7 +240,7 @@ class Subtasks(models.Model):
     id = models.AutoField(primary_key=True)
     task_id = models.IntegerField()
     subtask = models.CharField(max_length=100, blank=True, null=True)
-    status = models.IntegerField(default=0)
+    is_active = models.IntegerField(default=1)
 
     def __str__(self):
         return self.subtask

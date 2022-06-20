@@ -11,7 +11,7 @@ def activities(request):
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
     task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
-    subtask_data = Subtasks.objects.filter(status=0, task_id=act_type)
+    subtask_data = Subtasks.objects.filter(is_active=1, task_id=act_type)
     activitydata = Activity.objects.get(pk=activity_id)
     users_list = Bay_users.objects.filter(is_active=True, role=5).order_by('fname')
     if act_type == '1':
