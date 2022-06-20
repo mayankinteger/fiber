@@ -44,8 +44,8 @@ class TaskForm(forms.ModelForm):
     #added_by_id = forms.CharField(widget=forms.HiddenInput())
     class Meta:
         model = Task_detail
-        fields = "__all__"
-        #exclude = ['doer', 'status', 'qc_eng_1', 'qc_eng_2']
+        #fields = "__all__"
+        exclude = ['doer', 'status', 'qc_eng_1', 'qc_eng_2']
 
 class TaskmediaForm(forms.ModelForm):
     #media = forms.ImageField(widget=forms.ClearableFileInput(attrs={"class": "form-control", "style":"padding: 0.15rem 0.75rem;", "multiple":True}))

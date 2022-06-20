@@ -12,7 +12,7 @@ def task_details(request):
     act_type = request.GET.get("step")
     try:
         task_details = Task_detail.objects.filter(activity=activity_id, task_id=act_type).latest('id')
-    except  :
+    except:
         task_details = None
 
     if request.method == 'POST':
@@ -54,7 +54,7 @@ def task_details(request):
                 messages.success(request, "Your task details has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
 
-        
+
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
         status_data = 0
@@ -78,8 +78,10 @@ def task_details(request):
             internal_qc_rating = task_details.internal_qc_rating
             external_qc_rating = task_details.external_qc_rating
             att_qc_rating = task_details.att_qc_rating
-            start_date = task_details.start_date
-            complete_date = task_details.complete_date
+            if task_details.start_date:
+                start_date = task_details.start_date
+            if task_details.complete_date:
+                complete_date = task_details.complete_date
         else:
             activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type)
             counter = 1
