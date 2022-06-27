@@ -195,35 +195,15 @@ label{
 {% endblock %}
 
 {% block script %}
-<!-- Sweet Alert-->
-<script src="{% static '/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<!--Sweat alert-->
+<script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
 <script>
 	function Add_Files(type){  
 		  $(".Type").val(type);
 	}
-	
-	{% comment %}(".delete_media").click(function(){
-		var fileid = $(this).data("file-id");
-		var filename = $(this).data("file-name");
-		var activity_da = $('.activity_da_class').val();
-		var csr = $("input[name=csrfmiddlewaretoken]").val();
-		if(confirm("You want to delete this file ?")){
-			mydata = {id: fileid, csrfmiddlewaretoken: csr};
-			$.ajax({
-				url: "{% url 'media_delete' %}",
-				method: "POST",
-				data: mydata,
-				success: function(data){
-					//console.log(data);
-					location.reload();
-				},
-			});
-		}
-	});{% endcomment %}
 
 	$(".delete_media").click(function(){
 		var fileid = $(this).data("file-id");
-		//alert(fileid);
 		 Swal.fire({
 					   title: "Are you sure?",
 					   text: "You won't be able to revert this!",
@@ -235,7 +215,7 @@ label{
 						preConfirm: function() {
 						
 						   var csr = $("input[name=csrfmiddlewaretoken]").val();
-							mydata = {page:'media_delete',id:fileid,csrfmiddlewaretoken:csr} 
+							mydata = {page:'media_delete',id:fileid,csrfmiddlewaretoken:csr}
 						 return new Promise(function(resolve) {
 						   $.ajax({
 							url: '{% url "ajax" %}',

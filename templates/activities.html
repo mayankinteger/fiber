@@ -508,7 +508,7 @@ label{
 
 {% block script %}
 <!-- Sweet Alert-->
-<script src="{% static '/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
 <script>
 	function myfunction(fileid) 
  	{
@@ -628,9 +628,4 @@ label{
 	});
 	</script>
 	
-	<script>
-	$(".Alert_Pending_Task").click(function(){
-		alert("Please complete previous task first!");
-	});
-	</script>
 {% endblock %}
