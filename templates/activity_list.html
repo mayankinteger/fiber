@@ -140,6 +140,7 @@ table{
 									<th>DA</th>
 									<th>LUs</th>
 									<th>Wire Center</th>
+									<th>Fielder</th>
 									<th>F1</th>
 									<th>F2</th>
 									<th>Activity</th>
@@ -163,6 +164,7 @@ table{
 								<td>{% if i.da %}{{ i.da }}{% endif %}</td>
 								<td>{% if i.lus %}{{ i.lus }}{% endif %}</td>
 								<td>{% if i.wire_center %}{{ i.wire_center }}{% endif %}</td>
+								<td>{% if i.assign_fielder %}{{ i.assign_fielder.fname }} {{ i.assign_fielder.lname }}{% endif %}</td>
 								<td>{% if i.f1cfas %}{{ i.f1cfas }}{% endif %}</td>
 								<td>{% if i.f2cfas %}{{ i.f2cfas }}{% endif %}</td>
 								<td>{% for activities in i.activity.all %}
@@ -185,18 +187,23 @@ table{
 								</td>
 								<td>{% for activities in i.activity.all %}
 									{% if activities.id is 1 %}
-										{% if i.id|qc_count:'2' %}
-											<span class="badge badge-soft-danger font-size-11">{{i.id|qc_count:'2'}}</span>
+										{% if i.id|qc_count:'2,5,6' %}
+											<span class="badge badge-soft-danger font-size-11">{{i.id|qc_count:'2,5,6'}}</span>
 										{% endif %}
 									{% endif %}
 									{% if activities.id is 2 %}
-										{% if i.id|qc_count:'6' %}
-											<span class="badge badge-soft-primary font-size-11">{{i.id|qc_count:'6'}}</span>
+										{% if i.id|qc_count:'8,11,12' %}
+											<span class="badge badge-soft-primary font-size-11">{{i.id|qc_count:'8,11,12'}}</span>
 										{% endif %}
 									{% endif %}
 									{% if activities.id is 3 %}
-										{% if i.id|qc_count:'10' %}
-											<span class="badge badge-soft-success font-size-11">{{i.id|qc_count:'10'}}</span>
+										{% if i.id|qc_count:'14,17,18' %}
+											<span class="badge badge-soft-success font-size-11">{{i.id|qc_count:'14,17,18'}}</span>
+										{% endif %}
+									{% endif %}
+									{% if activities.id is 4 %}
+										{% if i.id|qc_count:'19,20' %}
+											<span class="badge badge-soft-info font-size-11">{{i.id|qc_count:'19,20'}}</span>
 										{% endif %}
 									{% endif %}
 									{% endfor %}

@@ -30,7 +30,6 @@ def create_bill(request):
     if page_check == False:
         return render(request,'404.html')
     edit_data={}
-    msg=""
     form = BillForm(request.POST or None)
     activity_id = request.GET.get("id")  
     if activity_id:

@@ -15,8 +15,12 @@ register = template.Library()
 
 @register.filter
 def qc_count(activity_id, subtask_id):
-    count = Activity_tasks.objects.filter(activity_id=activity_id, subtask=subtask_id).count()
-    return count
+    list_data = subtask_id.split(',')
+    sum = 0
+    for i in list_data:
+        count = Activity_tasks.objects.filter(activity_id=activity_id, subtask=i).count()
+        sum+=count
+    return sum
 
 @register.filter
 def toInt(string):
