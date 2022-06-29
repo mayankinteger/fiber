@@ -102,7 +102,7 @@ def task_details(request):
             if task_details.complete_date:
                 complete_date = task_details.complete_date
 
-        activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type)
+        activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
         counter = 1
         data_list = []
 
@@ -120,11 +120,10 @@ def task_details(request):
                 if act_type == '6':
                     complete_date = data_list[0].complete_date
             
-            if len(data_list)>1 and complete_date == None:
+            if len(data_list)>1:
                 if data_list[1].complete_date:
                     complete_date = data_list[1].complete_date
-                if act_type == '6':
-                    complete_date = data_list[1].complete_date
+
         else:
             for i in activity_task_data:
                 if counter==1 and (act_type == '1' or act_type == '2' or act_type == '3'):
