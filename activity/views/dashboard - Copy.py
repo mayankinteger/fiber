@@ -4,7 +4,19 @@ from activity.models import Activity
 from activity.views.page_permission import *
 
 current_date = date.today()
-@login_required(login_url="/login")
+# current_date = date.today()
+# today = datetime.date.today()
+present = datetime.date.today()
+weekday = present.weekday()
+start_delta = datetime.timedelta(days=weekday, weeks=1)
+start_week = datetime.timedelta(days=weekday)
+start_last_week = present - start_delta
+start_this_week =present - start_week
+# print(start_last_week)
+# print(start_this_week)
+prev = current_date.replace(day=1) - timedelta(days=1)
+now = timezone.now()
+lastt = current_date.replace(year=present.year) - timedelta(days=366)
 def dashboard(request):
     current_url = resolve(request.path_info).url_name
     user_id = request.user.id
@@ -17,21 +29,32 @@ def dashboard(request):
         total=models.Count('id'),
         today=models.Count('id', filter=models.Q(rec_date=now.date())),
         month=models.Count('id', filter=models.Q(rec_date__month=present.month)),
+        previous_month=models.Count('id', filter=models.Q(rec_date__month=prev.month)),
         year=models.Count('id', filter=models.Q(rec_date__year=present.year)),
+        previous_year=models.Count('id', filter=models.Q(rec_date__year=lastt.year)),
         yesterday=models.Count('id', filter=models.Q(rec_date__contains=(now - timedelta(hours=24)).date())),
-        this_week=models.Count('id', filter=models.Q(rec_date__gte=(now - timedelta(days=7)).date())),
+        day_before_yesterday = models.Count('id', filter=models.Q(rec_date__contains=(now - timedelta(hours=48)).date())),
+        this_week=models.Count('id', filter=models.Q(rec_date__gte=start_this_week)),
+        last_week=models.Count('id', filter=models.Q(rec_date__gte= start_last_week, rec_date__lt=start_this_week)),
     )
-    
+    #  print(last_week)
     present1 = datetime.date.today()
     completed = Activity.objects.aggregate(
         total=models.Count('id'),
-        today=models.Count('id', filter=models.Q(ecd=now.date())),
-        month=models.Count('id', filter=models.Q(ecd__month=present1.month)),
-        year=models.Count('id', filter=models.Q(ecd__year=present1.year)),
-        yesterday=models.Count('id', filter=models.Q(ecd__contains=(now - timedelta(hours=24)).date())),
-        this_week=models.Count('id', filter=models.Q(ecd__gte=(now - timedelta(days=7)).date())),
+        today=models.Count('id', filter=models.Q(cmplt_date=now.date())),
+        month=models.Count('id', filter=models.Q(cmplt_date__month=present1.month)),
+        previous_month=models.Count('id', filter=models.Q(cmplt_date__month=prev.month)),
+        year=models.Count('id', filter=models.Q(cmplt_date__year=present1.year)),
+        previous_year=models.Count('id', filter=models.Q(cmplt_date__year=lastt.year)),
+        yesterday=models.Count('id', filter=models.Q(cmplt_date__contains=(now - timedelta(hours=24)).date())),
+        day_before_yesterday = models.Count('id', filter=models.Q(cmplt_date__contains=(now - timedelta(hours=48)).date())),
+        this_week=models.Count('id', filter=models.Q(cmplt_date__gte=start_this_week)),
+        last_week=models.Count('id', filter=models.Q(cmplt_date__gte=start_last_week,cmplt_date__lt=start_this_week,)),
     )
-
+    
+    # fe_f =  Activity.objects.aggregate(
+        
+    # ) 
     ewos = Activity.objects.filter(cmplt_date__isnull = False).order_by('-id')[:10]
     #print(ewos)
     days_list=[]
@@ -61,6 +84,7 @@ def dashboard(request):
     cl1_fe_data = []
     cl2_fe_data = []
     cl3_fe_data = []
+    cl4_fe_data = []
     act_month = present.month
     for i in fe_list:
         fe_name.append(i.fname)
@@ -76,9 +100,10 @@ def dashboard(request):
             fe=models.Count('id', filter=models.Q(client_id=3,assign_fielder=i.id,rec_date__month=act_month))
             )
         cl3_fe_data.append(field_cl3_data['fe'])
+        
     #print(cl1_fe_data)
     #print(cl2_fe_data)
-    #print(cl3_fe_data)
+    # print(cl4_fe_data)
     
     fielder_list = Activity.objects.all()
     # print(fielder_list)
@@ -88,7 +113,6 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
-@login_required(login_url="/login")
 def dashboard1(request):
     current_url = resolve(request.path_info).url_name
     user_id = request.user.id

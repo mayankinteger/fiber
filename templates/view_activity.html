@@ -172,20 +172,20 @@ label{
 						<div class="form-group row">
 							<label class="col-md-2 font-weight">Lead Eng :</label>
 							<label class="col-md-2 color">{{viewdata.lead_eng.fname}} {{viewdata.lead_eng.lname}}</label>
-							<label class="col-md-2 font-weight">Engineer 1 :</label>
+							<!--<label class="col-md-2 font-weight">Engineer 1 :</label>
 							<label class="col-md-2 color">{{viewdata.assign_int_eng.fname}} {{viewdata.assign_int_eng.lname}}</label>
 							<label class="col-md-2 font-weight">Engineer 2 :</label>
-							<label class="col-md-2 color">{{viewdata.int_eng2.fname}} {{viewdata.int_eng2.lname}}</label>
-						</div>
-						<div class="form-group row">
-							<label class="col-md-2 font-weight">Notes For Fielders :</label>
-							<label class="col-md-6 color">{{viewdata.notes}}</label>
+							<label class="col-md-2 color">{{viewdata.int_eng2.fname}} {{viewdata.int_eng2.lname}}</label>-->
 							<label class="col-md-2 font-weight">Activity :</label>
-							<div class="col-md-2">
+							<div class="col-md-6">
 								{% for activities in viewdata.activity.all %}
 								<label class=" color">{{activities}}, </label>
 								{% endfor %}
 							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 font-weight">Notes For Fielders :</label>
+							<label class="col-md-6 color">{{viewdata.notes}}</label>
 						</div>
 					</div>
 				</div>

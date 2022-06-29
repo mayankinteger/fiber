@@ -18,6 +18,16 @@ def task_details(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
+            qa_eng = request.POST.get("qa_eng")
+            try:
+                qa_eng = Bay_users.objects.get(pk=qa_eng)
+            except:
+                qa_eng = None
+            qp_eng = request.POST.get("qp_eng")
+            try:
+                qp_eng = Bay_users.objects.get(pk=qp_eng)
+            except:
+                qp_eng = None
             doer = request.POST.get("doer")
             try:
                 doer = Bay_users.objects.get(pk=doer)
@@ -43,14 +53,15 @@ def task_details(request):
                 complete_date = form.cleaned_data.get("complete_date")
                 internal_qc_rating = form.cleaned_data.get("internal_qc_rating")
                 external_qc_rating = form.cleaned_data.get("external_qc_rating")
+                qa_rating = form.cleaned_data.get("qa_rating")
                 att_qc_rating = form.cleaned_data.get("att_qc_rating")
-                Task_detail.objects.filter(id=task_details.id).update(task_id=act_type, activity=activity_id, start_date=start_date, complete_date=complete_date, internal_qc_rating=internal_qc_rating, external_qc_rating=external_qc_rating, att_qc_rating=att_qc_rating, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
+                Task_detail.objects.filter(id=task_details.id).update(task_id=act_type, activity=activity_id, start_date=start_date, complete_date=complete_date, qa_eng=qa_eng, qp_eng=qp_eng, qa_rating=qa_rating, internal_qc_rating=internal_qc_rating, external_qc_rating=external_qc_rating, att_qc_rating=att_qc_rating, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
                 messages.success(request, "Your task details has been updated successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
             else:
                 form.save()
                 task_id = Task_detail.objects.latest('id').id
-                Task_detail.objects.filter(id=task_id).update(activity=activity_id, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
+                Task_detail.objects.filter(id=task_id).update(activity=activity_id, qa_eng=qa_eng, qp_eng=qp_eng, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
                 messages.success(request, "Your task details has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
         
@@ -58,6 +69,9 @@ def task_details(request):
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
         status_data = 0
+        qa_eng = 0
+        qp_eng = 0
+        qa_rating = 0
         doer = 0
         qc_eng_1 = 0
         qc_eng_2 = 0
@@ -67,6 +81,11 @@ def task_details(request):
         start_date = None
         complete_date = None
         if task_details:
+            if task_details.qa_eng:
+                qa_eng = task_details.qa_eng.id
+            if task_details.qp_eng:
+                qp_eng = task_details.qp_eng.id
+            qa_rating = task_details.qa_rating
             if task_details.status:
                 status_data = task_details.status.id
             if task_details.doer:
@@ -86,21 +105,42 @@ def task_details(request):
         activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type)
         counter = 1
         data_list = []
-        for i in activity_task_data:
-            if counter==1 and (act_type == '1' or act_type == '2' or act_type == '3'):
-                data_list.insert(0,i)
-                counter+=1
-            elif i.subtask.subtask == 'Submission' and (act_type == '1' or act_type == '2' or act_type == '3'):
-                data_list.insert(1,i)
-                counter+=1
-        
-        if len(data_list)>0 and start_date == None:
-            if data_list[0].start_date:
-                start_date = data_list[0].start_date
-        
-        if len(data_list)>1 and complete_date == None:
-            if data_list[1].complete_date:
-                complete_date = data_list[1].complete_date
+
+        if act_type == '6':
+            for i in activity_task_data:
+                if counter == 1 and (i.subtask.id == 1 or i.subtask.id == 7 or i.subtask.id == 13 or i.subtask.id == 19 or i.subtask.id == 23 or i.subtask.id == 25):
+                    data_list.insert(0,i)
+                    counter+=1
+                elif counter > 1 and (i.subtask.id == 4 or i.subtask.id == 10 or i.subtask.id == 16 or i.subtask.id == 22 or i.subtask.id == 24 or i.subtask.id == 25):
+                    data_list.insert(1,i)
+                    counter+=1
+            if len(data_list)>0 and start_date == None:
+                if data_list[0].start_date:
+                    start_date = data_list[0].start_date
+                if act_type == '6':
+                    complete_date = data_list[0].complete_date
+            
+            if len(data_list)>1 and complete_date == None:
+                if data_list[1].complete_date:
+                    complete_date = data_list[1].complete_date
+                if act_type == '6':
+                    complete_date = data_list[1].complete_date
+        else:
+            for i in activity_task_data:
+                if counter==1 and (act_type == '1' or act_type == '2' or act_type == '3'):
+                    data_list.insert(0,i)
+                    counter+=1
+                elif i.subtask.subtask == 'Submission' and (act_type == '1' or act_type == '2' or act_type == '3'):
+                    data_list.insert(1,i)
+                    counter+=1
+            
+            if len(data_list)>0 and start_date == None:
+                if data_list[0].start_date:
+                    start_date = data_list[0].start_date
+            
+            if len(data_list)>1 and complete_date == None:
+                if data_list[1].complete_date:
+                    complete_date = data_list[1].complete_date
         
         try:
             exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
@@ -112,8 +152,8 @@ def task_details(request):
             exist_comment = ''
     else:
         return redirect('activity_list')
-    
-    form = TaskForm(initial={'activity_id_id':activity_id, 'task_id':act_type, 'added_by_id':request.user.id, 'start_date':start_date, 'complete_date':complete_date, 'status':status_data, 'doer':doer, 'qc_eng_1':qc_eng_1, 'qc_eng_2':qc_eng_2, 'internal_qc_rating':internal_qc_rating, 'external_qc_rating':external_qc_rating, 'att_qc_rating':att_qc_rating})
+
+    form = TaskForm(initial={'activity_id_id':activity_id, 'task_id':act_type, 'added_by_id':request.user.id, 'start_date':start_date, 'complete_date':complete_date, 'qa_eng':qa_eng, 'qp_eng':qp_eng, 'qa_rating':qa_rating, 'status':status_data, 'doer':doer, 'qc_eng_1':qc_eng_1, 'qc_eng_2':qc_eng_2, 'internal_qc_rating':internal_qc_rating, 'external_qc_rating':external_qc_rating, 'att_qc_rating':att_qc_rating})
     mediaform = TaskmediaForm()
     remarkform = TaskcommentForm()
 

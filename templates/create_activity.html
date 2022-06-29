@@ -270,7 +270,19 @@ label{
 									{% endfor %}
 								</select>
 							</div>
-							<label class="col-md-1 col-form-label">Engineer 1</label>
+							<label class="col-md-1 col-form-label">Work Print</label>
+							<div class="col-md-2">
+								<input class="form-control" value="{{edit_data.work_print}}" type="text" name="work_print" title="Work Print">
+							</div>
+							<label class="col-md-1 col-form-label">Footage</label>
+							<div class="col-md-2">
+							{% if edit_data.footage %}
+								<input class="form-control" value="{{edit_data.footage}}" type="number" name="footage" title="Total Footage" placeholder="">
+							{% else %}
+								<input class="form-control" value="0" type="number" name="footage" title="Total Footage" placeholder="">
+							{% endif %}
+							</div>
+							<!--<label class="col-md-1 col-form-label">Engineer 1</label>
 							<div class="col-md-2">
 								<select class="form-control" name="assign_int_eng">
 									<option value="0">--Select--</option>
@@ -291,7 +303,7 @@ label{
 									{% endif %}
 									{% endfor %}
 								</select>
-							</div>
+							</div>-->
 						</div>
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label">Terminals</label>
@@ -302,18 +314,8 @@ label{
 								<input class="form-control" value="0" type="number" name="terminal" title="Total Terminals" placeholder="">
 							{% endif %}
 							</div>
-							<label class="col-md-1 col-form-label">Work Print</label>
-							<div class="col-md-2">
-								<input class="form-control" value="{{edit_data.work_print}}" type="text" name="work_print" title="Work Print">
-							</div>
-							<label class="col-md-1 col-form-label">Footage</label>
-							<div class="col-md-2">
-							{% if edit_data.footage %}
-								<input class="form-control" value="{{edit_data.footage}}" type="number" name="footage" title="Total Footage" placeholder="">
-							{% else %}
-								<input class="form-control" value="0" type="number" name="footage" title="Total Footage" placeholder="">
-							{% endif %}
-							</div>
+							
+							
 						</div>
 						
 						<div class="form-group row mt-4">

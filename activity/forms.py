@@ -7,7 +7,7 @@ from activity.templatetags.myfilters import *
 
 status_choice = invoicing_status_list()
 wireline_role = Bay_roles.objects.get(pk=5)
-doers = Bay_users.objects.filter(role=wireline_role).order_by('fname')
+doers = Bay_users.objects.filter(role=wireline_role,is_active=True).order_by('fname')
 doer = tuple((n.id,str(n.fname)+' '+str(n.lname)) for n in doers)
 doer = list(doer)
 add_tuple = (0,'')
@@ -28,14 +28,17 @@ class TaskForm(forms.ModelForm):
             self.task_status.insert(0, add_tuple)
             self.fields['status'] = forms.ChoiceField(choices = self.task_status,widget=forms.Select(attrs={'class':'form-control'}), required=False)
 
+    qa_eng = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}), required=False)
+    qp_eng = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}), required=False)
+    qa_rating = forms.ChoiceField(choices = Percentage,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     doer = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     qc_eng_1 = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     qc_eng_2 = forms.ChoiceField(choices = Doer_choice,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     internal_qc_rating = forms.ChoiceField(choices = Percentage,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     external_qc_rating = forms.ChoiceField(choices = Percentage,widget=forms.Select(attrs={'class':'form-control'}), required=False)
     att_qc_rating = forms.ChoiceField(choices = Percentage,widget=forms.Select(attrs={'class':'form-control'}), required=False)
-    start_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False)
-    complete_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False)
+    start_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False, disabled=True)
+    complete_date = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'], required=False, disabled=True)
     #permit_assign = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'])
     #permit_submission = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control custom_datepicker", "data-provide": "datepicker","data-date-autoclose":"true"},format='%m-%d-%Y'), label="Date", input_formats=['%Y-%m-%d', '%m-%d-%Y'])
     task_id = forms.CharField(widget=forms.HiddenInput())
@@ -45,7 +48,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task_detail
         #fields = "__all__"
-        exclude = ['doer', 'status', 'qc_eng_1', 'qc_eng_2']
+        exclude = ['qa_eng', 'qp_eng', 'doer', 'status', 'qc_eng_1', 'qc_eng_2']
 
 class TaskmediaForm(forms.ModelForm):
     #media = forms.ImageField(widget=forms.ClearableFileInput(attrs={"class": "form-control", "style":"padding: 0.15rem 0.75rem;", "multiple":True}))
