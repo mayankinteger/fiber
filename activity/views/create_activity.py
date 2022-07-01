@@ -30,8 +30,6 @@ def random_with_N_digits(n):
 def index(request):
     return redirect('handleLogin')
 
-
-
 rec=0
 def autoIncrement(digit,st_f):
     global rec
@@ -78,8 +76,8 @@ def create_activity(request):
         edit_data={}
     activities_list = Activities.objects.all()
     clients_list = Clients.objects.order_by('name')
-    feusers_list = Fe_users.objects.order_by('fname')
-    bayusers_list = Bay_users.objects.order_by('fname')
+    feusers_list = Fe_users.objects.filter(is_active=0).order_by('fname')
+    bayusers_list = Bay_users.objects.filter(is_active=True).order_by('fname')
     
     if request.method == "POST":
         

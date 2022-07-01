@@ -234,7 +234,7 @@ label{
 																	<label>Fielder : {{activitydata.assign_fielder.fname}} {{activitydata.assign_fielder.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-3 col-sm-4">
+															<!--<div class="col-md-3 col-sm-4">
 																<div class="form-group">
 																	<label>Engineer 1 : {{activitydata.assign_int_eng.fname}} {{activitydata.assign_int_eng.lname}}</label>
 																</div>
@@ -243,43 +243,36 @@ label{
 																<div class="form-group">
 																	<label>Engineer 2 : {{activitydata.int_eng2.fname}} {{activitydata.int_eng2.lname}}</label>
 																</div>
-															</div>
-															<!--<div class="col-md-3 col-sm-4">
-																<div class="form-group">
-																	<label>QC Engineer 1 : </label>
-																</div>
-															</div>
-															<div class="col-md-3 col-sm-4">
-																<div class="form-group">
-																	<label>QC Engineer 2 : </label>
-																</div>
 															</div>-->
-															{% if request.GET.step == '1' %}
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
-																	<label>Digitizer Name : </label>
+																	<label>QA Engineer : {{task_details.qa_eng.fname}} {{task_details.qa_eng.lname}}</label>
 																</div>
 															</div>
-															{% elif request.GET.step == '2' %}
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
-																	<label>Designer Name : </label>
+																	<label>QP Engineer : {{task_details.qp_eng.fname}} {{task_details.qp_eng.lname}}</label>
 																</div>
 															</div>
-															{% elif request.GET.step == '3' %}
+															{% if request.GET.step == '1' or request.GET.step == '2' or request.GET.step == '3' or request.GET.step == '4' %}
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
-																	<label>Drafter Name : </label>
+																	<label>QC Engineer 1 : {{task_details.qc_eng_1.fname}} {{task_details.qc_eng_1.lname}}</label>
 																</div>
 															</div>
-															{% elif request.GET.step == '5' %}
 															<div class="col-md-3 col-sm-4">
 																<div class="form-group">
-																	<label>Researcher Name : </label>
+																	<label>QC Engineer 2 : {{task_details.qc_eng_2.fname}} {{task_details.qc_eng_2.lname}}</label>
 																</div>
 															</div>
 															{% endif %}
-															
+															{%if request.GET.step != '4' and request.GET.step != '6' %}
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label>{% if request.GET.step == '1' %}Digitizer{% elif request.GET.step == '2' %}Designer{% elif request.GET.step == '3' %}Drafter{% elif request.GET.step == '5' %}Researcher{%endif%} Name : {{task_details.doer.fname}} {{task_details.doer.lname}}</label>
+																</div>
+															</div>
+															{% endif %}
 														</div>
 														
 														<h6 class="text-left" style="border-bottom:1px solid; margin-top:10px; color:#0caadc;">{{step}} Subtask</h6>

@@ -7,13 +7,13 @@ def ajax(request):
         page = request.POST.get("page")
         if page == 'attachment_fetch':
             task_id = request.POST.get("task_id")
-            all_media = Task_media.objects.filter(task_id=task_id)
+            all_media = Task_media.objects.filter(task_id=task_id).order_by('id')
             media = {'page':'media', 'data':all_media}
             html_content = render_to_string("ajax.html", media)
             return HttpResponse(html_content)
         elif page == 'remark_fetch':
             task_id = request.POST.get("task_id")
-            all_remark = Task_remark.objects.filter(task_id=task_id)
+            all_remark = Task_remark.objects.filter(task_id=task_id).order_by('id')
             remark = {'page':'remark', 'data':all_remark}
             html_content = render_to_string("ajax.html", remark)
             return HttpResponse(html_content)
@@ -24,12 +24,12 @@ def ajax(request):
             return JsonResponse({'status':'ok'})
         elif page == 'activity_delete':
             get_id = request.POST.get("act_id")
-            media_del = Activity_media.objects.filter(activity_id=get_id)
+            media_del = Activity_media.objects.filter(activity_id=get_id).order_by('id')
             if media_del:
                 for delete_allmedia in media_del:
                     print(delete_allmedia)
                     delete_allmedia.delete()
-            task_media_del = Task_media.objects.filter(task_id__activity_id=get_id)
+            task_media_del = Task_media.objects.filter(task_id__activity_id=get_id).order_by('id')
             if task_media_del:
                 for delete_taskmedia in task_media_del:
                     print(delete_taskmedia)

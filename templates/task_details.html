@@ -66,19 +66,19 @@ label{
 				<div class="page-title-right">
 					{% for activities in activitydata.activity.all %}
 						{% if activities.id is 5 %}
-							<span class="badge badge-soft-warning font-size-11">R</span>
+						<a href="/activities?step={{activities.id}}&id={{activitydata.id}}"><span class="badge badge-soft-warning font-size-11">R</span></a>
 						{% endif %}
 						{% if activities.id is 1 %}
-							<span class="badge badge-soft-danger font-size-11">F</span>
+						<a href="/activities?step={{activities.id}}&id={{activitydata.id}}"><span class="badge badge-soft-danger font-size-11">F</span></a>
 						{% endif %}
 						{% if activities.id is 2 %}
-							<span class="badge badge-soft-primary font-size-11">P</span>
+						<a href="/activities?step={{activities.id}}&id={{activitydata.id}}"><span class="badge badge-soft-primary font-size-11">P</span></a>
 						{% endif %}
 						{% if activities.id is 3 %}
-							<span class="badge badge-soft-success font-size-11">D</span>
+						<a href="/activities?step={{activities.id}}&id={{activitydata.id}}"><span class="badge badge-soft-success font-size-11">D</span></a>
 						{% endif %}
 						{% if activities.id is 4 %}
-							<span class="badge badge-soft-info font-size-11">Q</span>
+						<a href="/activities?step={{activities.id}}&id={{activitydata.id}}"><span class="badge badge-soft-info font-size-11">Q</span></a>
 						{% endif %}
 					{% endfor %}
 					<a class="" href="/view_activity?id={{ request.GET.id }}"><b><u>View Activity</u></b></a>&nbsp;

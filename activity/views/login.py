@@ -9,7 +9,7 @@ def handleLogin(request):
         # Get the post parameters
         email=request.POST['email']
         password=request.POST['password']
-        user=authenticate(email= email, password= password)
+        user=authenticate(email= email, password= password, is_active=True)
         if user is not None:
             login(request, user)
             messages.success(request, "Successfully Logged In")

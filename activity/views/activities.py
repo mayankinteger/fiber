@@ -11,9 +11,13 @@ def activities(request):
     activity_id = request.GET.get("id")
     act_type = request.GET.get("step")
     task_subtask = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
-    subtask_data = Subtasks.objects.filter(is_active=1, task_id=act_type)
+    subtask_data = Subtasks.objects.filter(is_active=1, task_id=act_type).order_by('id')
     activitydata = Activity.objects.get(pk=activity_id)
     users_list = Bay_users.objects.filter(is_active=True, role=5).order_by('fname')
+    try:
+        task_details = Task_detail.objects.get(activity=activity_id, task_id=act_type)
+    except:
+        task_details = None
     if act_type == '1':
         step = 'Fielding'
     elif act_type == '2':
@@ -28,7 +32,7 @@ def activities(request):
         step = 'Permit'
     elif act_type == '10':
         step = 'Invoicing'
-    param = {'activitydata':activitydata, 'step':step, 'act_type':act_type, 'task_subtask':task_subtask, 'subtask_data':subtask_data, 'users_list':users_list}
+    param = {'activitydata':activitydata, 'step':step, 'act_type':act_type, 'task_subtask':task_subtask, 'subtask_data':subtask_data, 'users_list':users_list, 'task_details':task_details}
     return render(request, 'activities.html', param)
 
 @login_required(login_url="/login")

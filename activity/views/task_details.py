@@ -105,48 +105,29 @@ def task_details(request):
         activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
         counter = 1
         data_list = []
-
-        if act_type == '6':
-            for i in activity_task_data:
-                if counter == 1 and (i.subtask.id == 1 or i.subtask.id == 7 or i.subtask.id == 13 or i.subtask.id == 19 or i.subtask.id == 23 or i.subtask.id == 25):
-                    data_list.insert(0,i)
-                    counter+=1
-                elif counter > 1 and (i.subtask.id == 4 or i.subtask.id == 10 or i.subtask.id == 16 or i.subtask.id == 22 or i.subtask.id == 24 or i.subtask.id == 25):
-                    data_list.insert(1,i)
-                    counter+=1
-            if len(data_list)>0 and start_date == None:
-                if data_list[0].start_date:
-                    start_date = data_list[0].start_date
-                if act_type == '6':
-                    complete_date = data_list[0].complete_date
-            
-            if len(data_list)>1:
-                if data_list[1].complete_date:
-                    complete_date = data_list[1].complete_date
-
-        else:
-            for i in activity_task_data:
-                if counter==1 and (act_type == '1' or act_type == '2' or act_type == '3'):
-                    data_list.insert(0,i)
-                    counter+=1
-                elif i.subtask.subtask == 'Submission' and (act_type == '1' or act_type == '2' or act_type == '3'):
-                    data_list.insert(1,i)
-                    counter+=1
-            
-            if len(data_list)>0 and start_date == None:
-                if data_list[0].start_date:
-                    start_date = data_list[0].start_date
-            
-            if len(data_list)>1 and complete_date == None:
-                if data_list[1].complete_date:
-                    complete_date = data_list[1].complete_date
+        for i in activity_task_data:
+            if counter == 1 and (i.subtask.id == 1 or i.subtask.id == 7 or i.subtask.id == 13 or i.subtask.id == 19 or i.subtask.id == 23 or i.subtask.id == 25):
+                data_list.insert(0,i)
+                counter+=1
+            elif counter > 1 and (i.subtask.id == 4 or i.subtask.id == 10 or i.subtask.id == 16 or i.subtask.id == 22 or i.subtask.id == 24 or i.subtask.id == 25):
+                data_list.insert(1,i)
+                counter+=1
+        if len(data_list)>0 and start_date == None:
+            if data_list[0].start_date:
+                start_date = data_list[0].start_date
+            if act_type == '6':
+                complete_date = data_list[0].complete_date
+        
+        if len(data_list)>1:
+            if data_list[1].complete_date:
+                complete_date = data_list[1].complete_date
         
         try:
-            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
+            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type).order_by('id')
         except:
             exist_media = ''
         try:
-            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
+            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type).order_by('id')
         except:
             exist_comment = ''
     else:

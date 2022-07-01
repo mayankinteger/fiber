@@ -73,14 +73,9 @@ def dashboard(request):
         else:
             days_list.append(0)
    
-    # print(complete_date)    
-    fe_list = Fe_users.objects.all()
-    fe_name=[]
-    for i in fe_list:
-        fe_name.append(i.fname)
-    # print(names)
-    # print(fe_name)
-    fe_list = Fe_users.objects.all()
+    # print(complete_date)
+
+    fe_list = Fe_users.objects.filter(is_active=0).order_by('fname')
     fe_name=[]
     # cl4_fe_data = []
     cl1_fe_data = []
@@ -103,16 +98,14 @@ def dashboard(request):
             fe=models.Count('id', filter=models.Q(client_id=3,assign_fielder=i.id,rec_date__month=act_month))
             )
         cl3_fe_data.append(field_cl3_data['fe'])
-    # print(cl1_fe_data)
-    # print(cl2_fe_data)
-    # print(cl3_fe_data)
+        
     cl1_lead_data = []
     cl2_lead_data = []
     cl3_lead_data = []
     leads =[]
     role = Bay_roles.objects.get(id=5)
-    lead = Bay_users.objects.filter(if_lead=1,role=role).order_by('fname')
-    # print(lead)
+    lead = Bay_users.objects.filter(if_lead=1,role=role,is_active=True).order_by('fname')
+    
     act_month1 = present.month
     if request.method == 'POST' and request.POST.get("months"):
         act_month1=request.POST.get("months")
@@ -189,11 +182,6 @@ def dashboard(request):
                 f_nov=models.Count('id', filter=models.Q(subtask=19,added_date__month='11') | Q(subtask=20,added_date__month='11')),
                 f_dec=models.Count('id', filter=models.Q(subtask=19,added_date__month='12') | Q(subtask=20,added_date__month='12')),
     )
-                
-    # print(fielding)
-    # print(planning)
-    # print(drafting)
-    # print(qc)
     
     context  = {'added': added,'fe_name':fe_name,'leads':leads,'fielding':fielding,'planning':planning,'drafting':drafting,'qc':qc,'completed': completed,'complete_date':complete_date,'receive_date':receive_date,'ewo_list':ewo_list,'days_list':days_list, 'field_cl1_output':cl1_fe_data,'field_cl2_output':cl2_fe_data,'field_cl3_output':cl3_fe_data,'lead_cl1_output':cl1_lead_data,'lead_cl2_output':cl2_lead_data,'lead_cl3_output':cl3_lead_data,'act_month':int(act_month),'act_month1':int(act_month1)}
     return render(request, 'dashboard.html', context)

@@ -118,10 +118,8 @@ def task_details(request):
             if act_type == '6':
                 complete_date = data_list[0].complete_date
         
-        if len(data_list)>1 and complete_date == None:
+        if len(data_list)>1:
             if data_list[1].complete_date:
-                complete_date = data_list[1].complete_date
-            if act_type == '6':
                 complete_date = data_list[1].complete_date
         
         try:
