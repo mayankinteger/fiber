@@ -80,7 +80,7 @@ def create_bill(request):
                 messages.success(request, " Your bill has been added successfully")
                 return redirect('billview')
 
-    context = {"form": form, 'activity_data':edit_data}
+    context = {"form": form, 'activitydata':edit_data}
     html_template = loader.get_template('create_bill.html')
     return HttpResponse(html_template.render(context, request))
 

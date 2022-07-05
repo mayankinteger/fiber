@@ -64,7 +64,7 @@ def task_details(request):
                 Task_detail.objects.filter(id=task_id).update(activity=activity_id, qa_eng=qa_eng, qp_eng=qp_eng, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
                 messages.success(request, "Your task details has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
-        
+
 
     if activity_id and act_type:
         activitydata = Activity.objects.get(pk=activity_id)
@@ -97,12 +97,12 @@ def task_details(request):
             internal_qc_rating = task_details.internal_qc_rating
             external_qc_rating = task_details.external_qc_rating
             att_qc_rating = task_details.att_qc_rating
-            if task_details.start_date:
+            '''if task_details.start_date:
                 start_date = task_details.start_date
             if task_details.complete_date:
-                complete_date = task_details.complete_date
+                complete_date = task_details.complete_date'''
 
-        activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type)
+        activity_task_data = Activity_tasks.objects.filter(activity_id=activity_id, task=act_type).order_by('id')
         counter = 1
         data_list = []
         for i in activity_task_data:
@@ -112,22 +112,22 @@ def task_details(request):
             elif counter > 1 and (i.subtask.id == 4 or i.subtask.id == 10 or i.subtask.id == 16 or i.subtask.id == 22 or i.subtask.id == 24 or i.subtask.id == 25):
                 data_list.insert(1,i)
                 counter+=1
-        if len(data_list)>0 and start_date == None:
+        if len(data_list)>0:
             if data_list[0].start_date:
                 start_date = data_list[0].start_date
             if act_type == '6':
                 complete_date = data_list[0].complete_date
-        
+
         if len(data_list)>1:
             if data_list[1].complete_date:
                 complete_date = data_list[1].complete_date
-        
+
         try:
-            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
+            exist_media = Task_media.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type).order_by('id')
         except:
             exist_media = ''
         try:
-            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type)
+            exist_comment = Task_remark.objects.filter(task_id__activity_id=activity_id, task_id__task=act_type).order_by('id')
         except:
             exist_comment = ''
     else:
@@ -151,6 +151,6 @@ def task_details(request):
         step = 'Permit'
     elif act_type == '10':
         step = 'Invoicing'
-    
+
     params = {"form":form, "mediaform":mediaform, "remarkform":remarkform, "activitydata":activitydata, "step":step, "act_type":act_type, 'exist_data':'', 'exist_comment':exist_comment, 'exist_media':exist_media}
     return render(request, 'task_details.html', params)

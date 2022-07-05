@@ -35,8 +35,6 @@ label{
 	padding: 0.20rem 0.25rem;
 }
 
-
-
 .custom-select {
 	//background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right 0.75rem center/8px 10px;
 	background: #fff;
@@ -48,6 +46,14 @@ table{
 .custom_btn{
 	height:21px;
 	padding: 0.05rem 0.65rem;
+}
+
+.buttons-html5{
+	height:21px;
+	padding: 0.05rem 0.65rem;
+	font-size: .76563rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
 }
 
 {% endblock %}
@@ -84,6 +90,8 @@ table{
 		</div>
 	</div>
 	<!-- end page title -->
+
+	
 
 	{% for message in messages  %}
       <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -259,7 +267,6 @@ table{
     $('#datatable').DataTable();
 	// start for next table //
 	
-	
 	 $('#actdatatable thead tr')
         .clone(true)
         .addClass('filters')
@@ -269,6 +276,7 @@ table{
         orderCellsTop: true,
         fixedHeader: true,
 		"pageLength": 50,
+		buttons: ['excel'],
         initComplete: function () {
             var api = this.api();
  
@@ -317,7 +325,9 @@ table{
                 });
         }
     });
-	
+	table.buttons().container()
+        .appendTo('#actdatatable_wrapper .col-md-6:eq(0)');
+		$(".dt-buttons").append('&nbsp;<a href="{% url "csv_activity_list" %}" target="_blank" class="btn btn-secondary buttons-html5"><span>All Data</span></a>');
 });
  </script>
 
@@ -364,3 +374,4 @@ table{
 	});
 	</script>
 {% endblock %}
+
