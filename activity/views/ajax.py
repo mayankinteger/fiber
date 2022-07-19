@@ -1,4 +1,5 @@
 from activity.views.import_data import *
+from django.contrib.auth.hashers import make_password , check_password
 
 
 @login_required(login_url="/login")
@@ -86,21 +87,22 @@ def ajax(request):
             return JsonResponse(clients_result)
         elif page=="fielder_delete":
             get_id = request.POST.get("act_id")
-            fe_user_delete = Fe_users.objects.get(id=get_id)
+            fe_user_delete = Bay_users.objects.get(id=get_id)
             if fe_user_delete:
-                print(fe_user_delete)
                 fe_user_delete.delete()
                 return JsonResponse({'status':'ok'})
         elif page=="feuser_status_change":
             feuser_id = request.POST.get("feuser_id")
             status = request.POST.get("status")
-            fe_user_status = Fe_users.objects.filter(id=feuser_id).update(is_active=status)
+            fe_user_status = Bay_users.objects.filter(id=feuser_id).update(is_active=status)
             if fe_user_status:
                 return JsonResponse({'status':'ok'})
         elif page=="fe_change_password":
-             feuser_id = request.POST.get("fe_id")
-             password = request.POST.get("password")
-             fe_user_data = Fe_users.objects.filter(id=feuser_id).update(password=password)
-             if fe_user_data:
+            feuser_id = request.POST.get("fe_id")
+            password = request.POST.get("password")
+            #  enc_password = pbkdf2_sha256.encrypt(password)
+            password=make_password(password)
+            fe_user_data = Bay_users.objects.filter(id=feuser_id).update(password=password)
+            if fe_user_data:
                 messages.success(request, " Your password has been updated successfully")
                 return JsonResponse({'status':'ok'})

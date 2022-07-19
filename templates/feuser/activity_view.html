@@ -1,0 +1,200 @@
+{% extends 'feuser/basemobile.html' %}
+{% load static %}
+
+{% block title %} Activity Details {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="page-content">
+
+    <div class="content-area">
+
+    <div class="pagehead-bg   primary-bg" >
+        </div> 
+
+    <div class="container has-pagehead is-pagetitle">
+        <div class="form-group-row">
+            <div class="section col-lg-6">
+            <h5 class="pagetitle">Activity Details</h5>
+            </div>
+            <div class="col-md-6" style="float:right">
+                
+                        
+                    {% comment %} <a class="pagetitle" href="/activity_media?id={{ request.GET.id }}">View Media</a>&nbsp; {% endcomment %}
+                    {% comment %} {% for i in jobs %} {% endcomment %}
+                    <div class="spacer-small"></div>
+                        <a class="waves-effect waves-light btn teal lighten-1"  href="/feuser/activity_media?id={{jobdata.id}}" ><i class="mdi mdi-message-text-outline right"></i>View Media</a>
+                    </div>
+                    {% comment %} {% endfor %} {% endcomment %}
+                
+            </div>
+            
+        </div>
+    </div>
+    <div class="container transparent pr0 pl0 relative">
+        <div class="section pt0 pb0">
+            <div class="row ">
+                <div class="col s12 pad-0">              
+                        <div class="card">
+                            <div class="card-body">
+                                <section class="activity-container">
+                                    <div class="container12">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-md-12">
+                                                <div class="tab-content" id="main_form">
+                                                    <div class="tab-pane active" role="tabpanel" id="fielding">
+                                                        <h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;">General Details</h6>
+                                                        
+                                                        <div class="row upper_area">
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>EWO : {{jobdata.ewo}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>DA : {{jobdata.da}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Market : {{jobdata.market}}</label>  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Wire Center : {{jobdata.wire_center}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>PFP : {{jobdata.pfp}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Job Type : {{jobdata.job_type}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>LUs : {{jobdata.lus}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Terminal : {{jobdata.terminal}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Notes For Fielders :{{jobdata.notes}}</label>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        
+                                                        <h6 class="text-left" style="border-bottom:1px solid; margin-top:10px; color:#0caadc;">F1 Details</h6>
+                                                        <div class="row upper_area">
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F1 CFAS : {{jobdata.f1cfas}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F1 Job No# : {{jobdata.f1job_no}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F1 SOW : {{jobdata.f1_sow}}</label>  
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <h6 class="text-left" style="border-bottom:1px solid; margin-top:10px; color:#0caadc;"> F2 Details</h6>
+                                                        <div class="row upper_area">
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F2 CFAS : {{jobdata.f2cfas}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F2 Job No# : {{jobdata.f2job_no}}</label> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>F2 SOW : {{f2_sow}}</label>  
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                            
+                                                </div>         
+                                            </div>         
+                                        </div>         
+                                    </div> 
+                                </section>       
+                            </div>         
+                        </div>         
+                        <div class="card">
+                            <div class="card-body">
+                                <section class="activity-container">
+                                    <div class="container12">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-md-12">
+                                                <div class="tab-content" id="main_form">
+                                                    <div class="form-group row">
+                                                        <div class="dispInlineLabel" >
+                                                            <label class="col-form-label " style="margin-left:10px">My ECD :</label>
+                                                            {% comment %} <label for="ti_gebdat">Geburtsdatum</label> {% endcomment %}
+                                                        </div>
+                                                        
+                                                        <div class="dispInline">
+                                                            <div class="input-field">
+                                                                <i class="mdi mdi-clock-outline prefix"></i>
+                                                                <input type="text" id="datepicker-input" class="datepicker">
+                                                                <label for="datepicker-input">Pick date</label>
+                                                                </div>
+                                                        </div>
+                                                        {% comment %} <label class="col-md-1 col-form-label">Ecd</label>
+                                                        <div class="col-md-2">
+                                                            <input class="form-control custom_datepicker" value="" type="text" autocomplete="off" name="ecd" title="Ecd" data-provide="datepicker" data-date-autoclose="true" >
+                                                        </div> {% endcomment %}
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

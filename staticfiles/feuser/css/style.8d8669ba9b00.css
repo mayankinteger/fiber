@@ -1,0 +1,244 @@
+/* --------------------------------------------------------
+Style Sheet for Ensign PWA Mobile App
+version: 1.0
+author: themepassion
+email: themepassion@jaybabani.com
+----------------------------------------------------------*/
+
+/*-------------------------------------
+TABLE OF CONTENTS:
+-------------------------------------*/
+
+/*-------------------------------------
++ Import Font
++ General Layout
++ Typography
++ Page Title
++ Helper Classes
++ Preloader
++ UI - buttons
++ UI - badges & Waves
++ UI - Colors
++ UI - Toasts
++ UI - Modal
++ UI - Grid
++ UI - Icons
++ Form Select
++ Dropdowns
++ Mediabox
++ Date picker
++ Time picker
++ Feature Discovery
++ Carousel
++ Carousel Home Screen
++ Slider
++ Testimonials
++ Floating action buttons
++ Tooltip
++ Highlight
++ Breadcrumbs
++ Buttons
++ Badges
++ Blockquote
++ Pagination
++ Spineers / preloaders
++ Carousel Basic
++ Accordion
++ Waves
++ Modal
++ Page Top Bar
++ Page Top Bar - Left Align
++ Page Top Bar - App Based
++ Page Top Bar - Right Aligned
++ Page Top Bar - Dark Style
++ Page Top Bar - Colored Style
++ Navigation Menu
++ Navigation Menu - Centered 
++ Navigation Menu - Dark Style
++ Navigation Menu - Colored Style
++ Sub pages - Inner Menu Links
++ Footer
++ Footer - Light Style
++ Footer - Colored Style
++ Footer - Minimal
++ Navigation User Menu
++ Drop Down
++ Collection
++ Progress Bars
++ Back to top button
++ Cards
++ Tabs
++ Icon Boxes
++ Chips
++ Form Range Sliders
++ Switches
++ Form Elements
++ Checkboxes
++ Radio Buttons
++ Select
++ Settings
++ Parallax
++ Masonry
++ Cards Wrap
++ Chat
++ Calendar
++ Events
++ Mailbox / Messages
++ Profile Page
++ Timeline
++ Portfolio
++ Blogs
++ Blogs - Aligned
++ Blogs - Small Left Style
++ Blogs - Medium Left Style
++ Blogs - Small Right Style
++ Blogs - Medium Right Style
++ Blogs - Small Alternate Style
++ Blogs - Medium Alternate Style
++ Blogs - Non Image
++ Login Page
++ Welcome page
++ Error Pages 
++ Search Page 
++ Pricing Tables
++ Invoice
++ Notifications
++ Edit Profile
++ App Settings
++ Clients
++ Fixed Footer Menu
++ Fixed Footer Menu - Dark Style
++ Fixed Footer Menu - Colored Style
++ Perfect Scrollbar
++ Table
++ Contact us page
++ Fancybox
++ Image Filter Overlay
++ Site - Dark Mode
++ Site - Dark Mode - Calendar
++ Site - Dark Mode - Events
++ Site - Dark Mode - Collections
++ Site - Dark Mode - Chat
++ Site - Dark Mode - Edit Profile
++ Site - Dark Mode - UI
++ Site - Dark Mode - Cards
++ Site - Dark Mode - Table
++ Site - Dark Mode - Badge and collapsible
++ Site - Dark Mode - Dropdown
++ Site - Dark Mode - Tabs
++ Site - Dark Mode - Iconboxes
++ Site - Dark Mode - Pagination
++ Site - Dark Mode - Modal & Waves
++ Site - Dark Mode - Forms
++ Site - Dark Mode - Datepicker and Timepicker
++ Site - Dark Mode - Checkbox & Radio
++ Site - Dark Mode - Chips
++ Site - Dark Mode - Range & Select
++ Site - Dark Mode - Switches
++ Site - Dark Mode - Inputs
++ Site - Dark Mode - Timeline
++ Site - Dark Mode - Pricing Tables & Search
++ Site - Dark Mode - Blogs
++ Site - Dark Mode - Client
++ Site - Dark Mode - Calendar
++ Site - Dark Mode - Portfolio
++ Site - Dark Mode - UI Icons
+
+--------------------------------------*/
+
+/*-------------------------------------
+  Variables
+  + Font: Poppins
+  + Primary Color: var(--primary-color) / rgba(var(--primary-rgb), 1)
+  + Accent Color: var(--accent-color) / rgba(var(--accent-rgb), 1)
+  + Text Color: var(--dark-700)
+  + Background Color: #f5f5f5
+  + Dark Mode Background Color: var(--dark-900) / var(--dark-800) / var(--dark-700)
+  + Dark Mode Text Color: #f5f5f5 / #CFD8DC
+
+-------------------------------------*/
+
+/*-------------------------------------
+  Import Font
+-------------------------------------*/
+
+/* @import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600); */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+@import url("variables.93f209b0db50.css");
+
+@import url("_general.ca1aa514d6aa.css");
+@import url("_preloader.5b524e14282e.css");
+@import url("_ui.90e808248d58.css");
+@import url("_datepicker.fe4950827c60.css");
+@import url("_timepicker.dd0c4e32d98f.css");
+@import url("_carousel.ea17cbed9dda.css");
+@import url("_carousel-home-screen.339bc5fa94c5.css");
+@import url("_slider.1fee8769253c.css");
+@import url("_testimonials.b2f29b2d5b62.css");
+@import url("_floating-action.6f1802406974.css");
+@import url("_tooltips.c0c9837298e9.css");
+@import url("_buttons.7e3b25e13f65.css");
+@import url("_badges.b9297604dc03.css");
+@import url("_blockquotes.97b55a3e2e44.css");
+@import url("_pagination.b01ce536f42f.css");
+@import url("_spinners.f117615a6850.css");
+@import url("_accordion.81eb25adb6d5.css");
+@import url("_waves.cc010229736e.css");
+@import url("_modal.85609c067008.css");
+@import url("_topbar.46609179a466.css");
+@import url("_navigation.66124cab8b3b.css");
+/* @import url("_navigation-centered.80da44a8dd23.css"); */
+@import url("_navigation-dark.1b145a76d183.css");
+@import url("_navigation-colored.4345b478ff8e.css");
+@import url("_subpages.fc33d0015756.css");
+@import url("_footer.ec28afde1d28.css");
+@import url("_footer-light.d41d8cd98f00.css");
+@import url("_footer-colored.498bf3a7e778.css");
+@import url("_footer-minimal.e596f68be4a8.css");
+@import url("_dropdown.05f6f83029ed.css");
+@import url("_collection.24d083fd8e4e.css");
+@import url("_progress.940c0e090f97.css");
+@import url("_backtotop.ac1a8b07b8e2.css");
+@import url("_cards.c60b685ec5cb.css");
+@import url("_tabs.22ffd79142e8.css");
+@import url("_iconboxes.e2eda7beb2c9.css");
+@import url("_chips.03c1edbc33fe.css");
+@import url("_form-range-sliders.536d1ce82c06.css");
+@import url("_switches.225776540764.css");
+@import url("_form-elements.ab827577110d.css");
+@import url("_settings.c964ce01af94.css");
+@import url("_parallax.05703075bd29.css");
+@import url("_chat.787ab459350b.css");
+@import url("_calendar.5d00bf9d3151.css");
+@import url("_events.38e1c5139f4c.css");
+@import url("_mailbox.917612ca5a84.css");
+@import url("_profile.246ad466b70c.css");
+@import url("_timeline.3d299e0516e6.css");
+@import url("_portfolio.cacd71dbfdb3.css");
+@import url("_blogs.0286ca244e6e.css");
+@import url("_products.eb6f8156e7e7.css");
+@import url("_login.461d85e4b8e7.css");
+@import url("_welcome.cf6f5226f630.css");
+@import url("_error.a7465acbc841.css");
+@import url("_search.d3e7305995e6.css");
+@import url("_pricing.e7e7cebe5777.css");
+@import url("_invoice.d517889b7852.css");
+@import url("_notifications.5a6fe0280ab1.css");
+@import url("_profile-edit.b566b2b915e3.css");
+@import url("_app-settings.6e892f341612.css");
+@import url("_clients.5aafd29294fa.css");
+@import url("_fixed-footer-menu.996c7e0335ac.css");
+@import url("_perfect-scrollbar.49726570c0d9.css");
+@import url("_tables.830ff6f53401.css");
+@import url("_contactus.d2c07917b686.css");
+@import url("_fancybox.7aa4c2a26382.css");
+@import url("_image-filter.355ad3d6a5cf.css");
+@import url("_shadow.10a1eba5a2ab.css");
+@import url("_team.a6cc74ec2104.css");
+@import url("_charts.8aa469e64b1b.css");
+@import url("_activity.2bbd8e625a97.css");
+@import url("_page-heading.984c4d2ee49b.css");
+@import url("_actions.156513abbeb7.css");
+@import url("_menu-effect.f8c792108568.css");
+@import url("_site-darkmode.90b63b5eb99d.css");

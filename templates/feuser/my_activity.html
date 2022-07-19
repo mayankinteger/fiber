@@ -1,0 +1,77 @@
+
+{% extends 'feuser/basemobile.html' %}
+{% load static %}
+
+{% block title %} My Activity {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="page-content">
+    <div class="content-area">
+
+        <div class="pagehead-bg   primary-bg" >
+        </div> 
+
+        <div class="container has-pagehead is-pagetitle">
+            <div class="section">
+            <h5 class="pagetitle">Job Details</h5>
+                </div>
+        </div>
+        <div class="container">
+            <div class="section">
+                <div class="row ui-mediabox portfolio  port-boxed   ">
+                    {% for i in jobs  %}
+                    <div class="col s6">
+                        <div class=" boxed z-depth-1">
+                            <div id="gmaps-markers" class="gmaps" style="height:200px; width:100%;"></div>
+                        </div>
+                        <div class="port-data boxed z-depth-1">
+                            <div class="col-md-8 col-sm-4">
+                                <div class="form-group">
+                                    <label>EWO : {{i.ewo}}</label> 
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-4">
+                                <div class="form-group">
+                                    <label>Start Date : {{i.rec_date|safe}}</label> 
+                                </div>
+                            </div> 
+                            
+                            <div class="col-md-8 col-sm-4">
+                                <div class="form-group">
+                                    <label>Market : {{i.market|safe}}</label>  
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-12 col-sm-4" style="margin:auto">
+                                <a href="/feuser/activity_view?id={{ i.id }}" class="btn btn-xs btn-primary pull-right text-white">Start</a><br>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    {% comment %} <script src="https://maps.google.com/maps/api/js?key=AIzaSyCtSAR45TFgZjOs4nBFFZnII-6mMHLfSYI"></script>
+    <script src="{% static 'libs/gmaps/gmaps.min.js '%}"></script> 
+    <script src="{% static 'js/pages/gmaps.init.js' %}"></script> {% endcomment %}
+{% endblock %}
+
+
+
+
+
+
+

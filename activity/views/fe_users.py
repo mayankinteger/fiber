@@ -1,6 +1,6 @@
 from activity.views.import_data import *
 from activity.views.page_permission import *
-
+from django.contrib.auth.hashers import make_password , check_password
 def sendfe_mail(mydata, page, subject):
     mail_setting = Mail_settings.objects.get(priority=2)
     html_content = render_to_string("email/"+page, mydata)
@@ -34,10 +34,11 @@ def fe_users(request):
     page_check = permision_check(current_url,user_id)
     if page_check == False:
         return render(request,'404.html')
-    fe_list = Fe_users.objects.order_by('-id')
+    bay_role = Bay_roles.objects.get(id=10)
+    fe_list = Bay_users.objects.filter(role=bay_role).order_by('-id')
     user_id = request.GET.get("id")
     if user_id:
-        edit_data = Fe_users.objects.get(id=user_id)
+        edit_data = Bay_users.objects.get(id=user_id)
     else:
         edit_data={}
     
@@ -51,32 +52,33 @@ def fe_users(request):
         state = request.POST.get("state")
         statelist = request.POST.getlist("state")
         formedit = request.POST.get("form_edit_id")
-
-        fe_dataa = Fe_users(fname=fname,lname=lname,state=state,password=password,cell_number=cellnumber,email=email,superviser_id=supervisor)
+        # enc_password = pbkdf2_sha256.encrypt(password)
+        fe_dataa = Bay_users(fname=fname,lname=lname,state=state,password=password,cell_number=cellnumber,email=email,superviser_id=supervisor)
+        fe_dataa.password=make_password(fe_dataa.password)
         if formedit != '':
             exist_email = request.POST.get("check_email")
-            check_email = Fe_users.objects.filter(email=email).exclude(email=exist_email)
+            check_email = Bay_users.objects.filter(email=email).exclude(email=exist_email)
             if check_email:
                 messages.error(request, " Email already register")
                 return redirect('fe_users')
             if Enquiry(statelist):
-                Fe_users.objects.filter(id=formedit).update(fname=fname,lname=lname,state=state,cell_number=cellnumber,email=email,superviser_id=supervisor)
-                u = Fe_users.objects.get(pk=formedit)
+                Bay_users.objects.filter(id=formedit).update(fname=fname,lname=lname,state=state,cell_number=cellnumber,email=email,superviser_id=supervisor)
+                u = Bay_users.objects.get(pk=formedit)
                 messages.success(request, " Your details has been updated successfully")
                 return redirect('fe_users')
             else:
                 edit_data = fe_dataa
                 messages.error(request, " Please fill all the required fields")
         else:
-            check_email = Fe_users.objects.filter(email=email)
+            check_email = Bay_users.objects.filter(email=email)
             if check_email:
                 messages.error(request, " Email already register")
                 return redirect('fe_users')
 
             if Enquiry(statelist):
                 fe_dataa.save()
-                new_act_id = Fe_users.objects.latest('id').id
-                new_act_id = Fe_users.objects.get(id=new_act_id)
+                new_act_id = Bay_users.objects.latest('id').id
+                new_act_id = Bay_users.objects.get(id=new_act_id)
                 params = {'email':email, 'password':password}
                 sendfe_mail(params, 'fe_user.html', 'New fielder added - '+fname+' '+lname)
                 messages.success(request, " Your details has been added successfully")
@@ -89,5 +91,3 @@ def fe_users(request):
 
     params={'fe_list':fe_list,"edit_data":edit_data}
     return render(request,'fe_users.html',params)
-
-

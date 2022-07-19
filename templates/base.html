@@ -85,25 +85,32 @@
 			padding: 0 calc(24px / 2) 0 0;
 		}
 		.dropdown-menu {
-			top: 79%;
+			top: 98%;
 		}
 		.dropdown-menu.show {
-			top: 79%!important;
+			top: 99%!important;
 		}
         .topnav .navbar-nav .nav-link {
             font-size: 12px;
+            position: relative;
+            color: #707d8a;
+            line-height: 40px;
+            margin-top: 16px;
+        }
+        .topnav{
+            height: 55px;
         }
         .d-none{
             font-size:12px;
         }
-        .col-form-label {
+        .col-form-label { 
             padding-top: calc(0.17rem + 1px);
             padding-bottom: calc(0.47rem + 1px);
             margin-bottom: 0;
             font-size: inherit;
             line-height: 1.5;
         }
-
+        
         {% block css %} {% endblock %}
 		</style>
 
@@ -186,37 +193,19 @@
                     </div>
 
                     <div class="d-flex">
-                        <div class="dropdown d-inline-block d-lg-none ml-2">
-                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-magnify"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
 
-                                <form class="p-3">
-                                    <div class="form-group m-0">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="dropdown d-none d-lg-inline-block ml-1">
-                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen" style="max-height: 60%;top: 16px;">
+                        <div class="dropdown d-none d-lg-inline-block ml-1" style="height: 40px;">
+                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen" style="height: 40px;">
                                 <i class="mdi mdi-fullscreen"></i>
                             </button>
                         </div>
-
-                        <div class="dropdown d-inline-block" style="">
-                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    
+                        <div class="dropdown d-inline-block" style="height: 40px;">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 40px;">
                                 <span class="d-none d-xl-inline-block ml-1">{% if request.user.is_authenticated %}{{request.user.fname}} {{request.user.lname}}{% endif %}</span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-menu dropdown-menu-right" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                                 <!-- item-->
                                 <a class="dropdown-item text-danger" href="/logout"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
                             </div>

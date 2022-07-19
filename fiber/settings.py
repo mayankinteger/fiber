@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'activity.apps.ActivityConfig',
     'bill.apps.BillConfig',
+    'feuser.apps.FeuserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,104 @@
+{% extends 'feuser/basemobile.html' %}
+{% load static %}
+
+{% block title %} Activity Media {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="page-content">
+
+    <div class="content-area">
+
+    <div class="pagehead-bg   primary-bg" >
+        </div> 
+
+    <div class="container has-pagehead is-pagetitle">
+        <div class="form-group-row">
+            <div class="section col-lg-6">
+            <h5 class="pagetitle">Activity Media</h5>
+            </div>
+            
+            
+        </div>
+    </div>
+    <div class="container transparent pr0 pl0 relative">
+        <div class="section pt0 pb0">
+            <div class="row ">
+                <div class="col s12 pad-0">              
+                    <div class="card darken-1">        
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="">
+                                    <table class="table mb-5">
+                                        {% comment %} <thead>
+                                            <tr>
+                                                <th>F1 Media Files</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onClick="Add_Files('f1')" data-toggle="modal" data-target=".bs-example-modal-center">Add Files</button></th>
+                                            </tr>
+                                        </thead> {% endcomment %}
+                                        <tbody>
+                                            <tr>
+                                                <th>File Name</th>
+                                                
+                                                <th class="right">Download</th>
+                                            </tr>
+                                            {% for i in f1_files %}
+                                            <tr>
+                                                
+                                                <tr>
+                                                    <td> {{i.file_name}} </td>
+                                                    <td class="right">
+                                                        <div class="iprev col s12 m6 l4 xl3">
+                                                        <a class="waves-effect waves-light btn teal lighten-1" href="{{i.file_name.url}}"><i class="mdi mdi-arrow-down-bold-circle fa-big "></i></a>
+                                                        
+                                                    </div>
+                                                </td>
+                                                
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                            {% for i in f2_files %}
+                                            <tr>
+                                                
+                                                <tr>
+                                                    <td> {{i.file_name}} </td>
+                                                    <td class="right">
+                                                        <div class="iprev col s12 m6 l4 xl3">
+                                                        <a class="waves-effect waves-light btn teal lighten-1" href="{{i.file_name.url}}"><i class="mdi mdi-arrow-down-bold-circle fa-big "></i></a>
+                                                        
+                                                    </div>
+                                                </td>
+                                                
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                            {% comment %} <tr>
+                                                <td> A02CMJD </td>
+                                                <td><a href="#" target="_blank" title="Download"></a><i class="dripicons-alarm dripicons-download fa-big "></i></td>
+                                                
+                                            </tr> {% endcomment %}
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>     
+                            </div>         
+                        </div>         
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

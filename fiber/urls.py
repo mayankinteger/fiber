@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('activity.urls')),
     path('', include('bill.urls')),
+    path('feuser/', include('feuser.urls')),
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handle404 = "fiber.views.error_404"

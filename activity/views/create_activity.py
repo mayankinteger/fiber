@@ -76,7 +76,8 @@ def create_activity(request):
         edit_data={}
     activities_list = Activities.objects.all()
     clients_list = Clients.objects.order_by('name')
-    feusers_list = Fe_users.objects.filter(is_active=0).order_by('fname')
+    bay_role = Bay_roles.objects.get(id=10)
+    feusers_list = Bay_users.objects.filter(role=bay_role, is_active=True).order_by('fname')
     bayusers_list = Bay_users.objects.filter(is_active=True).order_by('fname')
     
     if request.method == "POST":
@@ -127,8 +128,8 @@ def create_activity(request):
         
         assign_fielder = request.POST.get("assign_fielder")
         try:
-            assign_fielder = Fe_users.objects.get(id=assign_fielder)
-        except Fe_users.DoesNotExist:
+            assign_fielder = Bay_users.objects.get(id=assign_fielder)
+        except Bay_users.DoesNotExist:
             assign_fielder = None        
         assign_int_eng = request.POST.get("assign_int_eng")
         try:

@@ -2,11 +2,12 @@ from django import forms
 
 from django.contrib.auth.models import User
 from bill.models import Bill as Create_Bill
-from activity.models import Bay_users, Fe_users
+from activity.models import *
 from activity.templatetags.myfilters import *
 #from bootstrap_datepicker_plus.widgets import DatePickerInput
 
-users = Fe_users.objects.order_by('fname')
+bay_role = Bay_roles.objects.get(id=10)
+users = Bay_users.objects.filter(role=bay_role, is_active=True).order_by('fname')
 user = tuple((n.id,str(n.fname)+' '+str(n.lname)) for n in users)
 user = list(user)
 add_tuple = ('','--Select--')
