@@ -282,12 +282,12 @@ table{
                                 
                                 <td>
                                 
-                                    {% if i.is_active == 1 %}
+                                    {% if i.is_active == 0 %}
                                     
-                                    <a title="Change to active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=0><span><i class='mdi mdi-account-multiple-remove-outline fa-big'></i></span></a>&nbsp;
-                                    {% elif i.is_active == 0 %}
+                                    <a title="Change to active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=1><span><i class='mdi mdi-account-multiple-remove-outline fa-big'></i></span></a>&nbsp;
+                                    {% elif i.is_active == 1 %}
                                     
-                                    <a  title="Change to not active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=1><span><i class='mdi mdi-account-multiple-check-outline fa-big'></i></span></a>&nbsp;
+                                    <a  title="Change to not active" class="user_status" href='javascript:void(0);' id="button" user-id="{{ i.id }}" change-value=0><span><i class='mdi mdi-account-multiple-check-outline fa-big'></i></span></a>&nbsp;
                                     {% endif %}
                                     <a title="Edit" href='/fe_users?id={{ i.id }}'><span><i class='mdi mdi-pencil-outline fa-big'></i></span></a>&nbsp;
                                     
@@ -545,7 +545,7 @@ table{
                     .done(function(response){
                     Swal.fire({
                                 type: 'success',
-                                title: 'Fielder Deleted',
+                                title: 'Activity Deleted',
                                 confirmButtonColor: "#5156be",
                                 preConfirm: function() {
                                     window.location.reload();

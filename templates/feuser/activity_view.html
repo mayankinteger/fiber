@@ -1,6 +1,6 @@
 {% extends 'feuser/basemobile.html' %}
 {% load static %}
-
+{% load myfilters %}
 {% block title %} Activity Details {% endblock %}
 
 {% block css %}
@@ -65,7 +65,7 @@
                                                             </div>
                                                             <div class="col-md-3 col-sm-4">
                                                                 <div class="form-group">
-                                                                    <label>Market : {{jobdata.market}}</label>  
+                                                                    <label>Market : {{jobdata.market|market}}</label>  
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 col-sm-4">
