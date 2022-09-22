@@ -1,0 +1,13 @@
+INSERT INTO public.activity_bay_roles(
+	id, name, page_role_column, orderby)
+	VALUES (1, 'Account Management', 'sales', 3),
+	(2, 'PMO', 'customer_service', 4),
+	(3, 'Admin', 'admin', 1),
+	(4, 'Technical - Wireless', 'operations', 5),
+	(5, 'Technical - OSP/Wiredline', 'production', 6),
+	(6, 'IT Department', 'r_n_d', 10),
+	(7, 'HR', 'hr', 7),
+	(8, 'Accounts & Finance', 'account', 9),
+	(9, 'Marketing', 'marketing', NULL),
+	(10, 'Recruiting', 'logistics', 8),
+	(11, 'Executive Team', 'management', 2);

@@ -1,0 +1,221 @@
+we created 3 files 'db', 'first', 'myexcel'
+
+
+git config --global user.name "Mayank"
+
+git config --global user.email "mayank.kumar@integertel.com"
+
+git config --list
+
+git status
+
+git init
+
+#now it will show no error but it shows untracked files
+git status
+
+#all files going to staging area or we can say tracke all untracked files
+git add --a
+
+#now it will show our all untracked files added in staging area
+git status
+
+#now this command for all changes files has been committed and now we don't have any file in stagging area
+git commit -m "Initial Commit"
+
+# it shows our all commits
+git log
+
+
+
+# now we changes in our 2 files 'first', 'myexcel' and commit only one file
+
+#now this shows our two modified files
+git status
+
+#now we only have to commit single file 'first' commit and not touched our second file 'myexcel'
+git add first.txt
+
+#now this shows our 'first' file is in stagging area and 'myexcel' in modified files
+git status
+
+#now this commant for all changes files which is in stagging has been committed and now we don't have any file in stagging area
+git commit -m "Changed in first.txt"
+
+#now this shows our 'myexcel' in modified files because ou 'first.txt' has been committed with previous command
+git status
+
+#for checking how many committs we have done
+git log
+
+#now again we add into stagging area our all modified files
+git add --a
+
+git commit -m "Changed in myexcel"
+
+#now we have commit all files so it will show nothing
+git status
+
+#for delete content of git repository
+rm -r .git
+
+
+
+
+#for clonning git repository to your system
+git clone "<url of that>"
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git (master)
+$ git clone https://github.com/tensorflow/tensorflow.git
+Cloning into 'tensorflow'...
+remote: Enumerating objects: 1337027, done.
+remote: Counting objects: 100% (28/28), done.
+remote: Compressing objects: 100% (22/22), done.
+remote: Total 1337027 (delta 8), reused 19 (delta 6), pack-reused 1336999
+Receiving objects: 100% (1337027/1337027), 859.69 MiB | 8.59 MiB/s, done.
+Resolving deltas: 100% (1086278/1086278), done.
+Updating files: 100% (26376/26376), done.
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git (master)
+$ ls
+tensorflow/
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git (master)
+$ cd tensorflow
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ ls
+AUTHORS             ISSUES.md          WORKSPACE           tensorflow/
+BUILD               ISSUE_TEMPLATE.md  arm_compiler.BUILD  third_party/
+CITATION.cff        LICENSE            configure*          tools/
+CODEOWNERS          README.md          configure.cmd
+CODE_OF_CONDUCT.md  RELEASE.md         configure.py
+CONTRIBUTING.md     SECURITY.md        models.BUILD
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git add --a
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   README.md
+
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git commit -m "Changed readme"
+[master c4a460b0c4a] Changed readme
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Mayank Kumar@INT-IN-MAYANK-KUMAR MINGW64 /d/cloning git/tensorflow (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+
+
+
+
+#this use for checking difference between two same file in stagging area and working directory
+git diff
+
+#this use for checking difference between two same file in stagging area
+git diff --staged
+
+
+#this is use for direct commit without going to stagging area but with only tracked modified files and not with untracked files
+git commit -a -m "Direct Commit"
+
+#for removing any file with git bash in working directory
+git rm '<filename with extension>'
+git commit -m "remove file"
+
+#for renaming any file with git bash in working directory
+git mv '<filename with extension>' '<new filename with extension>'
+git commit -m "rename file"
+
+
+#for untrack any file in working directory
+git rm --cached '<filename with extension>'
+git commit -m "untrack file"
+
+#for track all commit
+git log
+
+#for track all commit with differences
+git log -p
+
+#for track only last 3 commits with differences
+git log -p -3
+
+#for track all commit in short
+git log --stat
+
+#for track all commit in one line
+git log --pretty=oneline
+
+#for track all commit with info little more short
+git log --pretty=full
+
+#for track last two days commits
+git log --since=2.days
+
+#for track last two weeks commits
+git log --since=2.weeks
+
+#for track last two months commits
+git log --since=2.months
+
+#for track last two years commits
+git log --since=2.years
+
+#for track all commit with hash code and author
+git log --pretty=format:"%h -- %an"
+
+#for track all commit with hash code and author email
+git log --pretty=format:"%h -- %ae"
+
+#for change in previous commit
+git commit --amend
+
+
+#for unstage any stage file
+git restore --staged <filename with extension>
+
+#for restore file from commit
+git checkout -- <filename with extension>
+
+#for match working directory with previous commit
+git checkout -f
