@@ -4,8 +4,8 @@
 {% block title %} Activity Media {% endblock %}
 
 {% block css %}
-
-{% endblock %}
+    
+{% endblock %} 
 
 {% block link %}
 {% endblock %}
@@ -45,7 +45,7 @@
                                         <tbody >
                                             <tr>
                                                 <th>File Name</th>
-                                                <th>Caption</th>
+                                                {% comment %} <th>Caption</th> {% endcomment %}
                                                 
                                                 <th class="right">Download</th>
                                             </tr>
@@ -53,11 +53,11 @@
                                             <tr>
                                                 
                                                 <tr>
-                                                    <td> {{i.file_name|toStr|mysplit}} </td>
-                                                    <td> {{i.caption}} </td>
+                                                    <td class="small"> {{i.file_name|toStr|mysplit}} <br> <strong>Caption</strong> : {{i.caption}} </td>
+                                                    {% comment %} <td> {{i.caption}} </td> {% endcomment %}
                                                     <td class="right">
                                                         <div class="iprev col s12 m6 l4 xl3">
-                                                        <a class="waves-effect waves-light btn teal lighten-1" href="{{i.file_name.url}}" download target=blank><i class="mdi mdi-arrow-down-bold-circle fa-big "></i></a>
+                                                        <a class="waves-effect waves-light  lighten-1" href="{{i.file_name.url}}" download target=blank><i class="mdi mdi-arrow-down-bold-circle-outline fa-big "></i></a>
                                                         
                                                     </div>
                                                 </td>
@@ -69,11 +69,11 @@
                                             <tr>
                                                 
                                                 <tr>
-                                                    <td> {{i.file_name|toStr|mysplit}} </td>
-                                                    <td> {{i.caption}} </td>
+                                                    <td class="small"> {{i.file_name|toStr|mysplit}} <br> <strong>Caption</strong> : {{i.caption}} </td>
+                                                    {% comment %} <td> {{i.caption}} </td> {% endcomment %}
                                                     <td class="right">
                                                         <div class="iprev col s12 m6 l4 xl3">
-                                                        <a class="waves-effect waves-light btn teal lighten-1" href="{{i.file_name.url}}" download target=blank><i class="mdi mdi-arrow-down-bold-circle fa-big "></i></a>
+                                                        <a class="waves-effect waves-light  lighten-1" href="{{i.file_name.url}}" download target=blank><i class="mdi mdi-arrow-down-bold-circle-outline fa-big "></i></a>
                                                         
                                                     </div>
                                                 </td>
@@ -86,7 +86,7 @@
                                                 <td><a href="#" target="_blank" title="Download"></a><i class="dripicons-alarm dripicons-download fa-big "></i></td>
                                                 
                                             </tr> {% endcomment %}
-
+                                            
                                         </tbody>
                                     </table>
                                 </div>     

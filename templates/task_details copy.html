@@ -82,76 +82,14 @@ label{
 		<div class="col-lg-12">
 				<div style="margin-bottom:5px;" class="card">
 					<div class="card-body">
-						<div class="row">
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Job Receive Date :  {{activitydata.rec_date|date:"m/d/Y"}}</label> 
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">ECD : {{activitydata.ecd|date:"m/d/Y"}}</label> 
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Client : {{activitydata.client_id.name}}</label>  
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">LUs : {{activitydata.lus}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group upper_area">
-									<label class="upper_area">Wire Center : {{activitydata.wire_center}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Job Type : {{activitydata.job_type}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Fielder : {{activitydata.assign_fielder.fname}} {{activitydata.assign_fielder.lname}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Lead Eng : {{activitydata.lead_eng.fname}} {{activitydata.lead_eng.lname}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Work Print : {{activitydata.work_print}}</label>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-4">
-								<div class="form-group">
-									<label class="upper_area">Footage/Terminals : {{activitydata.footage}}/{{activitydata.terminal}}</label>
-								</div>
-							</div>
-						</div>
+						{% include "upper_area.html" %}
 						<h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;"></h6>
 						<form novalidate action="" method="post" enctype="multipart/form-data">
-							{% csrf_token %}
+							{% csrf_token %} 
 							{{form.activity_id_id}}
 							{{form.task_id}}
-							{{form.qa_eng_old.as_hidden}}
-							{{form.qp_eng_old.as_hidden}}
-							{{form.doer_old.as_hidden}}
-							{{form.qc_eng_1_old.as_hidden}}
-							{{form.qc_eng_2_old.as_hidden}}
-							<input type="hidden" name="client_id" value="{{activitydata.client_id.name}}">
-							<input type="hidden" name="ticket_no" value="{{activitydata.ticket}}">
-							<input type="hidden" name="da" value="{{activitydata.da}}">
-							<input type="hidden" name="ewo" value="{{activitydata.ewo}}">
-							<input type="hidden" name="job_type" value="{{activitydata.job_type}}">
-							<input type="hidden" name="job_no" value="{{activitydata.job_no}}">
-							<input type="hidden" name="lus" value="{{activitydata.lus}}">
-
+							
+							
 							<div class="form-group row">
 								<label class="col-md-2 col-form-label">QA Engineer</label>
 								<div class="col-md-2">

@@ -174,89 +174,80 @@ label{
 													</li>
 												</ul>
 											</div>
+							
 												<div class="tab-content" id="main_form">
 													<div class="tab-pane active" role="tabpanel" id="fielding">
 														<h6 class="text-left" style="border-bottom:1px solid; color:#0caadc;"></h6>
 														{% if request.GET.step != '10' %}
 														<a href="/task_details?step={{request.GET.step}}&id={{request.GET.id}}" class="btn btn-xs btn-primary pull-right text-white">Update Status</a><br>
 														{% endif %}
-														<div class="row">
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Job Receive Date :  {{activity_data.rec_date|date:"m/d/Y"}}</label> 
+														{% include "upper_area.html" %}
+														<!--<div class="row">
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label class="upper_area">Job Receive Date : {{activitydata.rec_date|date:"m/d/Y"}}</label> 
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">ECD : {{activity_data.ecd|date:"m/d/Y"}}</label> 
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<labe class="upper_area"l>ECD : {{activitydata.ecd|date:"m/d/Y"}}</label> 
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Client : {{activity_data.client_id.name}}</label>  
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label class="upper_area">Client : {{activitydata.client_id.name}}</label>  
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">LUs : {{activity_data.lus}}</label>
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label class="upper_area">LUs : {{activitydata.lus}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">Wire Center : {{activitydata.wire_center}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Job Type : {{activity_data.job_type}}</label>
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label class="upper_area">Job Type : {{activitydata.job_type}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Fielder : {{activity_data.assign_fielder.fname}} {{activity_data.assign_fielder.lname}}</label>
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
+																	<label class="upper_area">Fielder : {{activitydata.assign_fielder.fname}} {{activitydata.assign_fielder.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Lead Eng : {{activity_data.lead_eng.fname}} {{activitydata.lead_eng.lname}}</label>
-																</div>
-															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Work Print : {{activity_data.work_print}}</label>
-																</div>
-															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
-																	<label class="upper_area">Footage/Terminals : {{activity_data.footage}}/{{activity_data.terminal}}</label>
-																</div>
-															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">QA Engineer : {{task_details.qa_eng.fname}} {{task_details.qa_eng.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">QP Engineer : {{task_details.qp_eng.fname}} {{task_details.qp_eng.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															{% if request.GET.step == '1' or request.GET.step == '2' or request.GET.step == '3' or request.GET.step == '4' %}
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">QC Engineer 1 : {{task_details.qc_eng_1.fname}} {{task_details.qc_eng_1.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">QC Engineer 2 : {{task_details.qc_eng_2.fname}} {{task_details.qc_eng_2.lname}}</label>
 																</div>
 															</div>
-															<div class="col-md-2 col-sm-4">
-																<div class="form-group upper_area">
+															{% endif %}
+															{%if request.GET.step != '4' and request.GET.step != '6' %}
+															<div class="col-md-3 col-sm-4">
+																<div class="form-group">
 																	<label class="upper_area">{% if request.GET.step == '1' %}Digitizer{% elif request.GET.step == '2' %}Designer{% elif request.GET.step == '3' %}Drafter{% elif request.GET.step == '5' %}Researcher{%endif%} Name : {{task_details.doer.fname}} {{task_details.doer.lname}}</label>
 																</div>
 															</div>
-														</div>
+															{% endif %}
+														</div>-->
 														
 														<h6 class="text-left" style="border-bottom:1px solid; margin-top:10px; color:#0caadc;">{{step}} Subtask</h6>
 														<form novalidate action="/activities" method="post" enctype="multipart/form-data">

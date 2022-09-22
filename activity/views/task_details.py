@@ -1,6 +1,25 @@
 from activity.views.import_data import *
 from activity.views.page_permission import *
 
+
+def send_taskmail(mydata, page, subject):
+    mail_setting = Mail_settings.objects.get(priority=2)
+    html_content = render_to_string("email/"+page, mydata)
+    text_content = strip_tags(html_content)
+    receiver = ['mayank.kumar@integertel.com']
+    email = EmailMultiAlternatives(
+        # subject
+        subject,
+        # msg
+        text_content,
+        # from email
+        mail_setting,
+        # recipient list
+        receiver
+    )
+    email.attach_alternative(html_content,"text/html")
+    email.send()
+
 @login_required(login_url="/login")
 def task_details(request):
     current_url = resolve(request.path_info).url_name
@@ -23,31 +42,63 @@ def task_details(request):
                 qa_eng = Bay_users.objects.get(pk=qa_eng)
             except:
                 qa_eng = None
+            qa_eng_old = request.POST.get("qa_eng_old")
+            try:
+                qa_eng_old = Bay_users.objects.get(pk=qa_eng_old)
+            except:
+                qa_eng_old = None
             qp_eng = request.POST.get("qp_eng")
             try:
                 qp_eng = Bay_users.objects.get(pk=qp_eng)
             except:
                 qp_eng = None
+            qp_eng_old = request.POST.get("qp_eng_old")
+            try:
+                qp_eng_old = Bay_users.objects.get(pk=qp_eng_old)
+            except:
+                qp_eng_old = None
             doer = request.POST.get("doer")
             try:
                 doer = Bay_users.objects.get(pk=doer)
             except:
                 doer = None
+            doer_old = request.POST.get("doer_old")
+            try:
+                doer_old = Bay_users.objects.get(pk=doer_old)
+            except:
+                doer_old = None
             qc_eng_1 = request.POST.get("qc_eng_1")
             try:
                 qc_eng_1 = Bay_users.objects.get(pk=qc_eng_1)
             except:
                 qc_eng_1 = None
+            qc_eng_1_old = request.POST.get("qc_eng_1_old")
+            try:
+                qc_eng_1_old = Bay_users.objects.get(pk=qc_eng_1_old)
+            except:
+                qc_eng_1_old = None
             qc_eng_2 = request.POST.get("qc_eng_2")
             try:
                 qc_eng_2 = Bay_users.objects.get(pk=qc_eng_2)
             except:
                 qc_eng_2 = None
+            qc_eng_2_old = request.POST.get("qc_eng_2_old")
+            try:
+                qc_eng_2_old = Bay_users.objects.get(pk=qc_eng_2_old)
+            except:
+                qc_eng_2_old = None
             status = request.POST.get("status")
             try:
                 status = Task_status.objects.get(pk=status)
             except:
                 status = None
+            ticket_no = request.POST.get("ticket_no")
+            da = request.POST.get("da")
+            ewo = request.POST.get("ewo")
+            job_type = request.POST.get("job_type")
+            job_no = request.POST.get("job_no")
+            lus = request.POST.get("lus")
+            client_id = request.POST.get("client_id")
             if task_details:
                 start_date = form.cleaned_data.get("start_date")
                 complete_date = form.cleaned_data.get("complete_date")
@@ -57,11 +108,41 @@ def task_details(request):
                 att_qc_rating = form.cleaned_data.get("att_qc_rating")
                 Task_detail.objects.filter(id=task_details.id).update(task_id=act_type, activity=activity_id, start_date=start_date, complete_date=complete_date, qa_eng=qa_eng, qp_eng=qp_eng, qa_rating=qa_rating, internal_qc_rating=internal_qc_rating, external_qc_rating=external_qc_rating, att_qc_rating=att_qc_rating, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
                 messages.success(request, "Your task details has been updated successfully")
+                if qa_eng!=qa_eng_old and qa_eng!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qa_eng.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qp_eng!=qp_eng_old and qp_eng!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qp_eng.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if doer!=doer_old and doer!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':doer.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qc_eng_1!=qc_eng_1_old and qc_eng_1!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qc_eng_1.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qc_eng_2!=qc_eng_2_old and qc_eng_2!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qc_eng_2.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
             else:
                 form.save()
                 task_id = Task_detail.objects.latest('id').id
                 Task_detail.objects.filter(id=task_id).update(activity=activity_id, qa_eng=qa_eng, qp_eng=qp_eng, doer=doer, qc_eng_1=qc_eng_1,qc_eng_2=qc_eng_2, status=status)
+                if qa_eng!=qa_eng_old and qa_eng!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qa_eng.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qp_eng!=qp_eng_old and qp_eng!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qp_eng.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if doer!=doer_old and doer!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':doer.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qc_eng_1!=qc_eng_1_old and qc_eng_1!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qc_eng_1.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
+                if qc_eng_2!=qc_eng_2_old and qc_eng_2!=0:
+                    params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':qc_eng_2.email, 'client':client_id}
+                    send_taskmail(params, 'activity_mail.html', 'New ticket assigned')
                 messages.success(request, "Your task details has been added successfully")
                 return redirect('/task_details?step='+act_type+'&id='+activity_id)
 
@@ -133,7 +214,7 @@ def task_details(request):
     else:
         return redirect('activity_list')
 
-    form = TaskForm(initial={'activity_id_id':activity_id, 'task_id':act_type, 'added_by_id':request.user.id, 'start_date':start_date, 'complete_date':complete_date, 'qa_eng':qa_eng, 'qp_eng':qp_eng, 'qa_rating':qa_rating, 'status':status_data, 'doer':doer, 'qc_eng_1':qc_eng_1, 'qc_eng_2':qc_eng_2, 'internal_qc_rating':internal_qc_rating, 'external_qc_rating':external_qc_rating, 'att_qc_rating':att_qc_rating})
+    form = TaskForm(initial={'activity_id_id':activity_id, 'task_id':act_type, 'added_by_id':request.user.id, 'start_date':start_date, 'complete_date':complete_date, 'qa_eng':qa_eng, 'qa_eng_old':qa_eng, 'qp_eng':qp_eng, 'qp_eng_old':qp_eng, 'qa_rating':qa_rating, 'status':status_data, 'doer':doer, 'doer_old':doer, 'qc_eng_1':qc_eng_1, 'qc_eng_1_old':qc_eng_1, 'qc_eng_2':qc_eng_2, 'qc_eng_2_old':qc_eng_2, 'internal_qc_rating':internal_qc_rating, 'external_qc_rating':external_qc_rating, 'att_qc_rating':att_qc_rating})
     mediaform = TaskmediaForm()
     remarkform = TaskcommentForm()
 

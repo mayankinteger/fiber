@@ -4,11 +4,11 @@ def index(request):
     return redirect('handleLogin')
 
 def handleLogin(request):
+    bay_role = Bay_roles.objects.get(id=10)
     if request.method=="POST":
         # Get the post parameters
         email=request.POST['email']
         password=request.POST['password']
-        bay_role = Bay_roles.objects.get(id=10)
         user=authenticate(email= email, password= password, is_active=True)
         if user:
             login(request, user)
@@ -24,7 +24,10 @@ def handleLogin(request):
             messages.error(request, "Invalid credentials! Please try again")
             return redirect("handleLogin")
     elif request.user.is_authenticated:
-        return redirect("activity_list")
+        if request.user.role.id == bay_role.id:
+            return  redirect("my_activity")
+        else:
+            return redirect("activity_list")
     else:
         #return render(request, 'login.html')
         params = {'redirect_page': request.GET.get("next", "off")}

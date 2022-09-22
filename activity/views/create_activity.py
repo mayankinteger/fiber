@@ -200,16 +200,16 @@ def create_activity(request):
 
                     client_data = Clients.objects.get(pk=client_id)
                     if assign_int_eng is not None:
-                        params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_int_eng.email, 'client':client_data.name}
+                        params = {'ticket_number':ticket_no, 'da_value':da, 'ewo':ewo, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_int_eng.email, 'client':client_data.name}
                         send_mail(params, 'activity_mail.html', 'New ticket assigned')
-                    
+
                     if int_eng2 is not None:
-                        params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':int_eng2.email, 'client':client_data.name}
+                        params = {'ticket_number':ticket_no, 'da_value':da, 'ewo':ewo, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':int_eng2.email, 'client':client_data.name}
                         send_mail(params, 'activity_mail.html', 'New ticket assigned')
 
                     if assign_fielder is not None:
-                        params = {'ticket_number':ticket_no, 'da_value':da, 'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_fielder.email, 'client':client_data.name}
-                        #send_mail(params, 'activity_mail.html', 'New ticket assigned')  
+                        params = {'ticket_number':ticket_no, 'da_value':da, 'ewo_value':ewo,'job_type':job_type, 'job_no':job_no, 'lus':lus, 'email':assign_fielder.email, 'client':client_data.name}
+                        send_mail(params, 'activity_mail.html', 'New ticket assigned')  
                         
                     #Activity.objects.filter(id=act_id).update(ticket=ticket_no)
                     for x in activitylist:

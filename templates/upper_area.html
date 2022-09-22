@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Job Receive Date :  {{activitydata.rec_date|date:"m/d/Y"}}</label> 
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">ECD : {{activitydata.ecd|date:"m/d/Y"}}</label> 
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Client : {{activitydata.client_id.name}}</label>  
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">LUs : {{activitydata.lus}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">Wire Center : {{activitydata.wire_center}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Job Type : {{activitydata.job_type}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Fielder : {{activitydata.assign_fielder.fname}} {{activitydata.assign_fielder.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Lead Eng : {{activitydata.lead_eng.fname}} {{activitydata.lead_eng.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Work Print : {{activitydata.work_print}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group">
+			<label class="upper_area">Footage/Terminals : {{activitydata.footage}}/{{activitydata.terminal}}</label>
+		</div>
+	</div>
+	{% if request.path == '/activities'%}
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">QA Engineer : {{task_details.qa_eng.fname}} {{task_details.qa_eng.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">QP Engineer : {{task_details.qp_eng.fname}} {{task_details.qp_eng.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">QC Engineer 1 : {{task_details.qc_eng_1.fname}} {{task_details.qc_eng_1.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">QC Engineer 2 : {{task_details.qc_eng_2.fname}} {{task_details.qc_eng_2.lname}}</label>
+		</div>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<div class="form-group upper_area">
+			<label class="upper_area">{% if request.GET.step == '1' %}Digitizer{% elif request.GET.step == '2' %}Designer{% elif request.GET.step == '3' %}Drafter{% elif request.GET.step == '5' %}Researcher{%endif%} Name : {{task_details.doer.fname}} {{task_details.doer.lname}}</label>
+		</div>
+	</div>
+	{% endif %}
+</div>

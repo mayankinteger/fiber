@@ -74,8 +74,9 @@ def dashboard(request):
             days_list.append(0)
    
     # print(complete_date)
-
-    fe_list = Fe_users.objects.filter(is_active=0).order_by('fname')
+    bay_role = Bay_roles.objects.get(id=10)
+    fe_list = Bay_users.objects.filter(role=bay_role,is_active=1).order_by('fname')
+    print(fe_list)
     fe_name=[]
     # cl4_fe_data = []
     cl1_fe_data = []
@@ -104,6 +105,7 @@ def dashboard(request):
     cl3_lead_data = []
     leads =[]
     role = Bay_roles.objects.get(id=5)
+    
     lead = Bay_users.objects.filter(if_lead=1,role=role,is_active=True).order_by('fname')
     
     act_month1 = present.month

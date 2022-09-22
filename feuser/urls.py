@@ -9,5 +9,6 @@ urlpatterns = [
     path('my_activity',views.mobile,name="my_activity"),
     path('activity_media', views.mobile_media,name='activity_media'),
     path('activity_view', views.mobile_view,name='activity_view'),
+    path('forgot_password', views.forgot_password,name='forgot_password'),
     # path('pdf_view', views.pdf_report_create,name='pdf_report_create'),
 ]
